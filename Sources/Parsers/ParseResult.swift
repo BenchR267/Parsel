@@ -16,7 +16,18 @@ public func ==(lhs: ParseError, rhs: ParseError) -> Bool {
     return lhs.code == rhs.code
 }
 
-public enum ParseResult<Token, Result> where Token: Sequence {
+public protocol ParseResultProtocol {
+    associatedtype Token
+    associatedtype Result
+    
+    func isSuccess() -> Bool
+    func isFailed() -> Bool
+    func unwrap() throws -> Result
+    func rest() throws -> Token
+    func error() throws -> ParseError
+}
+
+public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequence {
     
     case success(result: Result, rest: Token)
     
@@ -45,14 +56,47 @@ public enum ParseResult<Token, Result> where Token: Sequence {
         }
     }
     
+    /// Checks whether or not the result is successful
+    ///
+    /// - Returns: true if successful
+    public func isSuccess() -> Bool {
+        guard case .success(_) = self else {
+            return false
+        }
+        return true
+    }
+    
+    /// Checks whether or not the result is failed
+    ///
+    /// - Returns: true if failed
+    public func isFailed() -> Bool {
+        guard case .fail(_) = self else {
+            return false
+        }
+        return true
+    }
+    
     /// Unwraps the result from the success case.
     ///
     /// - Returns: the result if success
     /// - Throws: Errors.unwrappedFailedResult if not successful
-    func unwrap() throws -> Result {
+    public func unwrap() throws -> Result {
         switch self {
         case let .success(result, _):
             return result
+        default:
+            throw Errors.unwrappedFailedResult
+        }
+    }
+    
+    /// Returns the rest of the parsing operation in success case.
+    ///
+    /// - Returns: the rest if successful
+    /// - Throws: Errors.unwrappedFailedResult if not successful
+    public func rest() throws -> Token {
+        switch self {
+        case let .success(_, rest):
+            return rest
         default:
             throw Errors.unwrappedFailedResult
         }
@@ -62,7 +106,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Returns: the parsing error if not successful
     /// - Throws: Errors.errorFromSuccessfulResult if successful
-    func error() throws -> ParseError {
+    public func error() throws -> ParseError {
         switch self {
         case let .fail(err):
             return err

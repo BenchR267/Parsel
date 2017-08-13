@@ -39,8 +39,8 @@ public class Parser<T, R> where T: Sequence {
     /// - Returns: a new parser that combines both parse operations.
     public func flatMap<B>(f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
         return Parser<T, B> { tokens in
-            let erg = self.parse(tokens)
-            return erg.flatMap { result -> [ParseResult<T, B>] in
+            let res = self.parse(tokens)
+            return res.flatMap { result -> [ParseResult<T, B>] in
                 switch result {
                 case let .success(result, rest):
                     let np = f(result)

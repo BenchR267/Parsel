@@ -15,22 +15,22 @@ class ParserTests: XCTestCase {
     func test_unit() {
         let p = Parser<String, Int>.unit(3)
         
-        let erg1 = p.parse("123")
-        XCTAssertEqual(erg1.count, 1)
-        XCTAssertTrue(erg1[0] == .success(result: 3, rest: "123"))
+        let res1 = p.parse("123")
+        XCTAssertEqual(res1.count, 1)
+        XCTAssertTrue(res1[0] == .success(result: 3, rest: "123"))
         
         // state should not change
-        let erg2 = p.parse("123")
-        XCTAssertEqual(erg2.count, 1)
-        XCTAssertTrue(erg2[0] == .success(result: 3, rest: "123"))
+        let res2 = p.parse("123")
+        XCTAssertEqual(res2.count, 1)
+        XCTAssertTrue(res2[0] == .success(result: 3, rest: "123"))
     }
     
     func test_init_producesSuccess() {
         let p = Parser<String, Int>.unit(1)
         
-        let erg = p.parse("123")
-        XCTAssertEqual(erg.count, 1)
-        XCTAssertTrue(erg[0] == .success(result: 1, rest: "123"))
+        let res = p.parse("123")
+        XCTAssertEqual(res.count, 1)
+        XCTAssertTrue(res[0] == .success(result: 1, rest: "123"))
     }
     
     func test_init_producesFail() {
@@ -38,9 +38,9 @@ class ParserTests: XCTestCase {
             return [.fail(TestError(1))]
         }
         
-        let erg = p.parse("123")
-        XCTAssertEqual(erg.count, 1)
-        XCTAssertTrue(erg[0] == .fail(TestError(1)))
+        let res = p.parse("123")
+        XCTAssertEqual(res.count, 1)
+        XCTAssertTrue(res[0] == .fail(TestError(1)))
     }
     
     func test_init() {
@@ -51,50 +51,50 @@ class ParserTests: XCTestCase {
             return [.success(result: first, rest: String(str.dropFirst()))]
         }
         
-        let erg1 = lit.parse("123")
-        XCTAssertEqual(erg1.count, 1)
-        XCTAssertTrue(erg1[0] == .success(result: "1", rest: "23"))
+        let res1 = lit.parse("123")
+        XCTAssertEqual(res1.count, 1)
+        XCTAssertTrue(res1[0] == .success(result: "1", rest: "23"))
         
-        let erg2 = lit.parse("")
-        XCTAssertEqual(erg2.count, 1)
-        XCTAssertTrue(erg2[0] == .fail(TestError(1)))
+        let res2 = lit.parse("")
+        XCTAssertEqual(res2.count, 1)
+        XCTAssertTrue(res2[0] == .fail(TestError(1)))
     }
     
     func test_flatMap_success() {
         let doubleA = char("a").flatMap(f: char)
-        let erg1 = doubleA.parse("aab")
-        XCTAssertEqual(erg1.count, 1)
-        XCTAssertTrue(erg1[0] == .success(result: "a", rest: "b"))
+        let res1 = doubleA.parse("aab")
+        XCTAssertEqual(res1.count, 1)
+        XCTAssertTrue(res1[0] == .success(result: "a", rest: "b"))
         
         let doubleAPlusB = doubleA.flatMap(f: { _ in char("b") })
-        let erg2 = doubleAPlusB.parse("aab")
-        XCTAssertEqual(erg2.count, 1)
-        XCTAssertTrue(erg2[0] == .success(result: "b", rest: ""))
+        let res2 = doubleAPlusB.parse("aab")
+        XCTAssertEqual(res2.count, 1)
+        XCTAssertTrue(res2[0] == .success(result: "b", rest: ""))
     }
     
     func test_flatMap_fail() {
         let doubleA = char("a").flatMap(f: char)
         
-        let erg1 = doubleA.parse("")
-        XCTAssertEqual(erg1.count, 1)
-        XCTAssertTrue(erg1[0] == .fail(TestError(1)))
+        let res1 = doubleA.parse("")
+        XCTAssertEqual(res1.count, 1)
+        XCTAssertTrue(res1[0] == .fail(TestError(1)))
         
-        let erg2 = doubleA.parse("ab")
-        XCTAssertEqual(erg2.count, 1)
-        XCTAssertTrue(erg2[0] == .fail(TestError(1)))
+        let res2 = doubleA.parse("ab")
+        XCTAssertEqual(res2.count, 1)
+        XCTAssertTrue(res2[0] == .fail(TestError(1)))
     }
     
     func test_map() {
         let p = string("abc")
         let pMapped = p.map(f: { $0.count })
         
-        let erg1 = pMapped.parse("abcde")
-        XCTAssertEqual(erg1.count, 1)
-        XCTAssertTrue(erg1[0] == .success(result: 3, rest: "de"))
+        let res1 = pMapped.parse("abcde")
+        XCTAssertEqual(res1.count, 1)
+        XCTAssertTrue(res1[0] == .success(result: 3, rest: "de"))
         
-        let erg2 = pMapped.parse("edcba")
-        XCTAssertEqual(erg2.count, 1)
-        XCTAssertTrue(erg2[0] == .fail(TestError(1)))
+        let res2 = pMapped.parse("edcba")
+        XCTAssertEqual(res2.count, 1)
+        XCTAssertTrue(res2[0] == .fail(TestError(1)))
     }
     
 }

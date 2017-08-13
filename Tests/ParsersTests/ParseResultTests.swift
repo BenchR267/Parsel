@@ -86,11 +86,35 @@ class ParseResultTests: XCTestCase {
         XCTAssertThrowsError(try res2.unwrap())
     }
     
+    func test_rest() {
+        let res1 = ParseResult.success(result: 1, rest: "123")
+        XCTAssertEqual(try res1.rest(), "123")
+        
+        let res2 = ParseResult<String, Int>.fail(TestError(1))
+        XCTAssertThrowsError(try res2.rest())
+    }
+    
     func test_error() {
         let res1 = ParseResult.success(result: 1, rest: "123")
         XCTAssertThrowsError(try res1.error())
         
         let res2 = ParseResult<String, Int>.fail(TestError(1))
         XCTAssertTrue(try res2.error() == TestError(1))
+    }
+    
+    func test_isSuccess() {
+        let res1 = ParseResult.success(result: 1, rest: "123")
+        XCTAssertTrue(res1.isSuccess())
+        
+        let res2 = ParseResult<String, Int>.fail(TestError(1))
+        XCTAssertFalse(res2.isSuccess())
+    }
+    
+    func test_isFail() {
+        let res1 = ParseResult.success(result: 1, rest: "123")
+        XCTAssertFalse(res1.isFailed())
+        
+        let res2 = ParseResult<String, Int>.fail(TestError(1))
+        XCTAssertTrue(res2.isFailed())
     }
 }
