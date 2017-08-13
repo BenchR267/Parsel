@@ -8,26 +8,6 @@
 import XCTest
 @testable import Parsers
 
-// MARK: - Helpers
-
-func char(_ c: Character) -> Parser<String, Character> {
-    return Parser { str in
-        guard let first = str.characters.first, first == c else {
-            return [.fail(TestError(1))]
-        }
-        return [.success(result: first, rest: String(str.dropFirst()))]
-    }
-}
-
-func string(_ s: String) -> Parser<String, String> {
-    return Parser { str in
-        guard str.hasPrefix(s) else {
-            return [.fail(TestError(1))]
-        }
-        return [.success(result: s, rest: String(str.dropFirst(s.count)))]
-    }
-}
-
 class ParserTests: XCTestCase {
     
     // MARK: - Tests

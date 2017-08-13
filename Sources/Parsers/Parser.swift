@@ -14,7 +14,7 @@ public class Parser<T, R> where T: Sequence {
     public typealias ParseFunction = (T) -> [ParseResult<T, R>]
     
     /// The wrapped function, call to start the parsing process.
-    let parse: ParseFunction
+    public let parse: ParseFunction
     
     /// Initialize a parser with the given wrapping function.
     ///
@@ -27,7 +27,7 @@ public class Parser<T, R> where T: Sequence {
     ///
     /// - Parameter value: the result to produce
     /// - Returns: a parser that just produces this value as success
-    static func unit<B>(_ value: B) -> Parser<T, B> {
+    public static func unit<B>(_ value: B) -> Parser<T, B> {
         return Parser<T, B> { t in
             return [.success(result: value, rest: t)]
         }
@@ -37,7 +37,7 @@ public class Parser<T, R> where T: Sequence {
     ///
     /// - Parameter f: function that maps a parse result to a new parser
     /// - Returns: a new parser that combines both parse operations.
-    func flatMap<B>(f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
+    public func flatMap<B>(f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
         return Parser<T, B> { tokens in
             let erg = self.parse(tokens)
             return erg.flatMap { result -> [ParseResult<T, B>] in
@@ -56,7 +56,7 @@ public class Parser<T, R> where T: Sequence {
     ///
     /// - Parameter f: transforming function that maps from R to B
     /// - Returns: a new parser that calls f on each successful parsing operation
-    func map<B>(f: @escaping (R) -> B) -> Parser<T, B> {
+    public func map<B>(f: @escaping (R) -> B) -> Parser<T, B> {
         return self.flatMap(f: { res -> Parser<T, B> in
             return Parser.unit(f(res))
         })
