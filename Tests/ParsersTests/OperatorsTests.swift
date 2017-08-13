@@ -47,6 +47,16 @@ class OperatorsTests: XCTestCase {
         XCTAssertTrue(res == .success(result: 98, rest: "c"))
     }
     
+    func test_fallback_operator() {
+        let p1 = char("a") ?? "b"
+        let p2 = char("a").fallback("b")
+        
+        let input = "cba"
+        let res1 = p1.parse(input)
+        let res2 = p2.parse(input)
+        XCTAssertTrue(res1 == res2)
+    }
+    
 }
 
 #if os(Linux)
@@ -55,7 +65,9 @@ class OperatorsTests: XCTestCase {
             return [
                 ("test_or_operator", test_or_operator),
                 ("test_then_operator", test_then_operator),
-                ("test_map_operator", test_map_operator)
+                ("test_map_operator", test_map_operator),
+                ("test_map_operator_precendence", test_map_operator_precendence),
+                ("test_fallback_operator", test_fallback_operator)
             ]
         }
     }

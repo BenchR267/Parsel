@@ -33,4 +33,22 @@ extension Parser {
         return self.flatMap(f: { _ in other() })
     }
     
+    /// Provides a fallback if the parser fails.
+    ///
+    /// - Parameter defaultValue: a value that should be parsed instead.
+    /// - Returns: a parser that tries to parse and uses defaultValue if parsing failed.
+    ///
+    /// *NOTE* If parsing fails, there are no tokens consumed!
+    public func fallback(_ defaultValue: @escaping @autoclosure () -> R) -> Parser<T, R> {
+        return Parser { tokens in
+            let result = self.parse(tokens)
+            switch result {
+            case .fail(_):
+                return .success(result: defaultValue(), rest: tokens)
+            default:
+                return result
+            }
+        }
+    }
+    
 }

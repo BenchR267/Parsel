@@ -23,6 +23,13 @@ class Parser_ConjunctionTests: XCTestCase {
         let res = p.parse("abc")
         XCTAssertTrue(res == .success(result: "b", rest: "c"))
     }
+    
+    func test_fallback() {
+        let p = char("a").fallback("b")
+        
+        let res = p.parse("cba")
+        XCTAssertTrue(res == .success(result: "b", rest: "cba"))
+    }
 }
 
 #if os(Linux)
@@ -31,6 +38,7 @@ class Parser_ConjunctionTests: XCTestCase {
             return [
                 ("test_or", test_or),
                 ("test_then", test_then),
+                ("test_fallback", test_fallback)
             ]
         }
     }

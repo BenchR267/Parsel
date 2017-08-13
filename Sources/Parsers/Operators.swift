@@ -43,3 +43,13 @@ infix operator ^^: ParserMapPrecedenceGroup
 public func ^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping (R) -> B) -> Parser<T, B> {
     return lhs.map(f: rhs)
 }
+
+/// Convenience operator for fallback operation.
+///
+/// - Parameters:
+///   - lhs: the parser that could possibly fail
+///   - rhs: the default value that should be used instead
+/// - Returns: a parser that tries to parse self and uses rhs if parsing failed.
+public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> R) -> Parser<T, R> {
+    return lhs.fallback(rhs())
+}
