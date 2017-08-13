@@ -19,6 +19,15 @@ func char(_ c: Character) -> Parser<String, Character> {
     }
 }
 
+func string(_ s: String) -> Parser<String, String> {
+    return Parser { str in
+        guard str.hasPrefix(s) else {
+            return [.fail(TestError(1))]
+        }
+        return [.success(result: s, rest: String(str.dropFirst(s.count)))]
+    }
+}
+
 class ParserTests: XCTestCase {
     
     // MARK: - Tests
@@ -91,6 +100,19 @@ class ParserTests: XCTestCase {
         XCTAssertTrue(erg1[0] == .fail(TestError(1)))
         
         let erg2 = doubleA.parse("ab")
+        XCTAssertEqual(erg2.count, 1)
+        XCTAssertTrue(erg2[0] == .fail(TestError(1)))
+    }
+    
+    func test_map() {
+        let p = string("abc")
+        let pMapped = p.map(f: { $0.count })
+        
+        let erg1 = pMapped.parse("abcde")
+        XCTAssertEqual(erg1.count, 1)
+        XCTAssertTrue(erg1[0] == .success(result: 3, rest: "de"))
+        
+        let erg2 = pMapped.parse("edcba")
         XCTAssertEqual(erg2.count, 1)
         XCTAssertTrue(erg2[0] == .fail(TestError(1)))
     }

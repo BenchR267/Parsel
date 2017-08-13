@@ -27,8 +27,8 @@ public class Parser<T, R> where T: Sequence {
     ///
     /// - Parameter value: the result to produce
     /// - Returns: a parser that just produces this value as success
-    static func unit(_ value: R) -> Parser<T, R> {
-        return Parser<T, R> { t in
+    static func unit<B>(_ value: B) -> Parser<T, B> {
+        return Parser<T, B> { t in
             return [.success(result: value, rest: t)]
         }
     }
@@ -50,5 +50,15 @@ public class Parser<T, R> where T: Sequence {
                 }
             }
         }
+    }
+    
+    /// Produce a new parser which calls f on each successful parsing operation.
+    ///
+    /// - Parameter f: transforming function that maps from R to B
+    /// - Returns: a new parser that calls f on each successful parsing operation
+    func map<B>(f: @escaping (R) -> B) -> Parser<T, B> {
+        return self.flatMap(f: { res -> Parser<T, B> in
+            return Parser.unit(f(res))
+        })
     }
 }
