@@ -36,6 +36,15 @@ class OperatorsTests: XCTestCase {
         }
     }
     
+    func test_map_operator() {
+        let f: (String) -> Int = { $0.count }
+        let p = string("abc") ^^ f
+        
+        let res = p.parse("abcde")
+        XCTAssertEqual(res.count, 1)
+        XCTAssertTrue(res[0] == .success(result: 3, rest: "de"))
+    }
+    
 }
 
 #if os(Linux)
@@ -44,6 +53,7 @@ class OperatorsTests: XCTestCase {
             return [
                 ("test_or_operator", test_or_operator),
                 ("test_then_operator", test_then_operator),
+                ("test_map_operator", test_map_operator)
             ]
         }
     }
