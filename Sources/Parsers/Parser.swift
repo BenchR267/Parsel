@@ -32,4 +32,23 @@ public class Parser<T, R> where T: Sequence {
             return [.success(result: value, rest: t)]
         }
     }
+    
+    /// Produce a new parser for every succeeded parsing process.
+    ///
+    /// - Parameter f: function that maps a parse result to a new parser
+    /// - Returns: a new parser that combines both parse operations.
+    func flatMap<B>(f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
+        return Parser<T, B> { tokens in
+            let erg = self.parse(tokens)
+            return erg.flatMap { result -> [ParseResult<T, B>] in
+                switch result {
+                case let .success(result, rest):
+                    let np = f(result)
+                    return np.parse(rest)
+                case let .fail(err):
+                    return [.fail(err)]
+                }
+            }
+        }
+    }
 }
