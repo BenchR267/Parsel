@@ -14,17 +14,14 @@ class Parser_ConjunctionTests: XCTestCase {
         let p = char("a").or(char("b"))
         
         let res = p.parse("ab")
-        XCTAssertEqual(res.count, 2)
-        XCTAssertTrue(res[0] == .success(result: "a", rest: "b"))
-        XCTAssertTrue(res[1] == .fail(TestError(1)))
+        XCTAssertTrue(res == .success(result: "a", rest: "b"))
     }
 
     func test_then() {
         let p = char("a").then(char("b"))
         
         let res = p.parse("abc")
-        XCTAssertEqual(res.count, 1)
-        XCTAssertTrue(res[0] == .success(result: "b", rest: "c"))
+        XCTAssertTrue(res == .success(result: "b", rest: "c"))
     }
 }
 

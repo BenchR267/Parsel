@@ -15,7 +15,13 @@ extension Parser {
     /// - Returns: a parser that contains both parsing results.
     public func or(_ other: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
         return Parser { tokens in
-            return self.parse(tokens) + other().parse(tokens)
+            let result = self.parse(tokens)
+            switch result {
+            case .fail(_):
+                return other().parse(tokens)
+            default:
+                return result
+            }
         }
     }
     

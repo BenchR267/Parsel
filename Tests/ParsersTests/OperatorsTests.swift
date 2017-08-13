@@ -18,9 +18,7 @@ class OperatorsTests: XCTestCase {
         let res1 = p1.parse(input)
         let res2 = p2.parse(input)
         
-        for (r1, r2) in zip(res1, res2) {
-            XCTAssertTrue(r1 == r2)
-        }
+        XCTAssertTrue(res1 == res2)
     }
 
     func test_then_operator() {
@@ -31,9 +29,7 @@ class OperatorsTests: XCTestCase {
         let res1 = p1.parse(input)
         let res2 = p2.parse(input)
         
-        for (r1, r2) in zip(res1, res2) {
-            XCTAssertTrue(r1 == r2)
-        }
+        XCTAssertTrue(res1 == res2)
     }
     
     func test_map_operator() {
@@ -41,16 +37,14 @@ class OperatorsTests: XCTestCase {
         let p = string("abc") ^^ f
         
         let res = p.parse("abcde")
-        XCTAssertEqual(res.count, 1)
-        XCTAssertTrue(res[0] == .success(result: 3, rest: "de"))
+        XCTAssertTrue(res == .success(result: 3, rest: "de"))
     }
     
     func test_map_operator_precendence() {
         let p = char("a") >> char("b") ^^ { String($0).unicodeScalars.first?.value ?? 0 }
         let res = p.parse("abc")
         
-        XCTAssertEqual(res.count, 1)
-        XCTAssertTrue(res[0] == .success(result: 98, rest: "c"))
+        XCTAssertTrue(res == .success(result: 98, rest: "c"))
     }
     
 }

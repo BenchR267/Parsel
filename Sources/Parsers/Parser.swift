@@ -11,7 +11,7 @@ import Foundation
 public class Parser<T, R> where T: Sequence {
     
     /// ParseFunction is the type of the wrapped function type
-    public typealias ParseFunction = (T) -> [ParseResult<T, R>]
+    public typealias ParseFunction = (T) -> ParseResult<T, R>
     
     /// The wrapped function, call to start the parsing process.
     public let parse: ParseFunction
@@ -29,7 +29,7 @@ public class Parser<T, R> where T: Sequence {
     /// - Returns: a parser that just produces this value as success
     public static func unit<B>(_ value: B) -> Parser<T, B> {
         return Parser<T, B> { t in
-            return [.success(result: value, rest: t)]
+            return .success(result: value, rest: t)
         }
     }
     
@@ -39,15 +39,12 @@ public class Parser<T, R> where T: Sequence {
     /// - Returns: a new parser that combines both parse operations.
     public func flatMap<B>(f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
         return Parser<T, B> { tokens in
-            let res = self.parse(tokens)
-            return res.flatMap { result -> [ParseResult<T, B>] in
-                switch result {
-                case let .success(result, rest):
-                    let np = f(result)
-                    return np.parse(rest)
-                case let .fail(err):
-                    return [.fail(err)]
-                }
+            switch self.parse(tokens) {
+            case let .success(result, rest):
+                let np = f(result)
+                return np.parse(rest)
+            case let .fail(err):
+                return .fail(err)
             }
         }
     }
