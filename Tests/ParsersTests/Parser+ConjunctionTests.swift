@@ -27,3 +27,14 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertTrue(res[0] == .success(result: "b", rest: "c"))
     }
 }
+
+#if os(Linux)
+    extension Parser_ConjunctionTests {
+        static var allTests : [(String, (Parser_ConjunctionTests) -> () throws -> Void)] {
+            return [
+                ("test_or", test_or),
+                ("test_then", test_then),
+            ]
+        }
+    }
+#endif

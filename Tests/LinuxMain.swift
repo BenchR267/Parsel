@@ -1,6 +1,20 @@
+//
+//  LinuxMain.swift
+//  ParsersTests
+//
+//  Created by Benjamin Herzog on 13.08.17.
+//
+
 import XCTest
 @testable import ParsersTests
 
+#if os(Linux)
 XCTMain([
-    testCase(ParsersTests.allTests),
-])
+    testCase(ErrorsTests.allTests),
+    testCase(OperatorsTests.allTests),
+    testCase(ParseResultTests.allTests),
+    testCase(Parser_ConjunctionTests.allTests),
+    testCase(ParserTests.allTests),
+    testCase(Sequence_ParseResultTests.allTests),
+    ])
+#endif

@@ -37,3 +37,14 @@ class OperatorsTests: XCTestCase {
     }
     
 }
+
+#if os(Linux)
+    extension OperatorsTests {
+        static var allTests : [(String, (OperatorsTests) -> () throws -> Void)] {
+            return [
+                ("test_or_operator", test_or_operator),
+                ("test_then_operator", test_then_operator),
+            ]
+        }
+    }
+#endif

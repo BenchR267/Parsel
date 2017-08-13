@@ -19,3 +19,13 @@ class ErrorsTests: XCTestCase {
     }
 
 }
+
+#if os(Linux)
+    extension ErrorsTests {
+        static var allTests : [(String, (ErrorsTests) -> () throws -> Void)] {
+            return [
+                ("test_code", test_code),
+            ]
+        }
+    }
+#endif

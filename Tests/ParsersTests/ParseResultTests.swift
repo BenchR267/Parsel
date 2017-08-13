@@ -118,3 +118,23 @@ class ParseResultTests: XCTestCase {
         XCTAssertTrue(res2.isFailed())
     }
 }
+
+#if os(Linux)
+    extension ParseResultTests {
+        static var allTests : [(String, (ParseResultTests) -> () throws -> Void)] {
+            return [
+                ("test_map_success", test_map_success),
+                ("test_map_fail", test_map_fail),
+                ("test_flatMap_success", test_flatMap_success),
+                ("test_flatMap_fail", test_flatMap_fail),
+                ("test_equal", test_equal),
+                ("test_unwrap", test_unwrap),
+                ("test_rest", test_rest),
+                ("test_rest", test_rest),
+                ("test_error", test_error),
+                ("test_isSuccess", test_isSuccess),
+                ("test_isFail", test_isFail),
+            ]
+        }
+    }
+#endif

@@ -25,3 +25,14 @@ class Sequence_ParseResultTests: XCTestCase {
     }
 
 }
+
+#if os(Linux)
+    extension Sequence_ParseResultTests {
+        static var allTests : [(String, (Sequence_ParseResultTests) -> () throws -> Void)] {
+            return [
+                ("test_onlySuccess", test_onlySuccess),
+                ("test_onlyFails", test_onlyFails),
+            ]
+        }
+    }
+#endif
