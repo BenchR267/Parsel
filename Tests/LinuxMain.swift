@@ -15,6 +15,5 @@ XCTMain([
     testCase(ParseResultTests.allTests),
     testCase(Parser_ConjunctionTests.allTests),
     testCase(ParserTests.allTests),
-    testCase(Sequence_ParseResultTests.allTests),
     ])
 #endif
