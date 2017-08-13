@@ -19,4 +19,11 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertTrue(erg[1] == .fail(TestError(1)))
     }
 
+    func test_then() {
+        let p = char("a").then(char("b"))
+        
+        let erg = p.parse("abc")
+        XCTAssertEqual(erg.count, 1)
+        XCTAssertTrue(erg[0] == .success(result: "b", rest: "c"))
+    }
 }
