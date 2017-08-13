@@ -45,6 +45,14 @@ class OperatorsTests: XCTestCase {
         XCTAssertTrue(res[0] == .success(result: 3, rest: "de"))
     }
     
+    func test_map_operator_precendence() {
+        let p = char("a") >> char("b") ^^ { String($0).unicodeScalars.first?.value ?? 0 }
+        let res = p.parse("abc")
+        
+        XCTAssertEqual(res.count, 1)
+        XCTAssertTrue(res[0] == .success(result: 98, rest: "c"))
+    }
+    
 }
 
 #if os(Linux)
