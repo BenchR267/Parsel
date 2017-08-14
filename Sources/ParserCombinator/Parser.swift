@@ -1,11 +1,9 @@
 //
 //  Parser.swift
-//  ParsersPackageDescription
+//  ParserCombinator
 //
 //  Created by Benjamin Herzog on 13.08.17.
 //
-
-import Foundation
 
 /// A Parser parses sequences of T (Token) to one or multiple R (Result)
 public class Parser<T, R> where T: Sequence {

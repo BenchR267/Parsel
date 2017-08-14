@@ -1,12 +1,12 @@
 //
 //  Operators+SequentialTests.swift
-//  ParsersTests
+//  ParserCombinatorTests
 //
 //  Created by Benjamin Herzog on 14.08.17.
 //
 
 import XCTest
-@testable import Parsers
+@testable import ParserCombinator
 
 class Operators_SequentialTests: XCTestCase {
 

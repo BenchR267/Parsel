@@ -1,12 +1,12 @@
 //
 //  ErrorsTests.swift
-//  ParsersTests
+//  ParserCombinatorTests
 //
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
 import XCTest
-@testable import Parsers
+@testable import ParserCombinator
 
 class ErrorsTests: XCTestCase {
 

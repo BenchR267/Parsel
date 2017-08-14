@@ -1,11 +1,9 @@
 //
 //  Operators.swift
-//  ParsersPackageDescription
+//  ParserCombinator
 //
 //  Created by Benjamin Herzog on 13.08.17.
 //
-
-import Foundation
 
 // MARK: - Precendence groups and declaration
 

@@ -1,12 +1,12 @@
 //
 //  TestError.swift
-//  ParsersTests
+//  ParserCombinatorTests
 //
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
 import Foundation
-@testable import Parsers
+@testable import ParserCombinator
 
 internal struct TestError: ParseError, Equatable {
     let code: UInt64
