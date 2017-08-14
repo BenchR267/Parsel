@@ -41,22 +41,10 @@ public final class RegexParser: Parser<String, String> {
     
 }
 
-extension RegexParser: ExpressibleByStringLiteral {
+extension String {
     
-    public convenience init(stringLiteral value: String) {
-        do {
-            try self.init(value)
-        } catch {
-            fatalError("Tried to initialize RegexParser with invalid regex: \(value)")
-        }
-    }
-    
-    public convenience init(unicodeScalarLiteral value: String) {
-        self.init(stringLiteral: value)
-    }
-    
-    public convenience init(extendedGraphemeClusterLiteral value: String) {
-        self.init(stringLiteral: value)
+    var r: RegexParser {
+        return try! RegexParser(self)
     }
     
 }

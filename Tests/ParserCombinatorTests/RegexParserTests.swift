@@ -22,7 +22,7 @@ class RegexParserTests: XCTestCase {
     }
     
     func test_init_stringLiteral() {
-        let parser: RegexParser = "a"
+        let parser = "a".r
         XCTAssertEqual(parser.regex, "a")
     }
     
@@ -43,7 +43,7 @@ class RegexParserTests: XCTestCase {
     }
     
     func test_parse_fail() throws {
-        let parser: RegexParser = "[0-9]"
+        let parser = "[0-9]".r
         let result = parser.parse("a")
         XCTAssertTrue(result.isFailed())
         let error = try result.error() as! RegexParser.Error
