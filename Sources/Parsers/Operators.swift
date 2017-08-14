@@ -7,13 +7,33 @@
 
 import Foundation
 
+// MARK: - Precendence groups and declaration
+
+precedencegroup ParserConjunctionGroup {
+    associativity: left
+    higherThan: BitwiseShiftPrecedence
+}
+
+precedencegroup ParserMapPrecedenceGroup {
+    associativity: left
+    higherThan: ParserConjunctionGroup
+}
+
+infix operator ~: ParserConjunctionGroup
+infix operator ~>: ParserConjunctionGroup
+infix operator <~: ParserConjunctionGroup
+
+infix operator ^^: ParserMapPrecedenceGroup
+
+// MARK: - Implementation
+
 /// Convenience operator for 'or' conjunction.
 ///
 /// - Parameters:
 ///   - lhs: the first parser to evaluate
 ///   - rhs: the second parser to evaluate
 /// - Returns: a parser that evaluates both, rhs and lhs, starting with lhs
-public func ||<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
+public func |<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
     return lhs.or(rhs())
 }
 
@@ -26,13 +46,6 @@ public func ||<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser
 public func >><T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, B>) -> Parser<T, B> {
     return lhs.then(rhs())
 }
-
-precedencegroup ParserMapPrecedenceGroup {
-    associativity: left
-    higherThan: BitwiseShiftPrecedence
-}
-
-infix operator ^^: ParserMapPrecedenceGroup
 
 /// Convenience operator for map operations.
 ///
@@ -53,3 +66,5 @@ public func ^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping (R) -> B) -> Parser<T,
 public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> R) -> Parser<T, R> {
     return lhs.fallback(rhs())
 }
+
+

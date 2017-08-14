@@ -10,9 +10,20 @@ import XCTest
 
 class OperatorsTests: XCTestCase {
 
-    func test_or_operator() {
-        let p1 = char("a") || char("b")
+    func test_or_operator_first() {
+        let p1 = char("a") | char("b")
         let p2 = char("a").or(char("b"))
+        
+        let input = "abc"
+        let res1 = p1.parse(input)
+        let res2 = p2.parse(input)
+        
+        XCTAssertTrue(res1 == res2)
+    }
+    
+    func test_or_operator_second() {
+        let p1 = char("b") | char("a")
+        let p2 = char("b").or(char("a"))
         
         let input = "abc"
         let res1 = p1.parse(input)
@@ -63,7 +74,8 @@ class OperatorsTests: XCTestCase {
     extension OperatorsTests {
         static var allTests : [(String, (OperatorsTests) -> () throws -> Void)] {
             return [
-                ("test_or_operator", test_or_operator),
+                ("test_or_operator_first", test_or_operator_first),
+                ("test_or_operator_second", test_or_operator_second),
                 ("test_then_operator", test_then_operator),
                 ("test_map_operator", test_map_operator),
                 ("test_map_operator_precendence", test_map_operator_precendence),

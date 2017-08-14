@@ -11,10 +11,15 @@ import XCTest
 class Parser_ConjunctionTests: XCTestCase {
 
     func test_or() {
-        let p = char("a").or(char("b"))
+        let p1 = char("a").or(char("b"))
         
-        let res = p.parse("ab")
+        let res = p1.parse("ab")
         XCTAssertTrue(res == .success(result: "a", rest: "b"))
+        
+        let p2 = char("b").or(char("a"))
+        
+        let res2 = p2.parse("ab")
+        XCTAssertTrue(res2 == .success(result: "a", rest: "b"))
     }
 
     func test_then() {
@@ -29,6 +34,9 @@ class Parser_ConjunctionTests: XCTestCase {
         
         let res = p.parse("cba")
         XCTAssertTrue(res == .success(result: "b", rest: "cba"))
+        
+        let res2 = p.parse("abc")
+        XCTAssertTrue(res2 == .success(result: "a", rest: "bc"))
     }
 }
 
