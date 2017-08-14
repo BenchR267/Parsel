@@ -6,7 +6,7 @@
 //
 
 /// A Parser parses sequences of T (Token) to one or multiple R (Result)
-public class Parser<T, R> where T: Sequence {
+open class Parser<T, R> where T: Sequence {
     
     /// ParseFunction is the type of the wrapped function type
     public typealias ParseFunction = (T) -> ParseResult<T, R>
