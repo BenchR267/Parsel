@@ -66,5 +66,5 @@ internal func rep<T, R>(_ parser: Parser<T, R>) -> Parser<T, [R]> {
 }
 
 internal func int() -> Parser<String, Int> {
-    return rep(number()) ^^ { numbers in Int(numbers.map(String.init).joined()) ?? 0 }
+    return rep(number()).map { numbers in Int(numbers.map(String.init).joined()) ?? 0 }
 }
