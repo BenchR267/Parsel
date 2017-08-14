@@ -45,6 +45,24 @@ public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Par
         })
     }
 }
+    
+public func >~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Parser<Token, \(next)>) -> Parser<Token, \(next)> {
+    return Parser { tokens in
+        return lhs.parse(tokens).flatMap(f: { _, rest in
+            return rhs.parse(rest)
+        })
+    }
+}
+    
+public func <~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: Parser<Token, (\(chars))>) -> Parser<Token, \(next)> {
+    return Parser { tokens in
+        return lhs.parse(tokens).flatMap(f: { result, rest in
+            return rhs.parse(rest).map(f: { _, _ in
+                return result
+            })
+        })
+    }
+}
 """
     
 }

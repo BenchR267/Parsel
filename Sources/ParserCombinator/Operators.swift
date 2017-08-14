@@ -12,14 +12,19 @@ precedencegroup ParserConjunctionGroup {
     higherThan: BitwiseShiftPrecedence
 }
 
+precedencegroup ParserConjuctionRightGroup {
+    associativity: right
+    higherThan: ParserConjunctionGroup
+}
+
 precedencegroup ParserMapPrecedenceGroup {
     associativity: left
     higherThan: ParserConjunctionGroup
 }
 
 infix operator ~: ParserConjunctionGroup
-infix operator ~>: ParserConjunctionGroup
-infix operator <~: ParserConjunctionGroup
+infix operator >~: ParserConjunctionGroup
+infix operator <~: ParserConjuctionRightGroup
 
 infix operator ^^: ParserMapPrecedenceGroup
 
