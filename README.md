@@ -1,4 +1,5 @@
 ![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
+[![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org)
 
 # ParserCombinator
