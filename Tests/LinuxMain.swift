@@ -10,6 +10,7 @@ import XCTest
 
 #if os(Linux)
 XCTMain([
+	testCase(ParserCombinator_TestCase.allTests),
     testCase(ErrorsTests.allTests),
     testCase(OperatorsTests.allTests),
     testCase(ParseResultTests.allTests),
