@@ -9,6 +9,12 @@ public protocol ParseError: Swift.Error {
     var code: UInt64 { get }
 }
 
+public extension ParseError where Self: RawRepresentable, Self.RawValue == UInt64 {
+    var code: UInt64 {
+        return self.rawValue
+    }
+}
+
 /// ParseErrors are the same if their code matches
 public func ==(lhs: ParseError, rhs: ParseError) -> Bool {
     return lhs.code == rhs.code
