@@ -1,24 +1,17 @@
-//
-//  Operators+Sequential.swift
-//  ParsersPackageDescription
-//
-//  Created by Benjamin Herzog on 14.08.17.
-//
+// This file is generated via scripts/SequentialOperators.swift. Do not modify manually!
 
-import Foundation
-
-public func ~<T, A, B>(lhs: Parser<T, A>, rhs: Parser<T, B>) -> Parser<T, (A, B)> {
+public func ~<Token, A, B>(lhs: Parser<Token, (A)>, rhs: Parser<Token, B>) -> Parser<Token, (A, B)> {
     return Parser { tokens in
         switch lhs.parse(tokens) {
-        case let .success(result, rest):
-            return rhs.parse(rest).map(f: { (result, $0) })
+        case let .success((resultA), rest):
+            return rhs.parse(rest).map(f: { (resultA, $0) })
         case let .fail(err):
             return .fail(err)
         }
     }
 }
 
-public func ~<T, A, B, C>(lhs: Parser<T, (A, B)>, rhs: Parser<T, C>) -> Parser<T, (A, B, C)> {
+public func ~<Token, A, B, C>(lhs: Parser<Token, (A, B)>, rhs: Parser<Token, C>) -> Parser<Token, (A, B, C)> {
     return Parser { tokens in
         switch lhs.parse(tokens) {
         case let .success((resultA, resultB), rest):
@@ -29,7 +22,7 @@ public func ~<T, A, B, C>(lhs: Parser<T, (A, B)>, rhs: Parser<T, C>) -> Parser<T
     }
 }
 
-public func ~<T, A, B, C, D>(lhs: Parser<T, (A, B, C)>, rhs: Parser<T, D>) -> Parser<T, (A, B, C, D)> {
+public func ~<Token, A, B, C, D>(lhs: Parser<Token, (A, B, C)>, rhs: Parser<Token, D>) -> Parser<Token, (A, B, C, D)> {
     return Parser { tokens in
         switch lhs.parse(tokens) {
         case let .success((resultA, resultB, resultC), rest):
