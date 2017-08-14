@@ -8,15 +8,11 @@
 import Foundation
 @testable import ParserCombinator
 
-internal struct TestError: ParseError, Equatable {
+internal struct TestError: ParseError {
     let code: UInt64
     
     init(_ code: UInt64) {
         self.code = code
-    }
-    
-    static func ==(lhs: TestError, rhs: TestError) -> Bool {
-        return lhs.code == rhs.code
     }
 }
 
