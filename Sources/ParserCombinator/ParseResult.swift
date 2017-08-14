@@ -35,10 +35,10 @@ public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequenc
     ///
     /// - Parameter f: a function to use to transform result
     /// - Returns: ParseResult with transformed result or fail with unchanged error.
-    public func map<B>(f: (Result) -> B) -> ParseResult<Token, B> {
+    public func map<B>(f: (Result, Token) -> B) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):
-            return .success(result: f(result), rest: rest)
+            return .success(result: f(result, rest), rest: rest)
         case let .fail(err):
             return .fail(err)
         }

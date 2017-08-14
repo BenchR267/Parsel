@@ -12,7 +12,9 @@ class ParserCombinator_TestCase: XCTestCase {
 
     func test_addition() {
         
-        let addition = (int() ~ string("+") ~ int()) ^^ { f, _, s in f + s }
+        let addition = (int() ~ char("+") ~ int()).map { a, _, b in
+            return a + b
+        }
         
         let res = addition.parse("1234+56")
         XCTAssertEqual(1290, try res.unwrap())

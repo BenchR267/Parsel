@@ -18,9 +18,9 @@ func character(from number: Int) -> Character {
     return Character(UnicodeScalar(number + start)!)
 }
 
-func characters(count: Int, prefix: String = "", uppercased: Bool = true) -> String {
+func characters(count: Int) -> String {
     let chars = (0..<count).map(character(from:))
-                           .map { prefix + (uppercased ? String($0).uppercased() : String($0)) }
+                           .map { String($0).uppercased() }
     return chars.joined(separator: ", ")
 }
 
@@ -32,19 +32,17 @@ for i in (1...count) {
     
     let chars = characters(count: i)
     let next = String(character(from: i)).uppercased()
-    let results = characters(count: i, prefix: "result")
+    let resultsArray = (0..<i).map({ "result.\($0)" })
+    let results = resultsArray.count > 1 ? resultsArray.joined(separator: ", ") : "result"
     
     string += """
 
 
 public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Parser<Token, \(next)>) -> Parser<Token, (\(chars), \(next))> {
     return Parser { tokens in
-        switch lhs.parse(tokens) {
-        case let .success((\(results)), rest):
-            return rhs.parse(rest).map(f: { (\(results), $0) })
-        case let .fail(err):
-            return .fail(err)
-        }
+        return lhs.parse(tokens).flatMap(f: { (result, rest) in
+            return rhs.parse(rest).map(f: { r, t in (\(results), r) })
+        })
     }
 }
 """

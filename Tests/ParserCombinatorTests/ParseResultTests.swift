@@ -13,18 +13,18 @@ class ParseResultTests: XCTestCase {
     func test_map_success() {
         let res = ParseResult.success(result: 1, rest: "+2")
         
-        let mappedRes1 = res.map(f: {$0 + 1})
+        let mappedRes1 = res.map(f: { r, _ in r + 1})
         XCTAssertTrue(mappedRes1 == ParseResult.success(result: 2, rest: "+2"))
         XCTAssertTrue(type(of: mappedRes1) == ParseResult<String, Int>.self)
         
-        let mappedRes2 = res.map(f: { $0.description })
+        let mappedRes2 = res.map(f: { r, _ in r.description })
         XCTAssertTrue(mappedRes2 == ParseResult.success(result: "1", rest: "+2"))
         XCTAssertTrue(type(of: mappedRes2) == ParseResult<String, String>.self)
     }
     
     func test_map_fail() {
         let res = ParseResult<String, Int>.fail(TestError(1))
-        let mappedRes = res.map(f: { $0 + 1})
+        let mappedRes = res.map(f: { r, _ in r + 1})
         XCTAssertTrue(res == mappedRes)
     }
     
