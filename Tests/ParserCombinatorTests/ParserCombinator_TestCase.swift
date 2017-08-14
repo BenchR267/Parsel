@@ -12,7 +12,7 @@ class ParserCombinator_TestCase: XCTestCase {
 
     func test_addition() {
         
-        let addition = (int() ~ char("+") ~ int()).map { a, _, b in
+        let addition = (number ~ char("+") ~ number).map { a, _, b in
             return a + b
         }
         
