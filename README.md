@@ -40,6 +40,9 @@ Parsing an integer is as easy as
 
 ```Swift
 let number = digit.rep.map { numbers in Int(numbers.map(String.init).joined()) ?? 0 }
+
+let result = number.parse("123+456")
+try! result.unwrap() // Int: 579
 ```
 
 # What are the disadvantages?
