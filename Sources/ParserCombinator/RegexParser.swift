@@ -7,6 +7,7 @@
 
 import Foundation
 
+#if os(OSX)
 public final class RegexParser: Parser<String, String> {
     
     public enum Error: ParseError {
@@ -59,3 +60,4 @@ extension RegexParser: ExpressibleByStringLiteral {
     }
     
 }
+#endif
