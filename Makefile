@@ -14,4 +14,4 @@ generate:
 	chmod +x $(SEQUENTIAL_OPERATORS_PATH) && swift $(SEQUENTIAL_OPERATORS_PATH) $(NUMBER_OF_SEQUENTIAL_OPERATORS) > $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 
 test:
-	make generate && swift build && swift test
+	swift build && swift test
