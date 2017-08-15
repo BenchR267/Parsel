@@ -117,6 +117,18 @@ class ParseResultTests: XCTestCase {
         let res2 = ParseResult<String, Int>.fail(TestError(1))
         XCTAssertTrue(res2.isFailed())
     }
+    
+    func test_RawRepresentable_conformance() {
+        enum SomeParseError: UInt64, ParseError {
+            case someError
+            case someOtherError
+            case yetAnotherOne
+        }
+        
+        XCTAssertEqual(SomeParseError.someError.code, 0)
+        XCTAssertEqual(SomeParseError.someOtherError.code, 1)
+        XCTAssertEqual(SomeParseError.yetAnotherOne.code, 2)
+    }
 }
 
 #if os(Linux)
@@ -134,6 +146,7 @@ class ParseResultTests: XCTestCase {
                 ("test_error", test_error),
                 ("test_isSuccess", test_isSuccess),
                 ("test_isFail", test_isFail),
+                ("test_RawRepresentable_conformance", test_RawRepresentable_conformance),
             ]
         }
     }
