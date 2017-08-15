@@ -40,7 +40,9 @@ Parsing an integer addition is as easy as
 
 ```Swift
 func intFromDigits(_ digits: [Int]) -> Int {
-    return Int(digits.map(String.init).joined()) ?? 0
+    return digits.reduce(0) { res, e in    
+        return res * 10 + e
+    }
 }
 
 let number = digit.rep.map(intFromDigits)
