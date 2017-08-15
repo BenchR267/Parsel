@@ -28,7 +28,7 @@ extension Parser {
     /// - Parameter other: another parser to execute afterwards
     /// - Returns: a parser that first parses self and then other on the rest of self
     public func then<B>(_ other: @escaping @autoclosure () -> Parser<T, B>) -> Parser<T, B> {
-        return self.flatMap(f: { _ in other() })
+        return self.flatMap { _ in other() }
     }
     
     /// Provides a fallback if the parser fails.

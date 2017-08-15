@@ -57,7 +57,7 @@ public func >><T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Par
 ///   - rhs: a mapping operation to call on lhs' result
 /// - Returns: a parser that calls lhs and transforms its result with rhs afterwards.
 public func ^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping (R) -> B) -> Parser<T, B> {
-    return lhs.map(f: rhs)
+    return lhs.map(rhs)
 }
 
 /// Convenience operator for fallback operation.

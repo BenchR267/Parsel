@@ -55,17 +55,17 @@ class ParserTests: XCTestCase {
     }
     
     func test_flatMap_success() {
-        let doubleA = char("a").flatMap(f: char)
+        let doubleA = char("a").flatMap(char)
         let res1 = doubleA.parse("aab")
         XCTAssertTrue(res1 == .success(result: "a", rest: "b"))
         
-        let doubleAPlusB = doubleA.flatMap(f: { _ in char("b") })
+        let doubleAPlusB = doubleA.flatMap { _ in char("b") }
         let res2 = doubleAPlusB.parse("aab")
         XCTAssertTrue(res2 == .success(result: "b", rest: ""))
     }
     
     func test_flatMap_fail() {
-        let doubleA = char("a").flatMap(f: char)
+        let doubleA = char("a").flatMap(char)
         
         let res1 = doubleA.parse("")
         XCTAssertTrue(res1 == .fail(TestError(1)))
@@ -76,7 +76,7 @@ class ParserTests: XCTestCase {
     
     func test_map() {
         let p = string("abc")
-        let pMapped = p.map(f: { $0.count })
+        let pMapped = p.map { $0.count }
         
         let res1 = pMapped.parse("abcde")
         XCTAssertTrue(res1 == .success(result: 3, rest: "de"))
