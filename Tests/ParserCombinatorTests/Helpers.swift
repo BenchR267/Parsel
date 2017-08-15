@@ -63,4 +63,4 @@ extension Parser {
     
 }
 
-internal let number = digit.rep.map { numbers in Int(numbers.map(String.init).joined()) ?? 0 }
+internal let number = digit.rep.map { Int($0.map(String.init).joined()) ?? 0 }
