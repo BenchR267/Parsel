@@ -2,3 +2,6 @@
 /.build
 /Packages
 /*.xcodeproj
+
+# generated files
+Sources/ParserCombinator/Operators+Sequential.swift
