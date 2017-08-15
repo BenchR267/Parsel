@@ -38,6 +38,57 @@ class Parser_ConjunctionTests: XCTestCase {
         let res2 = p.parse("abc")
         XCTAssertTrue(res2 == .success(result: "a", rest: "bc"))
     }
+    
+    func test_fallback_parser() {
+        let p1 = char("a")
+        let p2 = char("b")
+        
+        let p = p1 ?? p2
+        
+        XCTAssertEqual(try p.parse("a").unwrap(), "a")
+        XCTAssertEqual(try p.parse("b").unwrap(), "b")
+        XCTAssertThrowsError(try p.parse("c").unwrap())
+    }
+    
+    func test_rep() throws {
+        let list = char("[") >~ digit.rep(sep: ", *".r) <~ char("]")
+        let result = list.parse("[1,  2, 3, 4]")
+        XCTAssertEqual(try result.unwrap(), [1, 2, 3, 4])
+    }
+    
+    func test_rep2() throws {
+        let result = number.parse("1234")
+        XCTAssertEqual(try result.unwrap(), 1234)
+    }
+    
+    func test_rep_fail() throws {
+        let res1 = digit.rep.parse("a")
+        XCTAssertTrue(res1.isFailed())
+        
+        let res2 = digit.rep(sep: char("+")).parse("-5+4")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_typeErased() throws {
+        let p = char("a")
+        let t = p.typeErased
+        
+        let input = "abc"
+        let res1 = p.parse(input)
+        let res2 = t.parse(input)
+        
+        XCTAssertTrue(res1.isSuccess())
+        XCTAssertTrue(res2.isSuccess())
+        
+        XCTAssertEqual(try res1.rest(), try res2.rest())
+        
+        let input2 = "bca"
+        let res3 = p.parse(input2)
+        let res4 = t.parse(input2)
+        
+        XCTAssertTrue(res3.isFailed())
+        XCTAssertTrue(res4.isFailed())
+    }
 }
 
 #if os(Linux)
@@ -46,7 +97,12 @@ class Parser_ConjunctionTests: XCTestCase {
             return [
                 ("test_or", test_or),
                 ("test_then", test_then),
-                ("test_fallback", test_fallback)
+                ("test_fallback", test_fallback),
+                ("test_fallback_parser", test_fallback_parser),
+                ("test_rep", test_rep),
+                ("test_rep2", test_rep2),
+                ("test_rep_fail", test_rep_fail),
+                ("test_typeErased", test_typeErased),
             ]
         }
     }

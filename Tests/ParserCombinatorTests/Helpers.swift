@@ -41,26 +41,4 @@ internal let digit = Parser<String, Int> { str in
     return .success(result: number, rest: String(str.dropFirst()))
 }
 
-extension Parser {
-    
-    var rep: Parser<T, [R]> {
-        return Parser<T, [R]> { tokens in
-            var results = [R]()
-            var totalRest = tokens
-            
-            while case let .success(result, rest) = self.parse(totalRest) {
-                results.append(result)
-                totalRest = rest
-            }
-            
-            if results.count > 0 {
-                return .success(result: results, rest: totalRest)
-            } else {
-                return .fail(TestError(1))
-            }
-        }
-    }
-    
-}
-
 internal let number = digit.rep.map { Int($0.map(String.init).joined()) ?? 0 }

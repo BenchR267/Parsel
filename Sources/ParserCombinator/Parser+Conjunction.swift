@@ -49,4 +49,89 @@ extension Parser {
         }
     }
     
+    /// Provides a fallback parser that is being used if self.parse fails.
+    ///
+    /// - Parameter defaultValue: the parser to use in case of failure
+    /// - Returns: a parser that first tries self.parse and only uses defaultValue if self failed.
+    public func fallback(_ defaultValue: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
+        return Parser { tokens in
+            switch self.parse(tokens) {
+            case let .success(result, rest):
+                return .success(result: result, rest: rest)
+            default:
+                return defaultValue().parse(tokens)
+            }
+        }
+    }
+    
+    /// Erases the type of the parser
+    var typeErased: Parser<T, ()> {
+        return Parser<T, ()> { tokens in
+            switch self.parse(tokens) {
+            case let .success(_, rest):
+                return .success(result: (), rest: rest)
+            case let .fail(err):
+                return .fail(err)
+            }
+            
+        }
+    }
+    
+    /// Parses self repetitive and returns results in array
+    var rep: Parser<T, [R]> {
+        return Parser<T, [R]> { tokens in
+            var results = [R]()
+            var totalRest = tokens
+
+            loop: while true {
+                switch self.parse(totalRest) {
+                case let .success(result, rest):
+                    results.append(result)
+                    totalRest = rest
+                case let .fail(err):
+                    if results.isEmpty {
+                        return .fail(err)
+                    }
+                    break loop
+                }
+            }
+
+            return .success(result: results, rest: totalRest)
+        }
+    }
+    
+    /// Parses self repetitive separated by sep Parser.
+    ///
+    /// - Parameter sep: the parser that separates self.parse operations.
+    /// - Returns: a parser that parses self separated by sep as long as it doesn't fail.
+    func rep<B>(sep: Parser<T, B>) -> Parser<T, [R]> {
+        return Parser<T, [R]> { tokens in
+            var results = [R]()
+            var totalRest = tokens
+            
+            let both = self <~ sep
+            
+            loop: while true {
+                
+                switch both.parse(totalRest) {
+                case let .success(result, rest):
+                    results.append(result)
+                    totalRest = rest
+                case .fail(_):
+                    switch self.parse(totalRest) {
+                    case let .success(singleResult, singleRest):
+                        results.append(singleResult)
+                        totalRest = singleRest
+                        break loop
+                    case let .fail(err):
+                        return .fail(err)
+                    }
+                }
+                
+            }
+            
+            return .success(result: results, rest: totalRest)
+        }
+    }
+    
 }

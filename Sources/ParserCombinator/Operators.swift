@@ -70,4 +70,6 @@ public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> R) -> 
     return lhs.fallback(rhs())
 }
 
-
+public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
+    return lhs.fallback(rhs())
+}

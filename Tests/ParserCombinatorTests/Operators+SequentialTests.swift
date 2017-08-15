@@ -40,6 +40,21 @@ class Operators_SequentialTests: XCTestCase {
         XCTAssertTrue(try res.error().code == 1)
     }
     
+    func test_sequential() {
+        let p1 = char("a") >~ char("b")
+        let p2 = char("a") <~ char("b")
+        
+        let input = "ab"
+        XCTAssertEqual(try p1.parse(input).unwrap(), "b")
+        XCTAssertEqual(try p2.parse(input).unwrap(), "a")
+        
+        let p3 = number <~ char("a")
+        XCTAssertEqual(try p3.parse("1234a").unwrap(), 1234)
+        
+        let p4 = char("a").rep ^^ { String($0) }
+        XCTAssertEqual(try p4.parse("aaaa").unwrap(), "aaaa")
+    }
+    
 }
 
 #if os(Linux)
@@ -47,7 +62,8 @@ class Operators_SequentialTests: XCTestCase {
         static var allTests : [(String, (Operators_SequentialTests) -> () throws -> Void)] {
             return [
                 ("test_sequential_success", test_sequential_success),
-                ("test_sequential_fail", test_sequential_fail)
+                ("test_sequential_fail", test_sequential_fail),
+                ("test_sequential", test_sequential),
             ]
         }
     }
