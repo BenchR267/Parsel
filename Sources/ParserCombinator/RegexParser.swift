@@ -12,21 +12,26 @@ public final class RegexParser: Parser<String, String> {
     public enum Error: ParseError {
         case doesNotMatch(pattern: String, input: String)
         case unimplemented
+        case invalidRegex(String)
         
         public var code: UInt64 {
             switch self {
             case .doesNotMatch(_): return 0
             case .unimplemented: return 1
+            case .invalidRegex(_): return 2
             }
         }
     }
     
     public let regex: String
     
-    public init(_ regex: String) throws {
+    public init(_ regex: String) {
         self.regex = regex
-        let nsRegex = try NSRegularExpression(pattern: regex, options: [])
+        let nsRegex = try? NSRegularExpression(pattern: regex, options: [])
         super.init { str in
+            guard let nsRegex = nsRegex else {
+                return .fail(Error.invalidRegex(regex))
+            }
             let matches = nsRegex.matches(in: str, options: [.anchored], range: NSRange(location: 0, length: str.count))
             guard let first = matches.first else {
                 return .fail(Error.doesNotMatch(pattern: regex, input: str))
@@ -43,7 +48,7 @@ public final class RegexParser: Parser<String, String> {
 extension String {
     
     public var r: RegexParser {
-        return try! RegexParser(self)
+        return RegexParser(self)
     }
     
 }
