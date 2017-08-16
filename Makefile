@@ -11,6 +11,8 @@ initial:
 
 clean:
 	rm -rf .build
+	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
+	rm -rf ParserCombinator.xcodeproj
 
 generate:
 	chmod +x $(SEQUENTIAL_OPERATORS_PATH)

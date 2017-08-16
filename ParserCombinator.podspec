@@ -23,4 +23,8 @@ Parsing is a very common task, it does not always mean to parse source code or J
 
   s.source_files = 'Sources/ParserCombinator/*.swift'
 
+  s.prepare_command = <<-CMD
+    make initial
+  CMD
+
 end
