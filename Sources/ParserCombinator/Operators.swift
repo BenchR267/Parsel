@@ -70,6 +70,12 @@ public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> R) -> 
     return lhs.fallback(rhs())
 }
 
+/// Convenience operator for fallback with parser operation.
+///
+/// - Parameters:
+///   - lhs: the parser that could fail
+///   - rhs: the parser that should be used instead
+/// - Returns: a parser that tries to parse self and parses rhs if self failed.
 public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
     return lhs.fallback(rhs())
 }

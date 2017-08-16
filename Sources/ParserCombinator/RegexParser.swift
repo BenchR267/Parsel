@@ -43,7 +43,7 @@ public final class RegexParser: Parser<String, String> {
 
 extension String {
     
-    var r: RegexParser {
+    public var r: RegexParser {
         return try! RegexParser(self)
     }
     
