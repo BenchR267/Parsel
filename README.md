@@ -60,7 +60,9 @@ Since parser combinators are very high level, they abstract the whole process of
 
 # Installation
 
-ParserCombinator is currently only available via Swift Package Manager. Support for Cocoapods and Carthage will come later.
+ParserCombinator is currently available via Swift Package Manager and Cocoapods. Support for Carthage will come later.
+
+## Swift Package Manager
 
 To use it in your project, just add it as a dependency in your `Package.swift` file and run `swift package update`.
 
@@ -75,10 +77,85 @@ let package = Package(
 )
 ```
 
+## Cocoapods
+
+While ParserCombinator is in active development and not officially released, you need to specify the Git-repository directly in your Podfile:
+
+```Ruby
+target 'MyAwesomeApp' do
+  use_frameworks!
+
+  pod 'ParserCombinator', :git => 'https://github.com/BenchR267/ParserCombinator', :branch => 'master'
+end
+
+```
+
 # Requirements
 
 * Swift 4.0
     * ParserCombinator is written in Swift 4.0 development snapshots and will be available when Swift 4.0 is released
+
+# Example
+
+Here is a quick example of a calculator written with ParserCombinator:
+
+![](Doc/img/computer.gif)
+
+Sourcecode:
+
+```Swift
+internal func string(_ s: String) -> Parser<String, String> {
+    return Parser { str in
+        guard str.hasPrefix(s) else {
+            return .fail(TestError(1))
+        }
+        return .success(result: s, rest: String(str.dropFirst(s.count)))
+    }
+}
+
+internal let digit = Parser<String, Int> { str in
+    guard let first = str.characters.first, let number = Int(String(first)) else {
+        return .fail(TestError(1))
+    }
+    return .success(result: number, rest: String(str.dropFirst()))
+}
+
+internal let number = digit.rep.map { Double(Int($0.map(String.init).joined()) ?? 0) }
+
+class Computer {
+    static var factor: Parser<String, Double> {
+        return number | char("(") >~ expr <~ char(")")
+    }
+    
+    static var term: Parser<String, Double> {
+        return (factor ~ ((string("*") ~ factor) | (string("/") ~ factor)).rep) ^^ {
+            number, list in
+            
+            return list.reduce(number) { x, op in
+                switch op.0 {
+                case "*": return x * op.1
+                case "/": return x / op.1
+                default: fatalError("Expected * or / but got \(op.0)")
+                }
+            }
+        }
+    }
+    
+    static var expr: Parser<String, Double> {
+        return (term ~ ((string("+") ~ term) | (string("-") ~ term)).rep) ^^ {
+            number, list in
+            
+            return list.reduce(number) { x, op in
+                switch op.0 {
+                case "+": return x + op.1
+                case "-": return x - op.1
+                default: fatalError("Expected + or - but got \(op.0)")
+                }
+            }
+        }
+    }
+}
+```
 
 # Author
 
