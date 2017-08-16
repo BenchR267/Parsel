@@ -76,7 +76,6 @@ class RegexParserTests: XCTestCase {
                 ("test_parse_number", test_parse_number),
                 ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
                 ("test_parse_fail", test_parse_fail),
-                ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex),
                 ("test_error", test_error),
             ]
         }
