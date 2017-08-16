@@ -69,16 +69,14 @@ class RegexParserTests: XCTestCase {
 
 #if os(Linux)
     extension RegexParserTests {
-        static var allTests : [(String, (RegexParserTests) -> () throws -> Void)] {
-            return [
-                ("test_init", test_init),
-                ("test_init_stringLiteral", test_init_stringLiteral),
-                ("test_parse_number", test_parse_number),
-                ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
-                ("test_parse_fail", test_parse_fail),
-//                ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex), // deactivated until https://bugs.swift.org/browse/SR-5477 is fixed
-                ("test_error", test_error),
-            ]
-        }
+        static var allTests = [
+            ("test_init", test_init),
+            ("test_init_stringLiteral", test_init_stringLiteral),
+            ("test_parse_number", test_parse_number),
+            ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
+            ("test_parse_fail", test_parse_fail),
+//            ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex), // deactivated until https://bugs.swift.org/browse/SR-5477 is fixed
+            ("test_error", test_error),
+        ]
     }
 #endif

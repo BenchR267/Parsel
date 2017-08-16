@@ -83,13 +83,11 @@ class Operators_SequentialTests: XCTestCase {
 
 #if os(Linux)
     extension Operators_SequentialTests {
-        static var allTests : [(String, (Operators_SequentialTests) -> () throws -> Void)] {
-            return [
-                ("test_sequential_success", test_sequential_success),
-                ("test_sequential_fail", test_sequential_fail),
-                ("test_sequential", test_sequential),
-                ("test_sequential_otherWayAround", test_sequential_otherWayAround),
-            ]
-        }
+        static var allTests = [
+            ("test_sequential_success", test_sequential_success),
+            ("test_sequential_fail", test_sequential_fail),
+            ("test_sequential", test_sequential),
+            ("test_sequential_otherWayAround", test_sequential_otherWayAround),
+        ]
     }
 #endif

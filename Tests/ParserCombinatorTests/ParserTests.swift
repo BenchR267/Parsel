@@ -89,16 +89,14 @@ class ParserTests: XCTestCase {
 
 #if os(Linux)
     extension ParserTests {
-        static var allTests : [(String, (ParserTests) -> () throws -> Void)] {
-            return [
-                ("test_unit", test_unit),
-                ("test_init_producesSuccess", test_init_producesSuccess),
-                ("test_init_producesFail", test_init_producesFail),
-                ("test_init", test_init),
-                ("test_flatMap_success", test_flatMap_success),
-                ("test_flatMap_fail", test_flatMap_fail),
-                ("test_map", test_map),
-            ]
-        }
+        static var allTests = [
+            ("test_unit", test_unit),
+            ("test_init_producesSuccess", test_init_producesSuccess),
+            ("test_init_producesFail", test_init_producesFail),
+            ("test_init", test_init),
+            ("test_flatMap_success", test_flatMap_success),
+            ("test_flatMap_fail", test_flatMap_fail),
+            ("test_map", test_map),
+        ]
     }
 #endif

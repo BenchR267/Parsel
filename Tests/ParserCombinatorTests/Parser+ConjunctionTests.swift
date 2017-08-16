@@ -93,17 +93,15 @@ class Parser_ConjunctionTests: XCTestCase {
 
 #if os(Linux)
     extension Parser_ConjunctionTests {
-        static var allTests : [(String, (Parser_ConjunctionTests) -> () throws -> Void)] {
-            return [
-                ("test_or", test_or),
-                ("test_then", test_then),
-                ("test_fallback", test_fallback),
-                ("test_fallback_parser", test_fallback_parser),
-                ("test_rep", test_rep),
-                ("test_rep2", test_rep2),
-                ("test_rep_fail", test_rep_fail),
-                ("test_typeErased", test_typeErased),
-            ]
-        }
+        static var allTests = [
+            ("test_or", test_or),
+            ("test_then", test_then),
+            ("test_fallback", test_fallback),
+            ("test_fallback_parser", test_fallback_parser),
+            ("test_rep", test_rep),
+            ("test_rep2", test_rep2),
+            ("test_rep_fail", test_rep_fail),
+            ("test_typeErased", test_typeErased),
+        ]
     }
 #endif
