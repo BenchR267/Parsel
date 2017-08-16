@@ -65,7 +65,7 @@ extension Parser {
     }
     
     /// Erases the type of the parser
-    var typeErased: Parser<T, ()> {
+    public var typeErased: Parser<T, ()> {
         return Parser<T, ()> { tokens in
             switch self.parse(tokens) {
             case let .success(_, rest):
@@ -78,7 +78,7 @@ extension Parser {
     }
     
     /// Parses self repetitive and returns results in array
-    var rep: Parser<T, [R]> {
+    public var rep: Parser<T, [R]> {
         return Parser<T, [R]> { tokens in
             var results = [R]()
             var totalRest = tokens
@@ -88,10 +88,7 @@ extension Parser {
                 case let .success(result, rest):
                     results.append(result)
                     totalRest = rest
-                case let .fail(err):
-                    if results.isEmpty {
-                        return .fail(err)
-                    }
+                case .fail(_):
                     break loop
                 }
             }
@@ -104,7 +101,7 @@ extension Parser {
     ///
     /// - Parameter sep: the parser that separates self.parse operations.
     /// - Returns: a parser that parses self separated by sep as long as it doesn't fail.
-    func rep<B>(sep: Parser<T, B>) -> Parser<T, [R]> {
+    public func rep<B>(sep: Parser<T, B>) -> Parser<T, [R]> {
         return Parser<T, [R]> { tokens in
             var results = [R]()
             var totalRest = tokens
@@ -123,8 +120,8 @@ extension Parser {
                         results.append(singleResult)
                         totalRest = singleRest
                         break loop
-                    case let .fail(err):
-                        return .fail(err)
+                    case .fail(_):
+                        return .success(result: results, rest: totalRest)
                     }
                 }
                 

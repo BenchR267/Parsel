@@ -63,10 +63,10 @@ class Parser_ConjunctionTests: XCTestCase {
     
     func test_rep_fail() throws {
         let res1 = digit.rep.parse("a")
-        XCTAssertTrue(res1.isFailed())
+        XCTAssertEqual(try res1.unwrap(), [])
         
         let res2 = digit.rep(sep: char("+")).parse("-5+4")
-        XCTAssertTrue(res2.isFailed())
+        XCTAssertEqual(try res2.unwrap(), [])
     }
     
     func test_typeErased() throws {
