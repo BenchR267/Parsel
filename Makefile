@@ -15,3 +15,8 @@ generate:
 
 test:
 	swift build && swift test
+
+travis:
+	make initial
+	pod lib lint ParserCombinator.podspec
+	make test
