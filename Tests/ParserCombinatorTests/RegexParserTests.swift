@@ -8,7 +8,6 @@
 import XCTest
 @testable import ParserCombinator
 
-#if os(OSX)
 class RegexParserTests: XCTestCase {
 
     func test_init() throws {
@@ -17,7 +16,7 @@ class RegexParserTests: XCTestCase {
         XCTAssertEqual(parser.regex, regex)
     }
 
-    func test_init_throw() {
+    func test_init_throw() throws {
         XCTAssertThrowsError(try RegexParser("\\"))
     }
     
@@ -60,4 +59,19 @@ class RegexParserTests: XCTestCase {
     }
     
 }
+
+#if os(Linux)
+    extension RegexParserTests {
+        static var allTests : [(String, (RegexParserTests) -> () throws -> Void)] {
+            return [
+                ("test_init", test_init),
+                ("test_init_throw", test_init_throw),
+                ("test_init_stringLiteral", test_init_stringLiteral),
+                ("test_parse_number", test_parse_number),
+                ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
+                ("test_parse_fail", test_parse_fail),
+                ("test_error", test_error),
+            ]
+        }
+    }
 #endif
