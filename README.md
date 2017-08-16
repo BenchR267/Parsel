@@ -72,7 +72,7 @@ import PackageDescription
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .Package(url: "https://github.com/BenchR267/ParserCombinator", majorVersion: 0)
+    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "0.1.0")
   ]
 )
 ```
