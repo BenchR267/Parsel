@@ -9,6 +9,7 @@ public enum Errors: UInt64, ParseError {
     
     case unwrappedFailedResult = 0
     case errorFromSuccessfulResult = 1
+    case conjunctionOfEmptyCollection = 2
     
     public var code: UInt64 {
         return self.rawValue
