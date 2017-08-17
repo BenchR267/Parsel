@@ -64,11 +64,9 @@ class ParserCombinator_TestCase: XCTestCase {
 
 #if os(Linux)
     extension ParserCombinator_TestCase {
-        static var allTests : [(String, (ParserCombinator_TestCase) -> () throws -> Void)] {
-            return [
-                ("test_addition", test_addition),
-                ("test_readme_code", test_readme_code)
-            ]
-        }
+        static var allTests = [
+            ("test_addition", test_addition),
+            ("test_readme_code", test_readme_code)
+        ]
     }
 #endif

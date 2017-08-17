@@ -23,6 +23,28 @@ extension Parser {
         }
     }
     
+    /// Concatenates the results of self + all given parsers.
+    /// The first of all that succeedes will be used.
+    ///
+    /// - Parameter others: a sequence of parsers to use as fallback
+    /// - Returns: a parser that tries all concatenates parsers in order
+    public func or<S: Sequence>(_ others: @escaping @autoclosure () -> S) -> Parser<T, R> where S.Element == Parser<T, R> {
+        return Parser { tokens in
+            let result = self.parse(tokens)
+            switch result {
+            case let .success(result, rest):
+                return .success(result: result, rest: rest)
+            case let .fail(err):
+                for parser in others() {
+                    if case let .success(result, rest) = parser.parse(tokens) {
+                        return .success(result: result, rest: rest)
+                    }
+                }
+                return .fail(err) // the first error will be returned
+            }
+        }
+    }
+    
     /// Discards the result of self and executes other afterwards on the rest.
     ///
     /// - Parameter other: another parser to execute afterwards

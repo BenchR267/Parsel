@@ -8,17 +8,12 @@
 import XCTest
 @testable import ParserCombinator
 
-#if os(OSX)
 class RegexParserTests: XCTestCase {
 
-    func test_init() throws {
+    func test_init() {
         let regex = "a"
-        let parser = try RegexParser(regex)
+        let parser = RegexParser(regex)
         XCTAssertEqual(parser.regex, regex)
-    }
-
-    func test_init_throw() {
-        XCTAssertThrowsError(try RegexParser("\\"))
     }
     
     func test_init_stringLiteral() {
@@ -27,7 +22,7 @@ class RegexParserTests: XCTestCase {
     }
     
     func test_parse_number() throws {
-        let parser = try RegexParser("[0-9]+") ^^ { r in Int(r)! }
+        let parser = RegexParser("[0-9]+") ^^ { r in Int(r)! }
         let result = parser.parse("1234")
         XCTAssertEqual(try result.unwrap(), 1234)
         
@@ -35,7 +30,7 @@ class RegexParserTests: XCTestCase {
     }
     
     func test_parse_lowercasedLetters() throws {
-        let parser = try RegexParser("[a-z]+")
+        let parser = RegexParser("[a-z]+")
         let result = parser.parse("abc")
         XCTAssertEqual(try result.unwrap(), "abc")
         
@@ -54,10 +49,34 @@ class RegexParserTests: XCTestCase {
         XCTAssertEqual(input, "a")
     }
     
+    func test_parse_fail_invalidRegex() throws {
+        let parser = "[".r
+        let result = parser.parse("abc")
+        let error = try result.error() as! RegexParser.Error
+        guard case let .invalidRegex(regex) = error else {
+            return XCTFail("Entered invalid regex, but got \(error) instead.")
+        }
+        XCTAssertEqual(regex, "[")
+    }
+    
     func test_error() {
         XCTAssertEqual(RegexParser.Error.doesNotMatch(pattern: "", input: "").code, 0)
         XCTAssertEqual(RegexParser.Error.unimplemented.code, 1)
+        XCTAssertEqual(RegexParser.Error.invalidRegex("").code, 2)
     }
     
 }
+
+#if os(Linux)
+    extension RegexParserTests {
+        static var allTests = [
+            ("test_init", test_init),
+            ("test_init_stringLiteral", test_init_stringLiteral),
+            ("test_parse_number", test_parse_number),
+            ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
+            ("test_parse_fail", test_parse_fail),
+//            ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex), // deactivated until https://bugs.swift.org/browse/SR-5477 is fixed
+            ("test_error", test_error),
+        ]
+    }
 #endif

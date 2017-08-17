@@ -68,13 +68,14 @@ public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Par
     
     if i > 1 {
         string += """
-        public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: Parser<Token, (\(chars))>) -> Parser<Token, (\(next), \(chars))> {
-            return Parser { tokens in
-                return lhs.parse(tokens).flatMap(f: { (r, rest) in
-                    return rhs.parse(rest).map(f: { result, t in (r, \(results)) })
-                })
-            }
-        }
+        
+public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: Parser<Token, (\(chars))>) -> Parser<Token, (\(next), \(chars))> {
+    return Parser { tokens in
+        return lhs.parse(tokens).flatMap(f: { (r, rest) in
+            return rhs.parse(rest).map(f: { result, t in (r, \(results)) })
+        })
+    }
+}
 """
     }
 }

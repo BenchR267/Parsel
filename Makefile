@@ -5,16 +5,18 @@ SEQUENTIAL_OPERATORS_PATH = ./Scripts/SequentialOperators.swift
 SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/ParserCombinator/Operators+Sequential.swift
 
 initial:
-	make generate
 	swift package update
-	swift package generate-xcodeproj
+	make generate
 
 clean:
 	rm -rf .build
+	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
+	rm -rf ParserCombinator.xcodeproj
 
 generate:
 	chmod +x $(SEQUENTIAL_OPERATORS_PATH)
 	swift $(SEQUENTIAL_OPERATORS_PATH) $(NUMBER_OF_SEQUENTIAL_OPERATORS) > $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
+	swift package generate-xcodeproj --enable-code-coverage
 
 test:
 	swift build

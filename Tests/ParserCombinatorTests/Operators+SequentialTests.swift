@@ -55,16 +55,39 @@ class Operators_SequentialTests: XCTestCase {
         XCTAssertEqual(try p4.parse("aaaa").unwrap(), "aaaa")
     }
     
+    func test_sequential_otherWayAround() throws {
+        let p = char("a") ~ (char("b") ~ (char("c") ~ (char("d") ~ (char("e") ~ (char("f") ~ (char("g") ~ (char("h") ~ (char("i") ~ (char("j") ~ char("k"))))))))))
+        let input = "abcdefghijk"
+        let res = p.parse(input)
+        let value = try res.unwrap()
+        XCTAssertEqual(value.0, "a")
+        XCTAssertEqual(value.1, "b")
+        XCTAssertEqual(value.2, "c")
+        XCTAssertEqual(value.3, "d")
+        XCTAssertEqual(value.4, "e")
+        XCTAssertEqual(value.5, "f")
+        XCTAssertEqual(value.6, "g")
+        XCTAssertEqual(value.7, "h")
+        XCTAssertEqual(value.8, "i")
+        XCTAssertEqual(value.9, "j")
+        XCTAssertEqual(value.10, "k")
+        
+        let p2 = char("a") <~ (char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k"))
+        XCTAssertEqual(try p2.parse(input).unwrap(), "a")
+        
+        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) >~ char("k")
+        XCTAssertEqual(try p3.parse(input).unwrap(), "k")
+    }
+    
 }
 
 #if os(Linux)
     extension Operators_SequentialTests {
-        static var allTests : [(String, (Operators_SequentialTests) -> () throws -> Void)] {
-            return [
-                ("test_sequential_success", test_sequential_success),
-                ("test_sequential_fail", test_sequential_fail),
-                ("test_sequential", test_sequential),
-            ]
-        }
+        static var allTests = [
+            ("test_sequential_success", test_sequential_success),
+            ("test_sequential_fail", test_sequential_fail),
+            ("test_sequential", test_sequential),
+            ("test_sequential_otherWayAround", test_sequential_otherWayAround),
+        ]
     }
 #endif

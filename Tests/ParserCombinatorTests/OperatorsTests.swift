@@ -72,15 +72,13 @@ class OperatorsTests: XCTestCase {
 
 #if os(Linux)
     extension OperatorsTests {
-        static var allTests : [(String, (OperatorsTests) -> () throws -> Void)] {
-            return [
-                ("test_or_operator_first", test_or_operator_first),
-                ("test_or_operator_second", test_or_operator_second),
-                ("test_then_operator", test_then_operator),
-                ("test_map_operator", test_map_operator),
-                ("test_map_operator_precendence", test_map_operator_precendence),
-                ("test_fallback_operator", test_fallback_operator)
-            ]
-        }
+        static var allTests = [
+            ("test_or_operator_first", test_or_operator_first),
+            ("test_or_operator_second", test_or_operator_second),
+            ("test_then_operator", test_then_operator),
+            ("test_map_operator", test_map_operator),
+            ("test_map_operator_precendence", test_map_operator_precendence),
+            ("test_fallback_operator", test_fallback_operator)
+        ]
     }
 #endif
