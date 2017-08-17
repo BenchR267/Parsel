@@ -26,9 +26,9 @@ extension Parser {
     /// Concatenates the results of self + all given parsers.
     /// The first of all that succeedes will be used.
     ///
-    /// - Parameter others: an array of parsers to use as fallback
+    /// - Parameter others: a sequence of parsers to use as fallback
     /// - Returns: a parser that tries all concatenates parsers in order
-    public func or(_ others: @escaping @autoclosure () -> [Parser<T, R>]) -> Parser<T, R> {
+    public func or<S: Sequence>(_ others: @escaping @autoclosure () -> S) -> Parser<T, R> where S.Element == Parser<T, R> {
         return Parser { tokens in
             let result = self.parse(tokens)
             switch result {

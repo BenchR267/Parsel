@@ -22,7 +22,7 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertTrue(res2 == .success(result: "a", rest: "b"))
     }
     
-    func test_or_array() throws {
+    func test_or_sequence() throws {
         let zero = string("0")
         let oneToNine = (1...9).map({string(String($0))})
         let p = zero.or(oneToNine) ^^ { Int($0)! }
@@ -110,7 +110,7 @@ class Parser_ConjunctionTests: XCTestCase {
     extension Parser_ConjunctionTests {
         static var allTests = [
             ("test_or", test_or),
-            ("test_or_array", test_or_array),
+            ("test_or_sequence", test_or_sequence),
             ("test_then", test_then),
             ("test_fallback", test_fallback),
             ("test_fallback_parser", test_fallback_parser),
