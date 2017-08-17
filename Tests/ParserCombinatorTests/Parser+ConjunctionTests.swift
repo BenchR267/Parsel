@@ -21,6 +21,21 @@ class Parser_ConjunctionTests: XCTestCase {
         let res2 = p2.parse("ab")
         XCTAssertTrue(res2 == .success(result: "a", rest: "b"))
     }
+    
+    func test_or_array() throws {
+        let zero = string("0")
+        let oneToNine = (1...9).map({string(String($0))})
+        let p = zero.or(oneToNine) ^^ { Int($0)! }
+        
+        let res1 = p.parse("0")
+        XCTAssertEqual(try res1.unwrap(), 0)
+        
+        let res2 = p.parse("3")
+        XCTAssertEqual(try res2.unwrap(), 3)
+        
+        let res3 = p.parse("a")
+        XCTAssertTrue(res3.isFailed())
+    }
 
     func test_then() {
         let p = char("a").then(char("b"))
@@ -95,6 +110,7 @@ class Parser_ConjunctionTests: XCTestCase {
     extension Parser_ConjunctionTests {
         static var allTests = [
             ("test_or", test_or),
+            ("test_or_array", test_or_array),
             ("test_then", test_then),
             ("test_fallback", test_fallback),
             ("test_fallback_parser", test_fallback_parser),
