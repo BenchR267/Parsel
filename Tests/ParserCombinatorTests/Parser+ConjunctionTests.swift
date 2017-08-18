@@ -36,6 +36,32 @@ class Parser_ConjunctionTests: XCTestCase {
         let res3 = p.parse("a")
         XCTAssertTrue(res3.isFailed())
     }
+    
+    func test_or_static_collection() throws {
+        let zeroToNine = (0...9).map({string(String($0))})
+        let p = Parser.or(zeroToNine) ^^ { Int($0)! }
+        
+        let res1 = p.parse("0")
+        XCTAssertEqual(try res1.unwrap(), 0)
+        
+        let res2 = p.parse("3")
+        XCTAssertEqual(try res2.unwrap(), 3)
+        
+        let res3 = p.parse("a")
+        XCTAssertTrue(res3.isFailed())
+    }
+    
+    func test_or_static_collection_fail() throws {
+        let p = Parser.or([Parser<String, String>]())
+        
+        let res = p.parse("a")
+        
+        XCTAssertTrue(res.isFailed())
+        
+        let err = try res.error() as! Errors
+        
+        XCTAssertEqual(err, .conjunctionOfEmptyCollection)
+    }
 
     func test_then() {
         let p = char("a").then(char("b"))

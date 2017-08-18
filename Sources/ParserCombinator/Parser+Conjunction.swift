@@ -45,6 +45,18 @@ extension Parser {
         }
     }
     
+    /// Concatenates the results of given parsers with an or operation.
+    /// Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!
+    ///
+    /// - Parameter parsers: the parsers to combine
+    /// - Returns: a parser that tries to parse the given parsers in order until one succeeds
+    public static func or<C: Collection>(_ parsers: C) -> Parser<T, R> where C.Element == Parser<T, R> {
+        guard let first = parsers.first else {
+            return Parser { _ in .fail(Errors.conjunctionOfEmptyCollection) }
+        }
+        return first.or(parsers.dropFirst())
+    }
+    
     /// Discards the result of self and executes other afterwards on the rest.
     ///
     /// - Parameter other: another parser to execute afterwards
