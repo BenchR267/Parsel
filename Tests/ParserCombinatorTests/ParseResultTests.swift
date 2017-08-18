@@ -86,6 +86,22 @@ class ParseResultTests: XCTestCase {
         XCTAssertThrowsError(try res2.unwrap())
     }
     
+    func test_unwrap_fallback() {
+        let res1 = ParseResult.success(result: 1, rest: "123")
+        XCTAssertEqual(res1.unwrap(fallback: 2), 1)
+        
+        let res2 = ParseResult<String, Int>.fail(TestError(1))
+        XCTAssertEqual(res2.unwrap(fallback: 2), 2)
+    }
+    
+    func test_unwrap_fallback_operator() {
+        let res1 = ParseResult.success(result: 1, rest: "123")
+        XCTAssertEqual(res1 ?? 2, 1)
+        
+        let res2 = ParseResult<String, Int>.fail(TestError(1))
+        XCTAssertEqual(res2 ?? 2, 2)
+    }
+    
     func test_rest() {
         let res1 = ParseResult.success(result: 1, rest: "123")
         XCTAssertEqual(try res1.rest(), "123")
@@ -140,6 +156,7 @@ class ParseResultTests: XCTestCase {
             ("test_flatMap_fail", test_flatMap_fail),
             ("test_equal", test_equal),
             ("test_unwrap", test_unwrap),
+            ("test_unwrap_fallback", test_unwrap_fallback),
             ("test_rest", test_rest),
             ("test_rest", test_rest),
             ("test_error", test_error),
