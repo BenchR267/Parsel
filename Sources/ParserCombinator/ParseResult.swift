@@ -31,6 +31,12 @@ public protocol ParseResultProtocol {
     func error() throws -> ParseError
 }
 
+/// The result of a parse process.
+///
+/// - success: the parse was successful.
+///     - contains the result and the rest of the token sequence that is unprocessed
+/// - fail: the parse was not successful.
+///     - contains the ParseError
 public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequence {
     
     case success(result: Result, rest: Token)
@@ -93,6 +99,14 @@ public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequenc
         }
     }
     
+    /// Unwraps the wrapped result and uses fallback if .fail(_)
+    ///
+    /// - Parameter fallback: the fallback value to use if parse failed
+    /// - Returns: either the parse result or fallback
+    public func unwrap(fallback: Result) -> Result {
+        return (try? unwrap()) ?? fallback
+    }
+    
     /// Returns the rest of the parsing operation in success case.
     ///
     /// - Returns: the rest if successful
@@ -122,8 +136,8 @@ public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequenc
 }
 
 // Hack until extensions with protocol conformance with constraints are possible
-public func ==<T, R>(rhs: ParseResult<T, R>, lhs: ParseResult<T, R>) -> Bool where T: Equatable, R: Equatable {
-    switch (rhs, lhs) {
+public func ==<T, R>(lhs: ParseResult<T, R>, rhs: ParseResult<T, R>) -> Bool where T: Equatable, R: Equatable {
+    switch (lhs, rhs) {
     case let (.success(res1, rest1), .success(res2, rest2)):
         return res1 == res2 && rest1 == rest2
     case let (.fail(err1), .fail(err2)):
@@ -131,4 +145,14 @@ public func ==<T, R>(rhs: ParseResult<T, R>, lhs: ParseResult<T, R>) -> Bool whe
     default:
         return false
     }
+}
+
+/// Convenience operator overload to use fallback on fail.
+///
+/// - Parameters:
+///   - lhs: the parse result that could fail
+///   - rhs: the fallback that should be used in that case
+/// - Returns: either the unwrapped result or fallback
+public func ??<T, R>(lhs: ParseResult<T, R>, rhs: R) -> R {
+    return lhs.unwrap(fallback: rhs)
 }
