@@ -27,18 +27,18 @@ func characters(count: Int) -> String {
 var string = """
 // This file is generated via scripts/SequentialOperators.swift. Do not modify manually!
 
-public func >~<Token, A, B>(lhs: Parser<Token, A>, rhs: Parser<Token, B>) -> Parser<Token, B> {
+public func >~<Token, A, B>(lhs: Parser<Token, A>, rhs: @escaping @autoclosure () -> Parser<Token, B>) -> Parser<Token, B> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap(f: { _, rest in
-            return rhs.parse(rest)
+            return rhs().parse(rest)
         })
     }
 }
 
-public func <~<Token, A, B>(lhs: Parser<Token, B>, rhs: Parser<Token, A>) -> Parser<Token, B> {
+public func <~<Token, A, B>(lhs: Parser<Token, B>, rhs: @escaping @autoclosure () -> Parser<Token, A>) -> Parser<Token, B> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap(f: { result, rest in
-            return rhs.parse(rest).map(f: { _, _ in
+            return rhs().parse(rest).map(f: { _, _ in
                 return result
             })
         })
@@ -56,10 +56,10 @@ for i in (1...count) {
     string += """
 
 
-public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Parser<Token, \(next)>) -> Parser<Token, (\(chars), \(next))> {
+public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: @escaping @autoclosure () -> Parser<Token, \(next)>) -> Parser<Token, (\(chars), \(next))> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs.parse(rest).map(f: { r, t in (\(results), r) })
+            return rhs().parse(rest).map(f: { r, t in (\(results), r) })
         })
     }
 }
@@ -69,10 +69,10 @@ public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: Par
     if i > 1 {
         string += """
         
-public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: Parser<Token, (\(chars))>) -> Parser<Token, (\(next), \(chars))> {
+public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: @escaping @autoclosure () -> Parser<Token, (\(chars))>) -> Parser<Token, (\(next), \(chars))> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs.parse(rest).map(f: { result, t in (r, \(results)) })
+            return rhs().parse(rest).map(f: { result, t in (r, \(results)) })
         })
     }
 }

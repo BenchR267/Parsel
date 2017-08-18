@@ -103,8 +103,8 @@ public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequenc
     ///
     /// - Parameter fallback: the fallback value to use if parse failed
     /// - Returns: either the parse result or fallback
-    public func unwrap(fallback: Result) -> Result {
-        return (try? unwrap()) ?? fallback
+    public func unwrap(fallback: @autoclosure () -> Result) -> Result {
+        return (try? unwrap()) ?? fallback()
     }
     
     /// Returns the rest of the parsing operation in success case.
@@ -153,6 +153,6 @@ public func ==<T, R>(lhs: ParseResult<T, R>, rhs: ParseResult<T, R>) -> Bool whe
 ///   - lhs: the parse result that could fail
 ///   - rhs: the fallback that should be used in that case
 /// - Returns: either the unwrapped result or fallback
-public func ??<T, R>(lhs: ParseResult<T, R>, rhs: R) -> R {
-    return lhs.unwrap(fallback: rhs)
+public func ??<T, R>(lhs: ParseResult<T, R>, rhs: @autoclosure () -> R) -> R {
+    return lhs.unwrap(fallback: rhs())
 }
