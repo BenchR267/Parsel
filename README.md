@@ -97,65 +97,9 @@ end
 
 # Example
 
-Here is a quick example of a calculator written with ParserCombinator:
+[Calculator](https://github.com/BenchR267/Calculator) is a small example I wrote with ParserCombinator.
 
-![](Doc/img/computer.gif)
-
-Sourcecode:
-
-```Swift
-internal func string(_ s: String) -> Parser<String, String> {
-    return Parser { str in
-        guard str.hasPrefix(s) else {
-            return .fail(TestError(1))
-        }
-        return .success(result: s, rest: String(str.dropFirst(s.count)))
-    }
-}
-
-internal let digit = Parser<String, Int> { str in
-    guard let first = str.characters.first, let number = Int(String(first)) else {
-        return .fail(TestError(1))
-    }
-    return .success(result: number, rest: String(str.dropFirst()))
-}
-
-internal let number = digit.rep.map { Double(Int($0.map(String.init).joined()) ?? 0) }
-
-class Computer {
-    static var factor: Parser<String, Double> {
-        return number | char("(") >~ expr <~ char(")")
-    }
-    
-    static var term: Parser<String, Double> {
-        return (factor ~ ((string("*") ~ factor) | (string("/") ~ factor)).rep) ^^ {
-            number, list in
-            
-            return list.reduce(number) { x, op in
-                switch op.0 {
-                case "*": return x * op.1
-                case "/": return x / op.1
-                default: fatalError("Expected * or / but got \(op.0)")
-                }
-            }
-        }
-    }
-    
-    static var expr: Parser<String, Double> {
-        return (term ~ ((string("+") ~ term) | (string("-") ~ term)).rep) ^^ {
-            number, list in
-            
-            return list.reduce(number) { x, op in
-                switch op.0 {
-                case "+": return x + op.1
-                case "-": return x - op.1
-                default: fatalError("Expected + or - but got \(op.0)")
-                }
-            }
-        }
-    }
-}
-```
+![Calculator_GIF](https://github.com/BenchR267/Calculator/raw/master/doc/img/Calculator.gif)
 
 # Author
 
