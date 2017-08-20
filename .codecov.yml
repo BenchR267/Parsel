@@ -1,2 +1,3 @@
-ignore:
-  - "**/*_TestCase.swift"
+coverage:
+  ignore:
+   - "Tests/*"
