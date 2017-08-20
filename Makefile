@@ -4,7 +4,7 @@
 
 NUMBER_OF_SEQUENTIAL_OPERATORS = 10
 SEQUENTIAL_OPERATORS_PATH = ./Scripts/SequentialOperators.swift
-SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/ParserCombinator/Core/Operators+Sequential.swift
+SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/Parsel/Core/Operators+Sequential.swift
 
 initial:
 	swift package update
@@ -12,17 +12,20 @@ initial:
 
 clean:
 	rm -rf .build
+	rm -rf build
+	rm -f Parsel.json
 	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
-	rm -rf ParserCombinator.xcodeproj
+	rm -rf Parsel.xcodeproj
 
 docs:
-	sourcekitten doc --spm-module ParserCombinator > ParserCombinator.json
+	swift build
+	sourcekitten doc --spm-module Parsel > Parsel.json
 	jazzy \
 	  --clean \
 	  --author "Benjamin Herzog" \
 	  --author_url "https://blog.benchr.de" \
-	  --github_url "https://github.com/BenchR267/ParserCombinator" \
-	  --sourcekitten-sourcefile ParserCombinator.json
+	  --github_url "https://github.com/BenchR267/Parsel" \
+	  --sourcekitten-sourcefile Parsel.json \
 	  --output docs/
 
 generate:
@@ -36,10 +39,10 @@ release:
 	path=`swift build --configuration release --show-bin-path`
 
 test:
-	swift build --build-tests
-	swift test --skip-build
+	swift build
+	swift test
 
 travis:
 	make initial
-	pod lib lint SwiftParserCombinator.podspec
+	pod lib lint Parsel.podspec
 	make test
