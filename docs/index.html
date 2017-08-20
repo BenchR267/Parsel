@@ -180,28 +180,15 @@
         <section>
           <section class="section">
             
-            <p><img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift">
-<a href=""><img src="https://img.shields.io/github/tag/BenchR267/ParserCombinator.svg" alt="GitHub tag"></a>
-<a href="https://travis-ci.org/BenchR267/ParserCombinator"><img src="https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master" alt="Build Status"></a>
-<a href=""><img src="https://img.shields.io/cocoapods/v/ParserCombinator.svg" alt="CocoaPods"></a>
-<a href="http://mit-license.org"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat" alt="License"></a></p>
-<h1 id='parsercombinator' class='heading'>ParserCombinator</h1>
+            <h1 id='parsercombinator' class='heading'>ParserCombinator</h1>
+
+<p><img src="https://img.shields.io/badge/Swift-4.0-orange.svg" alt="Swift"> <a href="https://travis-ci.org/BenchR267/ParserCombinator"><img src="https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master" alt="Build Status"></a> <a href=""><img src="https://img.shields.io/cocoapods/v/ParserCombinator.svg" alt="CocoaPods"></a> <a href="http://mit-license.org"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat" alt="License"></a> <a href="https://benchr267.github.io/ParserCombinator/"><img src="https://img.shields.io/badge/documentation-available-brightgreen.svg" alt=""></a></p>
 
 <p>ParserCombinator is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:</p>
-<pre class="highlight plaintext"><code>let digit = Parser&lt;String, Int&gt; { str in
-    guard let first = str.characters.first, let number = Int(String(first)) else {
-        return .fail(TestError(1))
-    }
-    return .success(result: number, rest: String(str.dropFirst()))
-}
+<pre class="highlight plaintext"><code>let digit: Parser&lt;String, Int&gt; = …
 
 func char(_ c: Character) -&gt; Parser&lt;String, Character&gt; {
-    return Parser { str in
-        guard let first = str.characters.first, first == c else {
-            return .fail(TestError(1))
-        }
-        return .success(result: first, rest: String(str.dropFirst()))
-    }
+    return …
 }
 
 let addition = (digit ~ char("+") ~ digit).map { a, _, b in
@@ -245,7 +232,7 @@ try! result.unwrap() // Int: 579
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "0.1.0")
+    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "1.0.0")
   ]
 )
 </code></pre>
@@ -255,9 +242,8 @@ let package = Package(
 <pre class="highlight plaintext"><code>target 'MyAwesomeApp' do
   use_frameworks!
 
-  pod 'ParserCombinator', :git =&gt; 'https://github.com/BenchR267/ParserCombinator', :branch =&gt; 'master'
+  pod 'ParserCombinator'
 end
-
 </code></pre>
 <h1 id='requirements' class='heading'>Requirements</h1>
 
@@ -273,6 +259,9 @@ end
 <p><a href="https://github.com/BenchR267/Calculator">Calculator</a> is a small example I wrote with ParserCombinator.</p>
 
 <p><img src="https://github.com/BenchR267/Calculator/raw/master/doc/img/Calculator.gif" alt="Calculator_GIF"></p>
+<h1 id='documentation' class='heading'>Documentation</h1>
+
+<p>Check out the documentation on the <a href="https://benchr267.github.io/ParserCombinator/">Github page</a>.</p>
 <h1 id='author' class='heading'>Author</h1>
 
 <ul>
@@ -280,7 +269,7 @@ end
 </ul>
 <h1 id='license' class='heading'>License</h1>
 
-<p>ParserCombinator is under MIT license. See the LICENSE file for more info. However, it is still in active development and I would not recommend to use it in production projects.</p>
+<p>ParserCombinator is under MIT license. See the LICENSE file for more info.</p>
 
           </section>
         </section>
