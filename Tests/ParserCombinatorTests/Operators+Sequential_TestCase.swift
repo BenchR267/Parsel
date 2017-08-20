@@ -37,7 +37,7 @@ class Operators_SequentialTests: XCTestCase {
     func test_sequential_fail() throws {
         let p = char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k")
         let res = p.parse("a")
-        XCTAssertTrue(try res.error().code == 1)
+        XCTAssertEqual(try res.error() as! TestError, TestError(1))
     }
     
     func test_sequential() {

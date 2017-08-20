@@ -5,31 +5,7 @@
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
-public protocol ParseError: Swift.Error {
-    var code: UInt64 { get }
-}
-
-public extension ParseError where Self: RawRepresentable, Self.RawValue == UInt64 {
-    var code: UInt64 {
-        return self.rawValue
-    }
-}
-
-/// ParseErrors are the same if their code matches
-public func ==(lhs: ParseError, rhs: ParseError) -> Bool {
-    return lhs.code == rhs.code
-}
-
-public protocol ParseResultProtocol {
-    associatedtype Token
-    associatedtype Result
-    
-    func isSuccess() -> Bool
-    func isFailed() -> Bool
-    func unwrap() throws -> Result
-    func rest() throws -> Token
-    func error() throws -> ParseError
-}
+public protocol ParseError: Swift.Error { }
 
 /// The result of a parse process.
 ///
@@ -37,7 +13,7 @@ public protocol ParseResultProtocol {
 ///     - contains the result and the rest of the token sequence that is unprocessed
 /// - fail: the parse was not successful.
 ///     - contains the ParseError
-public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequence {
+public enum ParseResult<Token, Result> where Token: Sequence {
     
     case success(result: Result, rest: Token)
     
@@ -135,13 +111,21 @@ public enum ParseResult<Token, Result>: ParseResultProtocol where Token: Sequenc
     
 }
 
-// Hack until extensions with protocol conformance with constraints are possible
+/// Compares two ParseResults for equality
+/// *NOTE*: two failed ParseResults are always equal!
+///
+/// Hack until extensions with protocol conformance with constraints are possible
+///
+/// - Parameters:
+///   - lhs: first argument
+///   - rhs: second argument
+/// - Returns: true if both are equal
 public func ==<T, R>(lhs: ParseResult<T, R>, rhs: ParseResult<T, R>) -> Bool where T: Equatable, R: Equatable {
     switch (lhs, rhs) {
     case let (.success(res1, rest1), .success(res2, rest2)):
         return res1 == res2 && rest1 == rest2
-    case let (.fail(err1), .fail(err2)):
-        return err1 == err2
+    case (.fail(_), .fail(_)):
+        return true
     default:
         return false
     }

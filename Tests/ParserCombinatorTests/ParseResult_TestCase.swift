@@ -71,7 +71,7 @@ class ParseResultTests: XCTestCase {
         
         res1 = .fail(TestError(1))
         res2 = .fail(TestError(2))
-        XCTAssertFalse(res1 == res2)
+        XCTAssertTrue(res1 == res2, "If parsing failed - the result should evaluate to the same")
         
         res1 = .success(result: 1, rest: "2")
         res2 = .fail(TestError(1))
@@ -115,7 +115,7 @@ class ParseResultTests: XCTestCase {
         XCTAssertThrowsError(try res1.error())
         
         let res2 = ParseResult<String, Int>.fail(TestError(1))
-        XCTAssertTrue(try res2.error() == TestError(1))
+        XCTAssertEqual(try res2.error() as! TestError, TestError(1))
     }
     
     func test_isSuccess() {
@@ -134,17 +134,6 @@ class ParseResultTests: XCTestCase {
         XCTAssertTrue(res2.isFailed())
     }
     
-    func test_RawRepresentable_conformance() {
-        enum SomeParseError: UInt64, ParseError {
-            case someError
-            case someOtherError
-            case yetAnotherOne
-        }
-        
-        XCTAssertEqual(SomeParseError.someError.code, 0)
-        XCTAssertEqual(SomeParseError.someOtherError.code, 1)
-        XCTAssertEqual(SomeParseError.yetAnotherOne.code, 2)
-    }
 }
 
 #if os(Linux)
@@ -162,7 +151,6 @@ class ParseResultTests: XCTestCase {
             ("test_error", test_error),
             ("test_isSuccess", test_isSuccess),
             ("test_isFail", test_isFail),
-            ("test_RawRepresentable_conformance", test_RawRepresentable_conformance),
         ]
     }
 #endif

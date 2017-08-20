@@ -59,12 +59,6 @@ class RegexParserTests: XCTestCase {
         XCTAssertEqual(regex, "[")
     }
     
-    func test_error() {
-        XCTAssertEqual(RegexParser.Error.doesNotMatch(pattern: "", input: "").code, 0)
-        XCTAssertEqual(RegexParser.Error.unimplemented.code, 1)
-        XCTAssertEqual(RegexParser.Error.invalidRegex("").code, 2)
-    }
-    
 }
 
 #if os(Linux)
@@ -76,7 +70,6 @@ class RegexParserTests: XCTestCase {
             ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
             ("test_parse_fail", test_parse_fail),
             ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex),
-            ("test_error", test_error),
         ]
     }
 #endif
