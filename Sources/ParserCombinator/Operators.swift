@@ -30,6 +30,7 @@ infix operator >~: ParserConjunctionGroup
 infix operator <~: ParserConjuctionRightGroup
 
 infix operator ^^: ParserMapPrecedenceGroup
+infix operator ^^^: ParserMapPrecedenceGroup
 
 // MARK: - Implementation
 
@@ -61,6 +62,17 @@ public func >><T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Par
 /// - Returns: a parser that calls lhs and transforms its result with rhs afterwards.
 public func ^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping (R) -> B) -> Parser<T, B> {
     return lhs.map(rhs)
+}
+
+/// Convenience operator for map operation. Replaces the result of lhs with rhs
+/// if lhs succeeded.
+///
+/// - Parameters:
+///   - lhs: the parser which result should be replaced
+///   - rhs: the value that should replace the result of lhs
+/// - Returns: a parser that parses lhs and replaces its result with rhs if it succeeds
+public func ^^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> B) -> Parser<T, B> {
+    return lhs.map({ _ in rhs() })
 }
 
 /// Convenience operator for atLeastOnce operation.

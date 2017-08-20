@@ -58,6 +58,13 @@ class OperatorsTests: XCTestCase {
         XCTAssertTrue(res == .success(result: 98, rest: "c"))
     }
     
+    func test_map_operator_value() {
+        let p = string("abc") ^^^ "cba"
+        
+        let res = p.parse("abcde")
+        XCTAssertTrue(res == .success(result: "cba", rest: "de"))
+    }
+    
     func test_atLeastOnce_operator() {
         let p1 = char("a")+
         
@@ -103,6 +110,7 @@ class OperatorsTests: XCTestCase {
             ("test_then_operator", test_then_operator),
             ("test_map_operator", test_map_operator),
             ("test_map_operator_precendence", test_map_operator_precendence),
+            ("test_map_operator_value", test_map_operator_value),
             ("test_atLeastOnce_operator", test_atLeastOnce_operator),
             ("test_rep_operator", test_rep_operator),
             ("test_rep_fail_operator", test_rep_fail_operator),
