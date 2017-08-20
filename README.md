@@ -1,26 +1,13 @@
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg)
-[![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator)
-[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org)
-
-# ParserCombinator
+# ParserCombinator 
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator) [![CocoaPods](https://img.shields.io/cocoapods/v/ParserCombinator.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/ParserCombinator/)
 
 ParserCombinator is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:
 
 ```Swift
-let digit = Parser<String, Int> { str in
-    guard let first = str.characters.first, let number = Int(String(first)) else {
-        return .fail(TestError(1))
-    }
-    return .success(result: number, rest: String(str.dropFirst()))
-}
+let digit: Parser<String, Int> = …
 
 func char(_ c: Character) -> Parser<String, Character> {
-    return Parser { str in
-        guard let first = str.characters.first, first == c else {
-            return .fail(TestError(1))
-        }
-        return .success(result: first, rest: String(str.dropFirst()))
-    }
+    return …
 }
 
 let addition = (digit ~ char("+") ~ digit).map { a, _, b in
@@ -72,7 +59,7 @@ import PackageDescription
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "0.1.0")
+    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "1.0.0")
   ]
 )
 ```
@@ -85,9 +72,8 @@ While ParserCombinator is in active development and not officially released, you
 target 'MyAwesomeApp' do
   use_frameworks!
 
-  pod 'ParserCombinator', :git => 'https://github.com/BenchR267/ParserCombinator', :branch => 'master'
+  pod 'ParserCombinator'
 end
-
 ```
 
 # Requirements
@@ -101,10 +87,14 @@ end
 
 ![Calculator_GIF](https://github.com/BenchR267/Calculator/raw/master/doc/img/Calculator.gif)
 
+# Documentation
+
+Check out the documentation on the [Github page](https://benchr267.github.io/ParserCombinator/).
+
 # Author
 
 * [@benchr](https://twitter.com/benchr), mail@benchr.de
 
 # License
 
-ParserCombinator is under MIT license. See the LICENSE file for more info. However, it is still in active development and I would not recommend to use it in production projects.
+ParserCombinator is under MIT license. See the LICENSE file for more info.

@@ -7,24 +7,24 @@
 
 import Foundation
 
+/// A parser that parses Strings with a given regular expression
 public final class RegexParser: Parser<String, String> {
     
+    /// Possible errors while using RegexParser
+    ///
+    /// - doesNotMatch: the pattern does not match the input (at the beginning)
+    /// - invalidRegex: the given regular expression is invalid
     public enum Error: ParseError {
         case doesNotMatch(pattern: String, input: String)
-        case unimplemented
         case invalidRegex(String)
-        
-        public var code: UInt64 {
-            switch self {
-            case .doesNotMatch(_): return 0
-            case .unimplemented: return 1
-            case .invalidRegex(_): return 2
-            }
-        }
     }
     
+    /// The pattern of the parser
     public let regex: String
     
+    /// Initialize a new RegexParser with a regular expression
+    ///
+    /// - Parameter regex: the regular expression to use
     public init(_ regex: String) {
         self.regex = regex
         let nsRegex = try? NSRegularExpression(pattern: regex, options: [])
@@ -47,6 +47,7 @@ public final class RegexParser: Parser<String, String> {
 
 extension String {
     
+    /// Returns a RegexParser with self as the pattern
     public var r: RegexParser {
         return RegexParser(self)
     }
