@@ -1,2 +1,2 @@
 ignore:
-  - "Tests/ParselTests"
+  - "**/*_TestCase.swift"
