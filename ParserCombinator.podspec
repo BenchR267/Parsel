@@ -15,7 +15,7 @@ Parsing is a very common task, it does not always mean to parse source code or J
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Sources/ParserCombinator/*.swift'
+  s.source_files = 'Sources/ParserCombinator/**/*.swift'
 
   s.prepare_command = <<-CMD
     make initial
