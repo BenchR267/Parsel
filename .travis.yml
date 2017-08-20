@@ -1,10 +1,27 @@
-sudo: required
-dist: trusty
-install: gem install cocoapods
-before_install:
-  - wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
-  - wget https://swift.org/builds/swift-4.0-branch/ubuntu1404/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04.tar.gz
-  - tar xzf swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04.tar.gz
-  - export PATH=${PWD}/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04/usr/bin:"${PATH}"
-script:
-  - make travis
+branches:
+  only:
+    - master
+    - develop
+    - /^hotfix.*$/
+    - /^feature.*$/
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      install: gem install cocoapods
+      before_install:
+        - wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import -
+        - wget https://swift.org/builds/swift-4.0-branch/ubuntu1404/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04.tar.gz
+        - tar xzf swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04.tar.gz
+        - export PATH=${PWD}/swift-4.0-DEVELOPMENT-SNAPSHOT-2017-08-15-a-ubuntu14.04/usr/bin:"${PATH}"
+      script:
+        - make travis
+    - os: osx
+      osx_image: xcode9
+      sudo: required
+      script:
+        - xcodebuild -version
+        - xcodebuild -scheme Parsel -sdk macosx -enableCodeCoverage YES -skipUnavailableActions build test
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
