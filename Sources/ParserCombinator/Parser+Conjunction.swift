@@ -28,6 +28,12 @@ extension Parser {
         }
     }
     
+    /// Tries to parse self and consumes it if success.
+    /// If self fails, the parser still succeeds and consumes nothing.
+    public var optional: Parser<T, R?> {
+        return (self ^^ { $0 }) | Parser.unit(nil)
+    }
+    
     // MARK: - OR
     
     /// Concatenates the results of both parsers.

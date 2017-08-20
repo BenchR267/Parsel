@@ -153,6 +153,19 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertTrue(res3.isFailed())
         XCTAssertTrue(res4.isFailed())
     }
+    
+    func test_optional() throws {
+        let p1 = char("a").optional
+        
+        let res1 = p1.parse("abc")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "bc")
+        
+        let res2 = p1.parse("cba")
+        XCTAssertTrue(res2.isSuccess())
+        XCTAssertEqual(try res2.unwrap(), nil)
+        XCTAssertEqual(try res2.rest(), "cba")
+    }
 }
 
 #if os(Linux)
