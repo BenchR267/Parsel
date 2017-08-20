@@ -17,6 +17,12 @@ clean:
 	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 	rm -rf Parsel.xcodeproj
 
+coverage:
+	make initial
+	xcodebuild -version
+	xcodebuild -scheme Parsel-Package -sdk macosx -skipUnavailableActions build test
+	curl -s https://codecov.io/bash | bash
+
 docs:
 	swift build
 	sourcekitten doc --spm-module Parsel > Parsel.json

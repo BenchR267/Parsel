@@ -20,8 +20,7 @@ matrix:
     - os: osx
       osx_image: xcode9
       sudo: required
+      env: CODECOV_TOKEN=$CODECOV_TOKEN
       script:
-        - xcodebuild -version
-        - xcodebuild -scheme Parsel -sdk macosx -enableCodeCoverage YES -skipUnavailableActions build test
-      after_success:
-        - bash <(curl -s https://codecov.io/bash)
+        - make initial
+        - make coverage
