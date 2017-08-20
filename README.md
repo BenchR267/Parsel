@@ -1,20 +1,23 @@
 # Parsel 
 ![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
-Parsel is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:
+Parsel is a library for writing parser combinators in Swift. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String:
 
 ```Swift
-let digit: Parser<String, Int> = …
-
-func char(_ c: Character) -> Parser<String, Character> {
-    return …
+let digit = Parser<String, Int> { input in
+    guard let first = input.first, let number = Int(String(first)) else {
+        return .fail(/* some pre-defined error */)
+    }
+    return .success(result: number, rest: String(input.dropFirst()))
 }
+```
 
-let addition = (digit ~ char("+") ~ digit).map { a, _, b in
-    return a + b
-}
+We can now simply extend this to create a parser that parses an addition of two digits from a string:
+
+```Swift
+let addition = (digit ~ "\\+".r ~ digit).map { a, _, b in a + b } // "\\+".r is a RegexParser that parses the `+` sign
+
 let result = addition.parse("2+4")
-
 try! result.unwrap() // Int: 6
 ```
 
@@ -51,7 +54,7 @@ Parsel is currently available via Swift Package Manager and Cocoapods. Support f
 
 ## Swift Package Manager
 
-To use it in your project, just add it as a dependency in your `Package.swift` file and run `swift package update`.
+To use Parsel in your project, just add it as a dependency in your `Package.swift` file and run `swift package update`.
 
 ```Swift
 import PackageDescription
@@ -66,7 +69,7 @@ let package = Package(
 
 ## Cocoapods
 
-To use Parsel with Cocoapods, just add this entry to your Podfile and run `pod install`: (due to naming collisions, the pods name is different)
+To use Parsel with Cocoapods, just add this entry to your Podfile and run `pod install`:
 
 ```Ruby
 target 'MyAwesomeApp' do

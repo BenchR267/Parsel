@@ -9,7 +9,7 @@ import XCTest
 @testable import Parsel
 
 class Parsel_TestCase: XCTestCase {
-
+    
     func test_addition() {
         
         let addition = (number ~ char("+") ~ number).map { a, _, b in
@@ -22,11 +22,11 @@ class Parsel_TestCase: XCTestCase {
     
     func test_readme_code() throws {
         
-        let digit = Parser<String, Int> { str in
-            guard let first = str.characters.first, let number = Int(String(first)) else {
-                return .fail(TestError(1))
+        let digit = Parser<String, Int> { input in
+            guard let first = input.first, let number = Int(String(first)) else {
+                return .fail(/* some pre-defined error */TestError(1))
             }
-            return .success(result: number, rest: String(str.dropFirst()))
+            return .success(result: number, rest: String(input.dropFirst()))
         }
         
         func char(_ c: Character) -> Parser<String, Character> {
@@ -38,9 +38,7 @@ class Parsel_TestCase: XCTestCase {
             }
         }
         
-        let addition1 = (digit ~ char("+") ~ digit).map { a, _, b in
-            return a + b
-        }
+        let addition1 = (digit ~ "\\+".r ~ digit).map { a, _, b in a + b } // "+".r is a RegexParser that parses the `+` sign
         let result1 = addition1.parse("2+4")
         
         XCTAssertEqual(try result1.unwrap(), 6)
@@ -59,7 +57,7 @@ class Parsel_TestCase: XCTestCase {
         let result2 = addition2.parse("123+456")
         XCTAssertEqual(try result2.unwrap(), 579)
     }
-
+    
 }
 
 #if os(Linux)
