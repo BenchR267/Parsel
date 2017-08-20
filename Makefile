@@ -2,7 +2,7 @@
 
 NUMBER_OF_SEQUENTIAL_OPERATORS = 10
 SEQUENTIAL_OPERATORS_PATH = ./Scripts/SequentialOperators.swift
-SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/ParserCombinator/Operators+Sequential.swift
+SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/ParserCombinator/Core/Operators+Sequential.swift
 
 initial:
 	swift package update
