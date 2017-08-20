@@ -6,3 +6,6 @@
 # jazzy
 /build
 /Parsel.json
+
+# codecov
+*.coverage.txt
