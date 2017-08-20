@@ -91,6 +91,29 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertThrowsError(try p.parse("c").unwrap())
     }
     
+    func test_atLeastOnce() throws {
+        let p1 = char("a").atLeastOnce
+        
+        let res1 = p1.parse("aaaa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
+        
+        let res2 = p1.parse("b")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_atLeastOnce_sep() throws {
+        let p1 = char("a").atLeastOnce(sep: string(", "))
+        
+        let res1 = p1.parse("a, a, a, a")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
+        
+        let res2 = p1.parse("aaaa")
+        XCTAssertEqual(try res2.unwrap(), ["a"])
+        
+        let res3 = p1.parse("b")
+        XCTAssertTrue(res3.isFailed())
+    }
+    
     func test_rep() throws {
         let list = char("[") >~ digit.rep(sep: string(", ")) <~ char("]")
         let result = list.parse("[1, 2, 3, 4]")
@@ -140,6 +163,8 @@ class Parser_ConjunctionTests: XCTestCase {
             ("test_then", test_then),
             ("test_fallback", test_fallback),
             ("test_fallback_parser", test_fallback_parser),
+            ("test_atLeastOnce", test_atLeastOnce),
+            ("test_atLeastOnce_sep", test_atLeastOnce_sep),
             ("test_rep", test_rep),
             ("test_rep2", test_rep2),
             ("test_rep_fail", test_rep_fail),

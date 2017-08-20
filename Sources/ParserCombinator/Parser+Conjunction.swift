@@ -6,6 +6,29 @@
 //
 
 extension Parser {
+
+    /// Discards the result of self and executes other afterwards on the rest.
+    ///
+    /// - Parameter other: another parser to execute afterwards
+    /// - Returns: a parser that first parses self and then other on the rest of self
+    public func then<B>(_ other: @escaping @autoclosure () -> Parser<T, B>) -> Parser<T, B> {
+        return self.flatMap { _ in other() }
+    }
+
+    /// Erases the type of the parser
+    public var typeErased: Parser<T, ()> {
+        return Parser<T, ()> { tokens in
+            switch self.parse(tokens) {
+            case let .success(_, rest):
+                return .success(result: (), rest: rest)
+            case let .fail(err):
+                return .fail(err)
+            }
+            
+        }
+    }
+    
+    // MARK: - OR
     
     /// Concatenates the results of both parsers.
     ///
@@ -57,13 +80,7 @@ extension Parser {
         return first.or(parsers.dropFirst())
     }
     
-    /// Discards the result of self and executes other afterwards on the rest.
-    ///
-    /// - Parameter other: another parser to execute afterwards
-    /// - Returns: a parser that first parses self and then other on the rest of self
-    public func then<B>(_ other: @escaping @autoclosure () -> Parser<T, B>) -> Parser<T, B> {
-        return self.flatMap { _ in other() }
-    }
+    // MARK: - fallback
     
     /// Provides a fallback if the parser fails.
     ///
@@ -98,17 +115,24 @@ extension Parser {
         }
     }
     
-    /// Erases the type of the parser
-    public var typeErased: Parser<T, ()> {
-        return Parser<T, ()> { tokens in
-            switch self.parse(tokens) {
-            case let .success(_, rest):
-                return .success(result: (), rest: rest)
-            case let .fail(err):
-                return .fail(err)
+    // MARK: - repetition
+    
+    /// Parses self repetitive with at least one success
+    public var atLeastOnce: Parser<T, [R]> {
+        return (self ~ self.rep) ^^ { [$0] + $1 }
+    }
+    
+    /// Parses self repetitive with separator with at least one success
+    ///
+    /// - Parameter sep: separator to use between parse operations
+    /// - Returns: a parser that parses self repetitive with separator with at least one success.
+    public func atLeastOnce<B>(sep: Parser<T, B>) -> Parser<T, [R]> {
+        return self.rep(sep: sep).flatMap({ res in
+            if res.isEmpty {
+                return Parser.fail(Errors.expectedAtLeastOnce)
             }
-            
-        }
+            return Parser.unit(res)
+        })
     }
     
     /// Parses self repetitive and returns results in array

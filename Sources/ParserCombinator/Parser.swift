@@ -31,6 +31,12 @@ open class Parser<T, R> where T: Sequence {
         }
     }
     
+    public static func fail<B>(_ err: ParseError) -> Parser<T, B> {
+        return Parser<T, B> { t in
+            return .fail(err)
+        }
+    }
+    
     /// Produce a new parser for every succeeded parsing process.
     ///
     /// - Parameter f: function that maps a parse result to a new parser
