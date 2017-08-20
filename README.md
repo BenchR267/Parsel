@@ -1,5 +1,5 @@
 # ParserCombinator 
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator) [![CocoaPods](https://img.shields.io/cocoapods/v/ParserCombinator.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/ParserCombinator/)
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator) [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftParserCombinator.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/ParserCombinator/)
 
 ParserCombinator is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:
 
