@@ -12,8 +12,8 @@ class ParserTests: XCTestCase {
     
     // MARK: - Tests
     
-    func test_unit() {
-        let p = Parser<String, Int>.unit(3)
+    func test_just() {
+        let p = Parser<String, Int>.just(3)
         
         let res1 = p.parse("123")
         XCTAssertTrue(res1 == .success(result: 3, rest: "123"))
@@ -24,7 +24,7 @@ class ParserTests: XCTestCase {
     }
     
     func test_init_producesSuccess() {
-        let p = Parser<String, Int>.unit(1)
+        let p = Parser<String, Int>.just(1)
         
         let res = p.parse("123")
         XCTAssertTrue(res == .success(result: 1, rest: "123"))
@@ -90,7 +90,7 @@ class ParserTests: XCTestCase {
 #if os(Linux)
     extension ParserTests {
         static var allTests = [
-            ("test_unit", test_unit),
+            ("test_just", test_just),
             ("test_init_producesSuccess", test_init_producesSuccess),
             ("test_init_producesFail", test_init_producesFail),
             ("test_init", test_init),

@@ -21,16 +21,20 @@ open class Parser<T, R> where T: Sequence {
         self.parse = parse
     }
     
-    /// unit creates a parser that parses the given value as success
+    /// just creates a parser that parses the given value as success
     ///
     /// - Parameter value: the result to produce
     /// - Returns: a parser that just produces this value as success
-    public static func unit<B>(_ value: B) -> Parser<T, B> {
+    public static func just<B>(_ value: B) -> Parser<T, B> {
         return Parser<T, B> { t in
             return .success(result: value, rest: t)
         }
     }
     
+    /// fail creates a parser that fails with the given error.
+    ///
+    /// - Parameter err: the error that should be used to fail
+    /// - Returns: a parser that always fails
     public static func fail<B>(_ err: ParseError) -> Parser<T, B> {
         return Parser<T, B> { t in
             return .fail(err)
@@ -55,7 +59,7 @@ open class Parser<T, R> where T: Sequence {
     /// - Returns: a new parser that calls f on each successful parsing operation
     public func map<B>(_ f: @escaping (R) -> B) -> Parser<T, B> {
         return self.flatMap { res -> Parser<T, B> in
-            return Parser.unit(f(res))
+            return Parser.just(f(res))
         }
     }
     

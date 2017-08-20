@@ -31,7 +31,7 @@ extension Parser {
     /// Tries to parse self and consumes it if success.
     /// If self fails, the parser still succeeds and consumes nothing.
     public var optional: Parser<T, R?> {
-        return (self ^^ { $0 }) | Parser.unit(nil)
+        return (self ^^ { $0 }) | Parser.just(nil)
     }
     
     // MARK: - OR
@@ -137,7 +137,7 @@ extension Parser {
             if res.isEmpty {
                 return Parser.fail(Errors.expectedAtLeastOnce)
             }
-            return Parser.unit(res)
+            return Parser.just(res)
         })
     }
     
