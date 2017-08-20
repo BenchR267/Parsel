@@ -1,5 +1,5 @@
 # Parsel 
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![Codecov branch](https://img.shields.io/codecov/c/github/BenchR267/Parsel/master.svg)](https://codecov.io/github/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
 Parsel is a library for writing parser combinators in Swift. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String:
 
