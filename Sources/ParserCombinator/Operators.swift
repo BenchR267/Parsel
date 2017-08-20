@@ -22,6 +22,9 @@ precedencegroup ParserMapPrecedenceGroup {
     higherThan: ParserConjunctionGroup
 }
 
+postfix operator +
+postfix operator *
+
 infix operator ~: ParserConjunctionGroup
 infix operator >~: ParserConjunctionGroup
 infix operator <~: ParserConjuctionRightGroup
@@ -58,6 +61,22 @@ public func >><T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Par
 /// - Returns: a parser that calls lhs and transforms its result with rhs afterwards.
 public func ^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping (R) -> B) -> Parser<T, B> {
     return lhs.map(rhs)
+}
+
+/// Convenience operator for atLeastOnce operation.
+///
+/// - Parameter lhs: the parser that should succeed at least once.
+/// - Returns: a parser that parses lhs repetitive with at least one successful result.
+public postfix func +<T, R>(lhs: Parser<T, R>) -> Parser<T, [R]> {
+    return lhs.atLeastOnce
+}
+
+/// Convenience oeprator for rep operation. (repetitive parsing.
+///
+/// - Parameter lhs: the parser that should be parses repetitive
+/// - Returns: a parser that parses lhs as long as it succeeds
+public postfix func *<T, R>(lhs: Parser<T, R>) -> Parser<T, [R]> {
+    return lhs.rep
 }
 
 /// Convenience operator for fallback operation.

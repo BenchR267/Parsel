@@ -58,6 +58,31 @@ class OperatorsTests: XCTestCase {
         XCTAssertTrue(res == .success(result: 98, rest: "c"))
     }
     
+    func test_atLeastOnce_operator() {
+        let p1 = char("a")+
+        
+        let res1 = p1.parse("aaaa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
+        
+        let res2 = p1.parse("b")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_rep_operator() throws {
+        let p = char("a")*
+        
+        let res1 = p.parse("aa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a"])
+        
+        let res2 = p.parse("bb")
+        XCTAssertEqual(try res2.unwrap(), [])
+    }
+    
+    func test_rep_fail_operator() throws {
+        let res1 = digit.rep.parse("a")
+        XCTAssertEqual(try res1.unwrap(), [])
+    }
+    
     func test_fallback_operator() {
         let p1 = char("a") ?? "b"
         let p2 = char("a").fallback("b")
@@ -78,6 +103,9 @@ class OperatorsTests: XCTestCase {
             ("test_then_operator", test_then_operator),
             ("test_map_operator", test_map_operator),
             ("test_map_operator_precendence", test_map_operator_precendence),
+            ("test_atLeastOnce_operator", test_atLeastOnce_operator),
+            ("test_rep_operator", test_rep_operator),
+            ("test_rep_fail_operator", test_rep_fail_operator),
             ("test_fallback_operator", test_fallback_operator)
         ]
     }
