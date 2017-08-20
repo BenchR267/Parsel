@@ -182,6 +182,7 @@ class Parser_ConjunctionTests: XCTestCase {
             ("test_rep2", test_rep2),
             ("test_rep_fail", test_rep_fail),
             ("test_typeErased", test_typeErased),
+            ("test_optional", test_optional),
         ]
     }
 #endif
