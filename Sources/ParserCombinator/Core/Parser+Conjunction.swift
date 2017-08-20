@@ -141,6 +141,17 @@ extension Parser {
         })
     }
     
+    /// Parses self repetitive with at least `count` succeeds.
+    ///
+    /// - Parameter count: the number of required succeeds
+    /// - Returns: a parser that parses self repetitive with at least `count` succeeds
+    public func atLeast(count: Int) -> Parser<T, [R]> {
+        if count <= 1 {
+            return self ^^ { [$0] }
+        }
+        return (self ~ self.atLeast(count: count - 1)) ^^ { [$0] + $1 }
+    }
+    
     /// Parses self repetitive and returns results in array
     public var rep: Parser<T, [R]> {
         return Parser<T, [R]> { tokens in

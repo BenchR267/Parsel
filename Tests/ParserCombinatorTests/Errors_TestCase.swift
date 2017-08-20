@@ -23,6 +23,13 @@ class ErrorsTests: XCTestCase {
         err = .expectedAtLeastOnce
         XCTAssertEqual(err.code, 3)
     }
+    
+    func test_genericError() {
+        let message = "a message"
+        let err1 = GenericParseError(message: message)
+        XCTAssertEqual(err1.message, message)
+        XCTAssertEqual(err1.code, UInt64(abs(message.hashValue)))
+    }
 
 }
 
@@ -30,6 +37,7 @@ class ErrorsTests: XCTestCase {
     extension ErrorsTests {
         static var allTests = [
             ("test_code", test_code),
+            ("test_genericError", test_genericError),
         ]
     }
 #endif

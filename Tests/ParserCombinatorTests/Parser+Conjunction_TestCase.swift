@@ -101,6 +101,16 @@ class Parser_ConjunctionTests: XCTestCase {
         XCTAssertTrue(res2.isFailed())
     }
     
+    func test_atLeast_count() throws {
+        let p1 = char("a").atLeast(count: 4)
+        
+        let res1 = p1.parse("aaaa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
+        
+        let res2 = p1.parse("aaa")
+        XCTAssertEqual(try res2.error() as! TestError, TestError(1))
+    }
+    
     func test_atLeastOnce_sep() throws {
         let p1 = char("a").atLeastOnce(sep: string(", "))
         
