@@ -16,6 +16,12 @@ class ErrorsTests: XCTestCase {
         
         err = .errorFromSuccessfulResult
         XCTAssertEqual(err.code, 1)
+        
+        err = .conjunctionOfEmptyCollection
+        XCTAssertEqual(err.code, 2)
+        
+        err = .expectedAtLeastOnce
+        XCTAssertEqual(err.code, 3)
     }
 
 }

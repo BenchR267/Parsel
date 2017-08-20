@@ -63,4 +63,16 @@ open class Parser<T, R> where T: Sequence {
         }
     }
     
+    /// Filter the result of the parser. Could be used for validation.
+    ///
+    /// - Parameter f: a function that produces an error if the given result should fail instead
+    /// - Returns: a parser that parses self and re-evaluates the result with f
+    public func filter(_ f: @escaping (R) -> ParseError?) -> Parser<T, R> {
+        return self.flatMap({ res in
+            if let err = f(res) {
+                return Parser.fail(err)
+            }
+            return Parser.just(res)
+        })
+    }
 }

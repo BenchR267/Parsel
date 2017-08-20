@@ -85,6 +85,25 @@ class ParserTests: XCTestCase {
         XCTAssertTrue(res2 == .fail(TestError(1)))
     }
     
+    func test_filter() throws {
+        struct TempError: ParseError {
+            let code: UInt64 = 1
+        }
+        
+        let p = char("a").rep.filter { res in
+            if res.count < 3 {
+                return TempError()
+            }
+            return nil
+        }
+        
+        let res1 = p.parse("aaa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a"])
+        
+        let res2 = p.parse("aa")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
 }
 
 #if os(Linux)
@@ -97,6 +116,7 @@ class ParserTests: XCTestCase {
             ("test_flatMap_success", test_flatMap_success),
             ("test_flatMap_fail", test_flatMap_fail),
             ("test_map", test_map),
+            ("test_filter", test_filter),
         ]
     }
 #endif
