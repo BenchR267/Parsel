@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class Operators_SequentialTests: XCTestCase {
+class Operators_Sequential_TestCase: XCTestCase {
     
     func test_sequential_success() throws {
         let p = char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k")
@@ -82,7 +82,7 @@ class Operators_SequentialTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension Operators_SequentialTests {
+    extension Operators_Sequential_TestCase {
         static var allTests = [
             ("test_sequential_success", test_sequential_success),
             ("test_sequential_fail", test_sequential_fail),

@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class ParserTests: XCTestCase {
+class Parser_TestCase: XCTestCase {
     
     // MARK: - Tests
     
@@ -119,7 +119,7 @@ class ParserTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension ParserTests {
+    extension Parser_TestCase {
         static var allTests = [
             ("test_just", test_just),
             ("test_init_producesSuccess", test_init_producesSuccess),

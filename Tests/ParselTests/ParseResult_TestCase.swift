@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class ParseResultTests: XCTestCase {
+class ParseResult_TestCase: XCTestCase {
     
     func test_map_success() {
         let res = ParseResult.success(result: 1, rest: "+2")
@@ -137,7 +137,7 @@ class ParseResultTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension ParseResultTests {
+    extension ParseResult_TestCase {
         static var allTests = [
             ("test_map_success", test_map_success),
             ("test_map_fail", test_map_fail),

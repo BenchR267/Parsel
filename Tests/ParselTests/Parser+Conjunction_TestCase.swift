@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class Parser_ConjunctionTests: XCTestCase {
+class Parser_Conjunction_TestCase: XCTestCase {
 
     func test_or() {
         let p1 = char("a").or(char("b"))
@@ -179,7 +179,7 @@ class Parser_ConjunctionTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension Parser_ConjunctionTests {
+    extension Parser_Conjunction_TestCase {
         static var allTests = [
             ("test_or", test_or),
             ("test_or_sequence", test_or_sequence),

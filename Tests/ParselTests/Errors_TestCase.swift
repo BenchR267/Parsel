@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class ErrorsTests: XCTestCase {
+class Errors_TestCase: XCTestCase {
     
     func test_genericError() {
         let message = "a message"
@@ -19,7 +19,7 @@ class ErrorsTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension ErrorsTests {
+    extension Errors_TestCase {
         static var allTests = [
             ("test_genericError", test_genericError),
         ]

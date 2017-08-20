@@ -10,13 +10,13 @@ import XCTest
 
 #if os(Linux)
 XCTMain([
-	testCase(ParserCombinator_TestCase.allTests),
-    testCase(ErrorsTests.allTests),
-    testCase(OperatorsTests.allTests),
-    testCase(ParseResultTests.allTests),
-    testCase(Parser_ConjunctionTests.allTests),
-    testCase(Operators_SequentialTests.allTests),
-    testCase(ParserTests.allTests),
-    testCase(RegexParserTests.allTests),
+	testCase(Parsel_TestCase.allTests),
+    testCase(Errors_TestCase.allTests),
+    testCase(Operators_TestCase.allTests),
+    testCase(ParseResult_TestCase.allTests),
+    testCase(Parser_Conjunction_TestCase.allTests),
+    testCase(Operators_Sequential_TestCase.allTests),
+    testCase(Parser_TestCase.allTests),
+    testCase(RegexParser_TestCase.allTests),
     ])
 #endif

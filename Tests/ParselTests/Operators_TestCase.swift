@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class OperatorsTests: XCTestCase {
+class Operators_TestCase: XCTestCase {
 
     func test_or_operator_first() {
         let p1 = char("a") | char("b")
@@ -103,7 +103,7 @@ class OperatorsTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension OperatorsTests {
+    extension Operators_TestCase {
         static var allTests = [
             ("test_or_operator_first", test_or_operator_first),
             ("test_or_operator_second", test_or_operator_second),

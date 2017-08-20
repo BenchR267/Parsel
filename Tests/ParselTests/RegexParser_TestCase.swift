@@ -8,7 +8,7 @@
 import XCTest
 @testable import Parsel
 
-class RegexParserTests: XCTestCase {
+class RegexParser_TestCase: XCTestCase {
 
     func test_init() {
         let regex = "a"
@@ -62,7 +62,7 @@ class RegexParserTests: XCTestCase {
 }
 
 #if os(Linux)
-    extension RegexParserTests {
+    extension RegexParser_TestCase {
         static var allTests = [
             ("test_init", test_init),
             ("test_init_stringLiteral", test_init_stringLiteral),
