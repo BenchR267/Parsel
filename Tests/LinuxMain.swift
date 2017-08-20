@@ -1,12 +1,12 @@
 //
 //  LinuxMain.swift
-//  ParserCombinatorTests
+//  ParselTests
 //
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
 import XCTest
-@testable import ParserCombinatorTests
+@testable import ParselTests
 
 #if os(Linux)
 XCTMain([
