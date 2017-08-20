@@ -41,5 +41,5 @@ test:
 
 travis:
 	make initial
-	pod lib lint ParserCombinator.podspec
+	pod lib lint SwiftParserCombinator.podspec
 	make test
