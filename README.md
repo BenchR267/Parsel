@@ -1,7 +1,7 @@
-# ParserCombinator 
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/ParserCombinator.svg?branch=master)](https://travis-ci.org/BenchR267/ParserCombinator) [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftParserCombinator.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/ParserCombinator/)
+# Parsel 
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
-ParserCombinator is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:
+Parsel is a WIP library that enables you to write parsers for a given grammer as easy as possible. Take for example a parser that is able to parse addition of two numbers:
 
 ```Swift
 let digit: Parser<String, Int> = …
@@ -47,7 +47,7 @@ Since parser combinators are very high level, they abstract the whole process of
 
 # Installation
 
-ParserCombinator is currently available via Swift Package Manager and Cocoapods. Support for Carthage will come later.
+Parsel is currently available via Swift Package Manager and Cocoapods. Support for Carthage will come later.
 
 ## Swift Package Manager
 
@@ -59,37 +59,37 @@ import PackageDescription
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .package(url: "https://github.com/BenchR267/ParserCombinator", from: "1.0.0")
+    .package(url: "https://github.com/BenchR267/Parsel", from: "1.0.0")
   ]
 )
 ```
 
 ## Cocoapods
 
-To use ParserCombinator with Cocoapods, just add this entry to your Podfile and run `pod install`: (due to naming collisions, the pods name is different)
+To use Parsel with Cocoapods, just add this entry to your Podfile and run `pod install`: (due to naming collisions, the pods name is different)
 
 ```Ruby
 target 'MyAwesomeApp' do
   use_frameworks!
 
-  pod 'SwiftParserCombinator'
+  pod 'Parsel'
 end
 ```
 
 # Requirements
 
 * Swift 4.0
-    * ParserCombinator is written in Swift 4.0 development snapshots and will be available when Swift 4.0 is released
+    * Parsel is written in Swift 4.0 development snapshots and will be available when Swift 4.0 is released
 
 # Example
 
-[Calculator](https://github.com/BenchR267/Calculator) is a small example I wrote with ParserCombinator.
+[Calculator](https://github.com/BenchR267/Calculator) is a small example I wrote with Parsel.
 
 ![Calculator_GIF](https://github.com/BenchR267/Calculator/raw/master/doc/img/Calculator.gif)
 
 # Documentation
 
-Check out the documentation on the [Github page](https://benchr267.github.io/ParserCombinator/).
+Check out the documentation on the [Github page](https://benchr267.github.io/Parsel/).
 
 # Author
 
@@ -97,4 +97,4 @@ Check out the documentation on the [Github page](https://benchr267.github.io/Par
 
 # License
 
-ParserCombinator is under MIT license. See the LICENSE file for more info.
+Parsel is under MIT license. See the LICENSE file for more info.
