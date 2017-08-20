@@ -66,13 +66,13 @@ let package = Package(
 
 ## Cocoapods
 
-While ParserCombinator is in active development and not officially released, you need to specify the Git-repository directly in your Podfile:
+To use ParserCombinator with Cocoapods, just add this entry to your Podfile and run `pod install`: (due to naming collisions, the pods name is different)
 
 ```Ruby
 target 'MyAwesomeApp' do
   use_frameworks!
 
-  pod 'ParserCombinator'
+  pod 'SwiftParserCombinator'
 end
 ```
 

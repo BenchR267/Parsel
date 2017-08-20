@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'ParserCombinator'
+  s.name             = 'SwiftParserCombinator'
   s.version          = '1.0.0'
   s.summary          = 'Parser combinator library in Swift'
 
