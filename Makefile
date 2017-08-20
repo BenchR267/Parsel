@@ -33,11 +33,6 @@ generate:
 	swift $(SEQUENTIAL_OPERATORS_PATH) $(NUMBER_OF_SEQUENTIAL_OPERATORS) > $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 	swift package generate-xcodeproj --enable-code-coverage
 
-release:
-	test $(TAG)
-	swift build --configuration release --static-swift-stdlib
-	path=`swift build --configuration release --show-bin-path`
-
 test:
 	swift build
 	swift test
