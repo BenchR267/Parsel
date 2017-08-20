@@ -16,3 +16,15 @@ public enum Errors: UInt64, ParseError {
         return self.rawValue
     }
 }
+
+public struct GenericParseError: ParseError, Equatable {
+    public let message: String
+    
+    public var code: UInt64 {
+        return UInt64(abs(message.hashValue))
+    }
+    
+    public static func ==(lhs: GenericParseError, rhs: GenericParseError) -> Bool {
+        return lhs.message == rhs.message
+    }
+}

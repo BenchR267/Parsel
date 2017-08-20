@@ -135,7 +135,7 @@ extension Parser {
     public func atLeastOnce<B>(sep: Parser<T, B>) -> Parser<T, [R]> {
         return self.rep(sep: sep).flatMap({ res in
             if res.isEmpty {
-                return Parser.fail(Errors.expectedAtLeastOnce)
+                return Parser<T, [R]>.fail(error: Errors.expectedAtLeastOnce)
             }
             return Parser.just(res)
         })

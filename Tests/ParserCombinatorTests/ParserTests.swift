@@ -104,6 +104,18 @@ class ParserTests: XCTestCase {
         XCTAssertTrue(res2.isFailed())
     }
     
+    func test_fail_error() throws {
+        let p = Parser<String, Int>.fail(error: TestError(1))
+        let res = p.parse("123")
+        XCTAssertEqual(try res.error() as! TestError, TestError(1))
+    }
+    
+    func test_fail_message() throws {
+        let p = Parser<String, Int>.fail(message: "a message")
+        let res = p.parse("123")
+        XCTAssertEqual(try res.error() as! GenericParseError, GenericParseError(message: "a message"))
+    }
+    
 }
 
 #if os(Linux)
@@ -117,6 +129,8 @@ class ParserTests: XCTestCase {
             ("test_flatMap_fail", test_flatMap_fail),
             ("test_map", test_map),
             ("test_filter", test_filter),
+            ("test_fail_error", test_fail_error),
+            ("test_fail_message", test_fail_message),
         ]
     }
 #endif

@@ -35,10 +35,16 @@ open class Parser<T, R> where T: Sequence {
     ///
     /// - Parameter err: the error that should be used to fail
     /// - Returns: a parser that always fails
-    public static func fail<B>(_ err: ParseError) -> Parser<T, B> {
-        return Parser<T, B> { t in
-            return .fail(err)
-        }
+    public static func fail(error: ParseError) -> Parser<T, R> {
+        return Parser<T, R> { _ in .fail(error) }
+    }
+    
+    /// Creates a parser that always fails with a GenericParseError.
+    ///
+    /// - Parameter message: the message to use for GenericParseError
+    /// - Returns: a parser that always fails
+    public static func fail(message: String) -> Parser<T, R> {
+        return Parser<T, R> { _ in .fail(GenericParseError(message: message)) }
     }
     
     /// Produce a new parser for every succeeded parsing process.
@@ -70,7 +76,7 @@ open class Parser<T, R> where T: Sequence {
     public func filter(_ f: @escaping (R) -> ParseError?) -> Parser<T, R> {
         return self.flatMap({ res in
             if let err = f(res) {
-                return Parser.fail(err)
+                return Parser.fail(error: err)
             }
             return Parser.just(res)
         })
