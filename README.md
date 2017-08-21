@@ -1,7 +1,7 @@
 # Parsel 
 ![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![Codecov branch](https://img.shields.io/codecov/c/github/BenchR267/Parsel/master.svg)](https://codecov.io/github/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
-Parsel is a library for writing parser combinators in Swift. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String:
+Parsel is a library for writing parser combinators in Swift. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String: _(You can use the pre-defined lexical parser for digit: `L.digit`)_
 
 ```Swift
 let digit = Parser<String, Int> { input in
@@ -36,13 +36,15 @@ func intFromDigits(_ digits: [Int]) -> Int {
 }
 
 let number = digit.rep.map(intFromDigits)
-let addition = (number ~ char("+") ~ number).map { a, _, b in
+let addition = (number ~ "\\+".r ~ number).map { a, _, b in
     return a + b
 }
 
 let result = addition.parse("123+456")
 try! result.unwrap() // Int: 579
 ```
+
+_(There is also a pre-defined lexical parser for numbers `L.number` that is able to parse a number in different formats [binary, octal, hexadecimal, decimal])_
 
 # What are the disadvantages?
 
