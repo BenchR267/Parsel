@@ -8,15 +8,14 @@
 public protocol ParseError: Swift.Error { }
 
 /// The result of a parse process.
-///
-/// - success: the parse was successful.
-///     - contains the result and the rest of the token sequence that is unprocessed
-/// - fail: the parse was not successful.
-///     - contains the ParseError
 public enum ParseResult<Token, Result> where Token: Sequence {
     
+    /// Parse was successful.
+    /// Contains the result and the rest of the token sequence that is unprocessed
     case success(result: Result, rest: Token)
     
+    /// Parse was not successful.
+    /// Contains the ParseError
     case fail(ParseError)
     
     /// Transforms the result with f, if successful.
@@ -32,7 +31,10 @@ public enum ParseResult<Token, Result> where Token: Sequence {
         }
     }
     
-    // TODO: Declaration seems wrong, maybe needs to be changed
+    /// Create a new ParseResult for the result.
+    ///
+    /// - Parameter f: a function that takes a result and returns a parse result
+    /// - Returns: the value that was produced by f if self was success or still fail if not
     public func flatMap<B>(f: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):

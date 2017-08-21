@@ -11,11 +11,15 @@ import Foundation
 public final class RegexParser: Parser<String, String> {
     
     /// Possible errors while using RegexParser
-    ///
-    /// - doesNotMatch: the pattern does not match the input (at the beginning)
-    /// - invalidRegex: the given regular expression is invalid
     public enum Error: ParseError {
+        
+        /// Pattern does not match the input (at the beginning)
+        ///
+        /// - pattern: the pattern that was used
+        /// - input: the input that failed on the pattern
         case doesNotMatch(pattern: String, input: String)
+        
+        /// Regular expression is invalid (could not be evaluated by NSRegularExpression)
         case invalidRegex(String)
     }
     

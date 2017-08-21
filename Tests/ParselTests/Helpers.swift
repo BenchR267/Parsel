@@ -5,7 +5,6 @@
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
-import Foundation
 @testable import Parsel
 
 internal struct TestError: ParseError, Equatable {
