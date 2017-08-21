@@ -225,6 +225,27 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/ben/Development/github/Parsel/Sources/Parsel/Lexical.swift",
+      "line": 10,
+      "symbol": "Lexical",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ben/Development/github/Parsel/Sources/Parsel/Lexical.swift",
+      "line": 12,
+      "symbol": "Lexical.Error",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ben/Development/github/Parsel/Sources/Parsel/Lexical.swift",
+      "line": 13,
+      "symbol": "Lexical.Error.unexpectedToken",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/ben/Development/github/Parsel/Sources/Parsel/RegexParser.swift",
       "line": 18,
       "symbol": "RegexParser.Error.doesNotMatch",
