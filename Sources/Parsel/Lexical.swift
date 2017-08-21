@@ -80,7 +80,7 @@ public enum Lexical {
         return buildNumber(digits: digits, base: 2)
     }
     
-    /// Parses a binary digit (0 or 1)
+    /// Parses an octal digit (0 to 7)
     public static let octalDigit = digit.filter { parsed in
         guard (0...7).contains(parsed) else {
             return Error.unexpectedToken(expected: "0 to 7", got: "\(parsed)")
@@ -112,9 +112,8 @@ public enum Lexical {
             return nil
     }
     
-    
     /// A parser for numbers of the format `0xdeadbeaf` or `0xDEADBEAF`
-    public static let hexadecimalNumber = (string("0x") >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
+    public static let hexadecimalNumber = ((string("0x") | string("0X")) >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 16)
     }
     

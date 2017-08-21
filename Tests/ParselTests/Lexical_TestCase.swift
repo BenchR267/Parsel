@@ -211,7 +211,7 @@ class Lexical_TestCase: XCTestCase {
         guard case let .unexpectedToken(expected, got) = try res4.error() as! L.Error else {
             return XCTFail()
         }
-        XCTAssertEqual(expected, "0x")
+        XCTAssertEqual(expected, "0X")
         XCTAssertEqual(got, "0b")
         
         let res5 = p.parse("0xg")
