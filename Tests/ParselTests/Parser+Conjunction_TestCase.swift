@@ -125,18 +125,10 @@ class Parser_Conjunction_TestCase: XCTestCase {
         XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
         
         let res2 = p.parse("aaaaa")
-        guard case let .expectedExactly(count, got: got) = try res2.error() as! Errors else {
-            return XCTFail()
-        }
-        XCTAssertEqual(count, 4)
-        XCTAssertEqual(got, 5)
+        XCTAssertEqual(try res2.unwrap(), ["a", "a", "a", "a"])
         
         let res3 = p.parse("aaa")
-        guard case let .expectedExactly(count2, got: got2) = try res3.error() as! Errors else {
-            return XCTFail()
-        }
-        XCTAssertEqual(count2, 4)
-        XCTAssertEqual(got2, 3)
+        XCTAssertEqual(try res3.error() as! TestError, TestError(1))
     }
     
     func test_atLeastOnce_sep() throws {

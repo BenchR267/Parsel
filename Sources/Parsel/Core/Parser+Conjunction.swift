@@ -154,13 +154,16 @@ extension Parser {
         })
     }
     
+    /// Parses self exactly count times and return the results in an array
+    ///
+    /// - Parameter count: the count how often self should be parsed
+    /// - Returns: a parser that tries to parse self exactly count times
     public func exactly(count: Int) -> Parser<T, [R]> {
-        return self.rep.filter({ parsed in
-            guard parsed.count == count else {
-                return Errors.expectedExactly(count, got: parsed.count)
-            }
-            return nil
-        })
+        precondition(count > 0)
+        if count == 1 {
+            return self ^^ { [$0] }
+        }
+        return (self ~ self.exactly(count: count - 1)) ^^ { [$0] + $1 }
     }
     
     /// Parses self repetitive and returns results in array

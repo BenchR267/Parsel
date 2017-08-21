@@ -62,6 +62,21 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "edc")
     }
     
+    func test_string_length() throws {
+        let p = L.string(length: 3)
+        
+        let res1 = p.parse("aaaaa")
+        XCTAssertEqual(try res1.unwrap(), "aaa")
+        XCTAssertEqual(try res1.rest(), "aa")
+        
+        let res2 = p.parse("aa")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "char")
+        XCTAssertEqual(got, "")
+    }
+    
     func test_digit() throws {
         let p = L.digit
         
@@ -261,6 +276,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_char", test_char),
             ("test_char_specific", test_char_specific),
             ("test_string", test_string),
+            ("test_string_length", test_string_length),
             ("test_digit", test_digit),
             ("test_binaryDigit", test_binaryDigit),
             ("test_binaryNumber", test_binaryNumber),

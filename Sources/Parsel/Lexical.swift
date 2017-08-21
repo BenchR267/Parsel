@@ -57,6 +57,14 @@ public enum Lexical {
         }
     }
     
+    /// Parses a string with the given length
+    ///
+    /// - Parameter length: the length the string should have
+    /// - Returns: a parser that parses a string with exactly the given length
+    public static func string(length: Int) -> Parser<String, String> {
+        return char.exactly(count: length) ^^ { String($0) }
+    }
+    
     // MARK: - numbers
     
     /// Parses a digit [0-9] from a given String
