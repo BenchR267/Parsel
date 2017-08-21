@@ -2,9 +2,11 @@
 
 .PHONY: clean docs
 
-NUMBER_OF_SEQUENTIAL_OPERATORS = 10
-SEQUENTIAL_OPERATORS_PATH = ./Scripts/SequentialOperators.swift
-SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/Parsel/Core/Operators+Sequential.swift
+ifeq ($(RELEASE), 1)
+    OPERATOR_COUNT=25
+else
+    OPERATOR_COUNT=10
+endif
 
 initial:
 	swift package update
@@ -35,8 +37,7 @@ docs:
 	  --output docs/
 
 generate:
-	chmod +x $(SEQUENTIAL_OPERATORS_PATH)
-	swift $(SEQUENTIAL_OPERATORS_PATH) $(NUMBER_OF_SEQUENTIAL_OPERATORS) > $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
+	swift ./Scripts/SequentialOperators.swift $(OPERATOR_COUNT) > ./Sources/Parsel/Core/Operators+Sequential.swift
 	swift package generate-xcodeproj --enable-code-coverage
 
 test:
