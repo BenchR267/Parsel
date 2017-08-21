@@ -5,11 +5,19 @@
 //  Created by Benjamin Herzog on 21.08.17.
 //
 
+/// L is the shortcut for Lexical namespace
 public typealias L = Lexical
 
+/// Lexical is the namespace for Lexical parsers (you can also use shorthand L if you prefer)
 public enum Lexical {
     
+    /// Errors that could occur while lexical parsing
     public enum Error: ParseError {
+        
+        /// an unexpected token occured
+        ///
+        /// - expected: a description of what was expected
+        /// - got: the actual value at that position
         case unexpectedToken(expected: String, got: String)
     }
     
