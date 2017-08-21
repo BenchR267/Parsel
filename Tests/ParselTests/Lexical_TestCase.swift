@@ -181,19 +181,54 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(try res2.unwrap(), 3735928495)
         XCTAssertEqual(try res2.rest(), "G")
         
-        let res3 = p.parse("0bAF3410")
-        guard case let .unexpectedToken(expected, got) = try res3.error() as! L.Error else {
+        let res3 = p.parse("0x12345G")
+        XCTAssertEqual(try res3.unwrap(), 74565)
+        XCTAssertEqual(try res3.rest(), "G")
+        
+        let res4 = p.parse("0bAF3410")
+        guard case let .unexpectedToken(expected, got) = try res4.error() as! L.Error else {
             return XCTFail()
         }
         XCTAssertEqual(expected, "0x")
         XCTAssertEqual(got, "0b")
         
-        let res4 = p.parse("0xg")
-        guard case let .unexpectedToken(expected2, got2) = try res4.error() as! L.Error else {
+        let res5 = p.parse("0xg")
+        guard case let .unexpectedToken(expected2, got2) = try res5.error() as! L.Error else {
             return XCTFail()
         }
         XCTAssertEqual(expected2, "0 to 15")
         XCTAssertEqual(got2, "16")
+    }
+    
+    func test_decimalNumber() throws {
+        let p = L.decimalNumber
+        
+        let res1 = p.parse("1234a")
+        XCTAssertEqual(try res1.unwrap(), 1234)
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("abcde")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "digit")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_number() {
+        let p = L.number
+        
+        func test(input: String, result: Int, rest: String) {
+            let res = p.parse(input)
+            XCTAssertEqual(try res.unwrap(), result)
+            XCTAssertEqual(try res.rest(), rest)
+        }
+        
+        test(input: "1234a", result: 1234, rest: "a")
+        test(input: "9a", result: 9, rest: "a")
+        test(input: "0x12345", result: 74565, rest: "")
+        test(input: "0b101011b", result: 43, rest: "b")
+        test(input: "0o342424", result: 115988, rest: "")
     }
     
 }
@@ -210,6 +245,8 @@ class Lexical_TestCase: XCTestCase {
             ("test_octalNumber", test_octalNumber),
             ("test_hexadecimalDigit", test_hexadecimalDigit),
             ("test_hexadecimalNumber", test_hexadecimalNumber),
+            ("test_decimalNumber", test_decimalNumber),
+            ("test_number", test_number),
         ]
     }
 #endif

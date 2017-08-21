@@ -79,6 +79,8 @@ public enum Lexical {
             return ascii - asciiValue(from: "a") + 10
         } else if (asciiValue(from: "A")...asciiValue(from: "Z")).contains(ascii) {
             return ascii - asciiValue(from: "A") + 10
+        } else if (asciiValue(from: "0")...asciiValue(from: "9")).contains(ascii) {
+            return ascii - asciiValue(from: "0")
         } else {
             return -1
         }
@@ -94,6 +96,16 @@ public enum Lexical {
     public static let hexadecimalNumber = (string("0x") >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 16)
     }
+    
+    /// Parses a decimal number
+    public static let decimalNumber = digit.atLeastOnce ^^ { digits in
+        return buildNumber(digits: digits, base: 10)
+    }
+    
+    /// Parses a number in hexadecimal, octal, binary or decimal format
+    public static let number = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
+    
+    // MARK: - Helpers
     
     /// Returns the ascii value of the given chars first unicode scalar or -1 if empty.
     ///
