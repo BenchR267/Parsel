@@ -15,12 +15,25 @@ public enum Lexical {
     
     // MARK: - strings
     
-    /// Parses one Char from a given String
+    /// Parses one Character from a given String
     public static let char = Parser<String, Character> { str in
         guard let first = str.characters.first else {
             return .fail(Error.unexpectedToken(expected: "char", got: String(str.prefix(1))))
         }
         return .success(result: first, rest: String(str.dropFirst()))
+    }
+    
+    /// Parses a specific Character from a given String
+    ///
+    /// - Parameter c: the Character that should be parsed
+    /// - Returns: a parser that parses that one Character from a given String
+    public static func char(_ c: Character) -> Parser<String, Character> {
+        return Parser { str in
+            guard let first = str.characters.first, first == c else {
+                return .fail(Error.unexpectedToken(expected: String(c), got: String(str.prefix(1))))
+            }
+            return .success(result: first, rest: String(str.dropFirst()))
+        }
     }
     
     /// Parses a given String from a String.

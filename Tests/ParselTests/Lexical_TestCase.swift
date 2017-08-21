@@ -25,6 +25,28 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "")
     }
     
+    func test_char_specific() throws {
+        let p = L.char("a")
+        
+        let res1 = p.parse("ab")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "b")
+        
+        let res2 = p.parse("ba")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "a")
+        XCTAssertEqual(got, "b")
+        
+        let res3 = p.parse("")
+        guard case let .unexpectedToken(expected2, got2) = try res3.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected2, "a")
+        XCTAssertEqual(got2, "")
+    }
+    
     func test_string() throws {
         let p = L.string("abc")
         
@@ -237,6 +259,7 @@ class Lexical_TestCase: XCTestCase {
     extension Lexical_TestCase {
         static var allTests = [
             ("test_char", test_char),
+            ("test_char_specific", test_char_specific),
             ("test_string", test_string),
             ("test_digit", test_digit),
             ("test_binaryDigit", test_binaryDigit),
