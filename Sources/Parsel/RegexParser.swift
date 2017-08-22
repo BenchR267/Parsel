@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// A shortcut to RegexParser
+public typealias Regex = RegexParser
+
 /// A parser that parses Strings with a given regular expression
 public final class RegexParser: Parser<String, String> {
     
@@ -46,7 +49,18 @@ public final class RegexParser: Parser<String, String> {
             return .success(result: match, rest: String(str.dropFirst(end)))
         }
     }
+ 
+    // MARK: - Common used regular expressions
+    // (thanks to https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149)
     
+    /// Parses an e-mail-address
+    public static let mail = "([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})".r
+    
+    /// Parses an http(s) address
+    public static let httpAddress = "(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?".r
+    
+    /// Parses an IP address
+    public static let ipAddress = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)".r
 }
 
 extension String {
