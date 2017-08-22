@@ -61,6 +61,9 @@ public final class RegexParser: Parser<String, String> {
     
     /// Parses an IP address
     public static let ipAddress = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)".r
+    
+    /// Parses a semantic version number (1.0.0, 1.0, …) thanks to https://github.com/mojombo/semver/issues/232
+    public static let semver = "(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?".r
 }
 
 extension String {
