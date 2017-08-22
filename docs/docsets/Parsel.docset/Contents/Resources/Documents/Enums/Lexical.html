@@ -187,6 +187,9 @@
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Parsel1La">L</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Parsel5Regexa">Regex</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -319,6 +322,60 @@
                       <div>
                         <h4>Return Value</h4>
                         <p>a parser that parses that one Character from a given String</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO9asciiCharAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/asciiChar" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO9asciiCharAA6ParserCySSs9CharacterVGvZ">asciiChar</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses one char that is part of the ascii table</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">asciiChar</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO4charAA6ParserCySSs9CharacterVGvZ">char</a></span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="n">parsed</span> <span class="k">in</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO11asciiStringAA6ParserCyS2SGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/asciiString" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO11asciiStringAA6ParserCyS2SGvZ">asciiString</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a string that consists only of characters from the ascii range</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">asciiString</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO9asciiCharAA6ParserCySSs9CharacterVGvZ">asciiChar</a></span><span class="o">.</span><span class="n">atLeastOnce</span> <span class="o">^^</span> <span class="p">{</span> <span class="kt">String</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>

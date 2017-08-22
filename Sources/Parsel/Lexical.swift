@@ -44,6 +44,17 @@ public enum Lexical {
         }
     }
     
+    /// Parses one char that is part of the ascii table
+    public static let asciiChar = char.filter { parsed in
+        guard parsed.unicodeScalars.first(where: { !$0.isASCII }) == nil else {
+            return Error.unexpectedToken(expected: "ascii", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses a string that consists only of characters from the ascii range
+    public static let asciiString = asciiChar.atLeastOnce ^^ { String($0) }
+    
     /// Parses a given String from a String.
     ///
     /// - Parameter s: the String which should be parsed

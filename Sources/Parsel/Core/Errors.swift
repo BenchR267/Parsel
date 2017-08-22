@@ -33,6 +33,12 @@ public struct GenericParseError: ParseError, Equatable {
     /// the message of the error
     public let message: String
     
+    /// Compare two instances of GenericParseError
+    ///
+    /// - Parameters:
+    ///   - lhs: the first error to compare with
+    ///   - rhs: the second error to compare with
+    /// - Returns: true if both messages are equal, false otherwise
     public static func ==(lhs: GenericParseError, rhs: GenericParseError) -> Bool {
         return lhs.message == rhs.message
     }

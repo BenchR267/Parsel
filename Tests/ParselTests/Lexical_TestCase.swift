@@ -310,6 +310,36 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "a")
     }
     
+    func test_asciiChar() throws {
+        let p = L.asciiChar
+        
+        let res1 = p.parse("a")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "")
+        
+        let res2 = p.parse("😜")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "ascii")
+        XCTAssertEqual(got, "😜")
+    }
+    
+    func test_asciiString() throws {
+        let p = L.asciiString
+        
+        let res1 = p.parse("abc😜")
+        XCTAssertEqual(try res1.unwrap(), "abc")
+        XCTAssertEqual(try res1.rest(), "😜")
+        
+        let res2 = p.parse("😜abc")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "ascii")
+        XCTAssertEqual(got, "😜")
+    }
+    
 }
 
 #if os(Linux)
@@ -331,6 +361,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_floatingNumber", test_floatingNumber),
             ("test_oneWhitespace", test_oneWhitespace),
             ("test_whitespaces", test_whitespaces),
+            ("test_asciiChar", test_asciiChar),
         ]
     }
 #endif
