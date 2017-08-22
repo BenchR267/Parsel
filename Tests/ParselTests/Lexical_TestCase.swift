@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import Parsel
+@testable import Parsel
 
 class Lexical_TestCase: XCTestCase {
     
@@ -340,6 +340,55 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "😜")
     }
     
+    func test_lowercaseLetter() throws {
+        let p = L.lowercaseLetter
+        
+        let res1 = p.parse("abB")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "bB")
+        
+        let res2 = p.parse("Ab")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "lowercase")
+        XCTAssertEqual(got, "A")
+    }
+    
+    func test_uppercaseLetter() throws {
+        let p = L.uppercaseLetter
+        
+        let res1 = p.parse("ABb")
+        XCTAssertEqual(try res1.unwrap(), "A")
+        XCTAssertEqual(try res1.rest(), "Bb")
+        
+        let res2 = p.parse("aB")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "uppercase")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_letter() throws {
+        let p = L.letter
+        
+        let res1 = p.parse("ab1")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "b1")
+        
+        let res2 = p.parse("1aB")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "letter")
+        XCTAssertEqual(got, "1")
+    }
+    
+    func test_asciiValue() {
+        XCTAssertEqual(L.asciiValue(from: Character("😜")), -1)
+        XCTAssertEqual(L.asciiValue(from: Character("a")), 97)
+    }
 }
 
 #if os(Linux)
@@ -362,6 +411,11 @@ class Lexical_TestCase: XCTestCase {
             ("test_oneWhitespace", test_oneWhitespace),
             ("test_whitespaces", test_whitespaces),
             ("test_asciiChar", test_asciiChar),
+            ("test_asciiString", test_asciiString),
+            ("test_lowercaseLetter", test_lowercaseLetter),
+            ("test_uppercaseLetter", test_uppercaseLetter),
+            ("test_letter", test_letter),
+            ("test_asciiValue", test_asciiValue),
         ]
     }
 #endif

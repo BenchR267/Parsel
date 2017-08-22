@@ -383,6 +383,87 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Parsel7LexicalO15lowercaseLetterAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/lowercaseLetter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO15lowercaseLetterAA6ParserCySSs9CharacterVGvZ">lowercaseLetter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a lowercase letter (&lsquo;a&rsquo;-&lsquo;z&rsquo;)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">lowercaseLetter</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO4charAA6ParserCySSs9CharacterVGvZ">char</a></span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="n">parsed</span> <span class="k">in</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO15uppercaseLetterAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/uppercaseLetter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO15uppercaseLetterAA6ParserCySSs9CharacterVGvZ">uppercaseLetter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses an uppercase letter (&lsquo;A&rsquo;-&lsquo;Z&rsquo;)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">uppercaseLetter</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO4charAA6ParserCySSs9CharacterVGvZ">char</a></span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="n">parsed</span> <span class="k">in</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO6letterAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/letter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO6letterAA6ParserCySSs9CharacterVGvZ">letter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a letter (&lsquo;a&rsquo;-&lsquo;z&rsquo; | &lsquo;A&rsquo;-&lsquo;Z&rsquo;)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">letter</span> <span class="o">=</span> <span class="p">(</span><span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO15lowercaseLetterAA6ParserCySSs9CharacterVGvZ">lowercaseLetter</a></span> <span class="o">|</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO15uppercaseLetterAA6ParserCySSs9CharacterVGvZ">uppercaseLetter</a></span><span class="p">)</span><span class="o">.</span><span class="n">mapError</span> <span class="p">{</span> <span class="n">err</span> <span class="k">in</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Parsel7LexicalO6stringAA6ParserCyS2SGSSFZ"></a>
                     <a name="//apple_ref/swift/Method/string(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Parsel7LexicalO6stringAA6ParserCyS2SGSSFZ">string(_:)</a>

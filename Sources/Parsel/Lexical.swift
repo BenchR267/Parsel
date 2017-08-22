@@ -55,6 +55,31 @@ public enum Lexical {
     /// Parses a string that consists only of characters from the ascii range
     public static let asciiString = asciiChar.atLeastOnce ^^ { String($0) }
     
+    /// Parses a lowercase letter ('a'-'z')
+    public static let lowercaseLetter = char.filter { parsed in
+        guard (asciiValue(from: "a")...asciiValue(from: "z")).contains(asciiValue(from: parsed)) else {
+            return Error.unexpectedToken(expected: "lowercase", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses an uppercase letter ('A'-'Z')
+    public static let uppercaseLetter = char.filter { parsed in
+        guard (asciiValue(from: "A")...asciiValue(from: "Z")).contains(asciiValue(from: parsed)) else {
+            return Error.unexpectedToken(expected: "uppercase", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses a letter ('a'-'z' | 'A'-'Z')
+    public static let letter = (lowercaseLetter | uppercaseLetter).mapError { err in
+        guard let lexicalErr = err as? Error else { return err }
+        guard case let .unexpectedToken(_, got) = lexicalErr else {
+            return err
+        }
+        return Error.unexpectedToken(expected: "letter", got: got)
+    }
+    
     /// Parses a given String from a String.
     ///
     /// - Parameter s: the String which should be parsed
@@ -192,12 +217,15 @@ public enum Lexical {
     
     // MARK: - Helpers
     
-    /// Returns the ascii value of the given chars first unicode scalar or -1 if empty.
+    /// Returns the ascii value of the given char or -1 if no ascii char
     ///
     /// - Parameter char: the char to evaluate
-    /// - Returns: its ascii value or -1 if no unicodescalar
-    private static func asciiValue(from char: Character) -> Int {
-        return Int(char.unicodeScalars.first!.value)
+    /// - Returns: its ascii value or -1 if no ascii char
+    static func asciiValue(from char: Character) -> Int {
+        guard let first = char.unicodeScalars.first, first.isASCII else {
+            return -1
+        }
+        return Int(first.value)
     }
     
     /// Builds a number from a given array of digits.
