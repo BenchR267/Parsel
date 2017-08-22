@@ -280,6 +280,36 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(try res2.rest(), "a")
     }
     
+    func test_oneWhitespace() throws {
+        let p = L.oneWhitespace
+        
+        let res1 = p.parse(" a")
+        XCTAssertEqual(try res1.unwrap(), " ")
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("a ")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "\t")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_whitespaces() throws {
+        let p = L.whitespaces ^^ { String($0) }
+        
+        let res1 = p.parse("   \t\n\r\na")
+        XCTAssertEqual(try res1.unwrap(), "   \t\n\r\n")
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("a ")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "\t")
+        XCTAssertEqual(got, "a")
+    }
+    
 }
 
 #if os(Linux)
@@ -299,6 +329,8 @@ class Lexical_TestCase: XCTestCase {
             ("test_decimalNumber", test_decimalNumber),
             ("test_number", test_number),
             ("test_floatingNumber", test_floatingNumber),
+            ("test_oneWhitespace", test_oneWhitespace),
+            ("test_whitespaces", test_whitespaces),
         ]
     }
 #endif

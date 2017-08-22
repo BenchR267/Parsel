@@ -677,6 +677,379 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO14floatingNumberAA6ParserCySSSdGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/floatingNumber" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO14floatingNumberAA6ParserCySSSdGvZ">floatingNumber</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a floating number from String to Double (0.123; 0,123; …)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">floatingNumber</span> <span class="o">=</span> <span class="s">"[0-9]+([</span><span class="se">\\</span><span class="s">.,][0-9]+)?"</span><span class="o">.</span><span class="n">r</span> <span class="o">^^</span> <span class="p">{</span> <span class="n">str</span> <span class="o">-&gt;</span> <span class="kt">Double</span> <span class="k">in</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Common%20characters"></a>
+                <a name="//apple_ref/swift/Section/Common characters" class="dashAnchor"></a>
+                <a href="#/Common%20characters">
+                  <h3 class="section-name">Common characters</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO4plusAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/plus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO4plusAA6ParserCySSs9CharacterVGvZ">plus</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>+</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">plus</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO5minusAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/minus" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO5minusAA6ParserCySSs9CharacterVGvZ">minus</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>-</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">minus</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO8multiplyAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/multiply" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO8multiplyAA6ParserCySSs9CharacterVGvZ">multiply</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>*</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">multiply</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"*"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO6divideAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/divide" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO6divideAA6ParserCySSs9CharacterVGvZ">divide</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>/</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">divide</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO6assignAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/assign" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO6assignAA6ParserCySSs9CharacterVGvZ">assign</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>=</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">assign</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"="</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO5equalAA6ParserCyS2SGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/equal" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO5equalAA6ParserCyS2SGvZ">equal</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses the <code>==</code> sign</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">equal</span> <span class="o">=</span> <span class="p">(</span><span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO6assignAA6ParserCySSs9CharacterVGvZ">assign</a></span> <span class="o">~</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO6assignAA6ParserCySSs9CharacterVGvZ">assign</a></span><span class="p">)</span> <span class="o">^^</span> <span class="p">{</span> <span class="kt">String</span><span class="p">([</span><span class="nv">$0</span><span class="p">,</span> <span class="nv">$1</span><span class="p">])</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Whitespaces"></a>
+                <a name="//apple_ref/swift/Section/Whitespaces" class="dashAnchor"></a>
+                <a href="#/Whitespaces">
+                  <h3 class="section-name">Whitespaces</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO5spaceAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/space" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO5spaceAA6ParserCySSs9CharacterVGvZ">space</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses one space character</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">space</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">" "</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO7newLineAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/newLine" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO7newLineAA6ParserCySSs9CharacterVGvZ">newLine</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a new line <code>\n</code> character</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">newLine</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO14carriageReturnAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/carriageReturn" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO14carriageReturnAA6ParserCySSs9CharacterVGvZ">carriageReturn</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a new line <code>\n</code> character</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">carriageReturn</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"</span><span class="se">\r\n</span><span class="s">"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO3tabAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/tab" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO3tabAA6ParserCySSs9CharacterVGvZ">tab</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a tab <code>\t</code> character</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">tab</span> <span class="o">=</span> <span class="nf">char</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO13oneWhitespaceAA6ParserCySSs9CharacterVGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/oneWhitespace" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO13oneWhitespaceAA6ParserCySSs9CharacterVGvZ">oneWhitespace</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses exactly one whitespace</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">oneWhitespace</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO5spaceAA6ParserCySSs9CharacterVGvZ">space</a></span> <span class="o">|</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO7newLineAA6ParserCySSs9CharacterVGvZ">newLine</a></span> <span class="o">|</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO14carriageReturnAA6ParserCySSs9CharacterVGvZ">carriageReturn</a></span> <span class="o">|</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO3tabAA6ParserCySSs9CharacterVGvZ">tab</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel7LexicalO11whitespacesAA6ParserCySSSays9CharacterVGGvZ"></a>
+                    <a name="//apple_ref/swift/Variable/whitespaces" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel7LexicalO11whitespacesAA6ParserCySSSays9CharacterVGGvZ">whitespaces</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses at least one whitespace</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">whitespaces</span> <span class="o">=</span> <span class="n"><a href="../Enums/Lexical.html#/s:6Parsel7LexicalO13oneWhitespaceAA6ParserCySSs9CharacterVGvZ">oneWhitespace</a></span><span class="o">.</span><span class="n">atLeastOnce</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>

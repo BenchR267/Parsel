@@ -167,11 +167,14 @@ public enum Lexical {
     /// Parses a new line `\n` character
     public static let newLine = char("\n")
     
+    /// Parses a new line `\n` character
+    public static let carriageReturn = char("\r\n")
+    
     /// Parses a tab `\t` character
     public static let tab = char("\t")
     
     /// Parses exactly one whitespace
-    public static let oneWhitespace = space | newLine | tab
+    public static let oneWhitespace = space | newLine | carriageReturn | tab
     
     /// Parses at least one whitespace
     public static let whitespaces = oneWhitespace.atLeastOnce
