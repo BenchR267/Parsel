@@ -133,6 +133,49 @@ public enum Lexical {
     /// Parses a number in hexadecimal, octal, binary or decimal format
     public static let number = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
     
+    /// Parses a floating number from String to Double (0.123; 0,123; …)
+    public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { str -> Double in
+            let cleaned = str.replacingOccurrences(of: ",", with: ".")
+            return Double(cleaned)!
+        }
+    
+    // MARK: - Common characters
+    
+    /// Parses the `+` sign
+    public static let plus = char("+")
+    
+    /// Parses the `-` sign
+    public static let minus = char("-")
+    
+    /// Parses the `*` sign
+    public static let multiply = char("*")
+    
+    /// Parses the `/` sign
+    public static let divide = char("/")
+    
+    /// Parses the `=` sign
+    public static let assign = char("=")
+    
+    /// Parses the `==` sign
+    public static let equal = (assign ~ assign) ^^ { String([$0, $1]) }
+    
+    // MARK: - Whitespaces
+    
+    /// Parses one space character
+    public static let space = char(" ")
+    
+    /// Parses a new line `\n` character
+    public static let newLine = char("\n")
+    
+    /// Parses a tab `\t` character
+    public static let tab = char("\t")
+    
+    /// Parses exactly one whitespace
+    public static let oneWhitespace = space | newLine | tab
+    
+    /// Parses at least one whitespace
+    public static let whitespaces = oneWhitespace.atLeastOnce
+    
     // MARK: - Helpers
     
     /// Returns the ascii value of the given chars first unicode scalar or -1 if empty.

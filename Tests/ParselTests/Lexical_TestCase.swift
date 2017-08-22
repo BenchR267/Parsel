@@ -268,6 +268,18 @@ class Lexical_TestCase: XCTestCase {
         test(input: "0o342424", result: 115988, rest: "")
     }
     
+    func test_floatingNumber() throws {
+        let p = L.floatingNumber
+        
+        let res1 = p.parse("0,123a")
+        XCTAssertEqual(try res1.unwrap(), 0.123, accuracy: 0.0001)
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("0.123a")
+        XCTAssertEqual(try res2.unwrap(), 0.123, accuracy: 0.0001)
+        XCTAssertEqual(try res2.rest(), "a")
+    }
+    
 }
 
 #if os(Linux)
@@ -286,6 +298,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_hexadecimalNumber", test_hexadecimalNumber),
             ("test_decimalNumber", test_decimalNumber),
             ("test_number", test_number),
+            ("test_floatingNumber", test_floatingNumber),
         ]
     }
 #endif
