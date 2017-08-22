@@ -12,13 +12,21 @@ open class Parser<T, R> where T: Sequence {
     public typealias ParseFunction = (T) -> ParseResult<T, R>
     
     /// The wrapped function, call to start the parsing process.
-    public let parse: ParseFunction
+    public let parseFunction: ParseFunction
     
     /// Initialize a parser with the given wrapping function.
     ///
     /// - Parameter parse: A function that describes how to parse from T to R
     public init(parse: @escaping ParseFunction) {
-        self.parse = parse
+        self.parseFunction = parse
+    }
+    
+    /// Start the parsing with that parser
+    ///
+    /// - Parameter input: the token sequence that should be parsed
+    /// - Returns: the result of the parsing operation
+    public func parse(_ input: T) -> ParseResult<T, R> {
+        return self.parseFunction(input)
     }
     
     /// just creates a parser that parses the given value as success
