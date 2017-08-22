@@ -14,7 +14,7 @@
     <a title="Parser Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Parsel Docs</a> (98% documented)</p>
+        <p><a href="../index.html">Parsel Docs</a> (99% documented)</p>
         <p class="header-right"><a href="https://github.com/BenchR267/Parsel"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -186,6 +186,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Parsel1La">L</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Parsel5Regexa">Regex</a>
               </li>
             </ul>
           </li>
@@ -553,6 +556,56 @@
                       <div>
                         <h4>Return Value</h4>
                         <p>a new parser that calls f on each successful parsing operation</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel6ParserC8mapErrorACyxq_GAA05ParseD0_pAaF_pcF"></a>
+                    <a name="//apple_ref/swift/Method/mapError(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel6ParserC8mapErrorACyxq_GAA05ParseD0_pAaF_pcF">mapError(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return another error when parsing failed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">mapError</span><span class="p">(</span><span class="n">_</span> <span class="nv">f</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols.html#/s:6Parsel10ParseErrorP">ParseError</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols.html#/s:6Parsel10ParseErrorP">ParseError</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">R</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>f</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a function that maps from the occured error to another one</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a parser that parses self and transforms the error if failed</p>
                       </div>
                     </section>
                   </div>
@@ -1133,6 +1186,56 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:6Parsel6ParserC7exactlyACyxSayq_GGSi5count_tF"></a>
+                    <a name="//apple_ref/swift/Method/exactly(count:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel6ParserC7exactlyACyxSayq_GGSi5count_tF">exactly(count:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses self exactly count times and return the results in an array</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">exactly</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="p">[</span><span class="kt">R</span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>count</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>the count how often self should be parsed</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a parser that tries to parse self exactly count times</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:6Parsel6ParserC3repACyxSayq_GGv"></a>
                     <a name="//apple_ref/swift/Property/rep" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Parsel6ParserC3repACyxSayq_GGv">rep</a>
@@ -1212,7 +1315,7 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-08-21)</p>
+          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-08-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

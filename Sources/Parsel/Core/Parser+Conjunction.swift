@@ -146,10 +146,24 @@ extension Parser {
     /// - Parameter count: the number of required succeeds
     /// - Returns: a parser that parses self repetitive with at least `count` succeeds
     public func atLeast(count: Int) -> Parser<T, [R]> {
-        if count <= 1 {
+        return self.rep.filter({ parsed in
+            guard parsed.count >= count else {
+                return Errors.expectedAtLeast(count, got: parsed.count)
+            }
+            return nil
+        })
+    }
+    
+    /// Parses self exactly count times and return the results in an array
+    ///
+    /// - Parameter count: the count how often self should be parsed
+    /// - Returns: a parser that tries to parse self exactly count times
+    public func exactly(count: Int) -> Parser<T, [R]> {
+        precondition(count > 0)
+        if count == 1 {
             return self ^^ { [$0] }
         }
-        return (self ~ self.atLeast(count: count - 1)) ^^ { [$0] + $1 }
+        return (self ~ self.exactly(count: count - 1)) ^^ { [$0] + $1 }
     }
     
     /// Parses self repetitive and returns results in array

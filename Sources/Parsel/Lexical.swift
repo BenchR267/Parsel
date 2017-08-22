@@ -44,6 +44,42 @@ public enum Lexical {
         }
     }
     
+    /// Parses one char that is part of the ascii table
+    public static let asciiChar = char.filter { parsed in
+        guard parsed.unicodeScalars.first(where: { !$0.isASCII }) == nil else {
+            return Error.unexpectedToken(expected: "ascii", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses a string that consists only of characters from the ascii range
+    public static let asciiString = asciiChar.atLeastOnce ^^ { String($0) }
+    
+    /// Parses a lowercase letter ('a'-'z')
+    public static let lowercaseLetter = char.filter { parsed in
+        guard (asciiValue(from: "a")...asciiValue(from: "z")).contains(asciiValue(from: parsed)) else {
+            return Error.unexpectedToken(expected: "lowercase", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses an uppercase letter ('A'-'Z')
+    public static let uppercaseLetter = char.filter { parsed in
+        guard (asciiValue(from: "A")...asciiValue(from: "Z")).contains(asciiValue(from: parsed)) else {
+            return Error.unexpectedToken(expected: "uppercase", got: String(parsed))
+        }
+        return nil
+    }
+    
+    /// Parses a letter ('a'-'z' | 'A'-'Z')
+    public static let letter = (lowercaseLetter | uppercaseLetter).mapError { err in
+        guard let lexicalErr = err as? Error else { return err }
+        guard case let .unexpectedToken(_, got) = lexicalErr else {
+            return err
+        }
+        return Error.unexpectedToken(expected: "letter", got: got)
+    }
+    
     /// Parses a given String from a String.
     ///
     /// - Parameter s: the String which should be parsed
@@ -55,6 +91,14 @@ public enum Lexical {
             }
             return .success(result: s, rest: String(str.dropFirst(s.count)))
         }
+    }
+    
+    /// Parses a string with the given length
+    ///
+    /// - Parameter length: the length the string should have
+    /// - Returns: a parser that parses a string with exactly the given length
+    public static func string(length: Int) -> Parser<String, String> {
+        return char.exactly(count: length) ^^ { String($0) }
     }
     
     // MARK: - numbers
@@ -80,7 +124,7 @@ public enum Lexical {
         return buildNumber(digits: digits, base: 2)
     }
     
-    /// Parses a binary digit (0 or 1)
+    /// Parses an octal digit (0 to 7)
     public static let octalDigit = digit.filter { parsed in
         guard (0...7).contains(parsed) else {
             return Error.unexpectedToken(expected: "0 to 7", got: "\(parsed)")
@@ -112,9 +156,8 @@ public enum Lexical {
             return nil
     }
     
-    
     /// A parser for numbers of the format `0xdeadbeaf` or `0xDEADBEAF`
-    public static let hexadecimalNumber = (string("0x") >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
+    public static let hexadecimalNumber = ((string("0x") | string("0X")) >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 16)
     }
     
@@ -126,14 +169,63 @@ public enum Lexical {
     /// Parses a number in hexadecimal, octal, binary or decimal format
     public static let number = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
     
+    /// Parses a floating number from String to Double (0.123; 0,123; …)
+    public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { str -> Double in
+            let cleaned = str.replacingOccurrences(of: ",", with: ".")
+            return Double(cleaned)!
+        }
+    
+    // MARK: - Common characters
+    
+    /// Parses the `+` sign
+    public static let plus = char("+")
+    
+    /// Parses the `-` sign
+    public static let minus = char("-")
+    
+    /// Parses the `*` sign
+    public static let multiply = char("*")
+    
+    /// Parses the `/` sign
+    public static let divide = char("/")
+    
+    /// Parses the `=` sign
+    public static let assign = char("=")
+    
+    /// Parses the `==` sign
+    public static let equal = (assign ~ assign) ^^ { String([$0, $1]) }
+    
+    // MARK: - Whitespaces
+    
+    /// Parses one space character
+    public static let space = char(" ")
+    
+    /// Parses a new line `\n` character
+    public static let newLine = char("\n")
+    
+    /// Parses a new line `\n` character
+    public static let carriageReturn = char("\r\n")
+    
+    /// Parses a tab `\t` character
+    public static let tab = char("\t")
+    
+    /// Parses exactly one whitespace
+    public static let oneWhitespace = space | newLine | carriageReturn | tab
+    
+    /// Parses at least one whitespace
+    public static let whitespaces = oneWhitespace.atLeastOnce
+    
     // MARK: - Helpers
     
-    /// Returns the ascii value of the given chars first unicode scalar or -1 if empty.
+    /// Returns the ascii value of the given char or -1 if no ascii char
     ///
     /// - Parameter char: the char to evaluate
-    /// - Returns: its ascii value or -1 if no unicodescalar
-    private static func asciiValue(from char: Character) -> Int {
-        return Int(char.unicodeScalars.first!.value)
+    /// - Returns: its ascii value or -1 if no ascii char
+    static func asciiValue(from char: Character) -> Int {
+        guard let first = char.unicodeScalars.first, first.isASCII else {
+            return -1
+        }
+        return Int(first.value)
     }
     
     /// Builds a number from a given array of digits.

@@ -69,6 +69,21 @@ open class Parser<T, R> where T: Sequence {
         }
     }
     
+    /// Return another error when parsing failed
+    ///
+    /// - Parameter f: a function that maps from the occured error to another one
+    /// - Returns: a parser that parses self and transforms the error if failed
+    public func mapError(_ f: @escaping (ParseError) -> ParseError) -> Parser<T, R> {
+        return Parser { str in
+            switch self.parse(str) {
+            case let .fail(err):
+                return .fail(f(err))
+            case let .success(result, rest):
+                return .success(result: result, rest: rest)
+            }
+        }
+    }
+    
     /// Filter the result of the parser. Could be used for validation.
     ///
     /// - Parameter f: a function that produces an error if the given result should fail instead

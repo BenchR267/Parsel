@@ -14,7 +14,7 @@
     <a title="RegexParser Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Parsel Docs</a> (98% documented)</p>
+        <p><a href="../index.html">Parsel Docs</a> (99% documented)</p>
         <p class="header-right"><a href="https://github.com/BenchR267/Parsel"><img src="../img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
@@ -187,6 +187,9 @@
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:6Parsel1La">L</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:6Parsel5Regexa">Regex</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -310,10 +313,129 @@
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Common%20used%20regular%20expressions"></a>
+                <a name="//apple_ref/swift/Section/Common used regular expressions" class="dashAnchor"></a>
+                <a href="#/Common%20used%20regular%20expressions">
+                  <h3 class="section-name">Common used regular expressions</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel11RegexParserC4mailACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/mail" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel11RegexParserC4mailACvZ">mail</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses an e-mail-address</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">mail</span> <span class="o">=</span> <span class="s">"([a-z0-9_</span><span class="se">\\</span><span class="s">.-]+)@([</span><span class="se">\\</span><span class="s">da-z</span><span class="se">\\</span><span class="s">.-]+)</span><span class="se">\\</span><span class="s">.([a-z</span><span class="se">\\</span><span class="s">.]{2,6})"</span><span class="o">.</span><span class="n">r</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel11RegexParserC11httpAddressACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/httpAddress" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel11RegexParserC11httpAddressACvZ">httpAddress</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses an http(s) address</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">httpAddress</span> <span class="o">=</span> <span class="s">"(https?:</span><span class="se">\\</span><span class="s">/</span><span class="se">\\</span><span class="s">/)?([</span><span class="se">\\</span><span class="s">da-z</span><span class="se">\\</span><span class="s">.-]+)</span><span class="se">\\</span><span class="s">.([a-z</span><span class="se">\\</span><span class="s">.]{2,6})([</span><span class="se">\\</span><span class="s">/</span><span class="se">\\</span><span class="s">w </span><span class="se">\\</span><span class="s">.-]*)*</span><span class="se">\\</span><span class="s">/?"</span><span class="o">.</span><span class="n">r</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel11RegexParserC9ipAddressACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/ipAddress" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel11RegexParserC9ipAddressACvZ">ipAddress</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses an IP address</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ipAddress</span> <span class="o">=</span> <span class="s">"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)</span><span class="se">\\</span><span class="s">.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"</span><span class="o">.</span><span class="n">r</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Parsel11RegexParserC6semverACvZ"></a>
+                    <a name="//apple_ref/swift/Variable/semver" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Parsel11RegexParserC6semverACvZ">semver</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Parses a semantic version number (1.0.0, 1.0, …) thanks to <a href="https://github.com/mojombo/semver/issues/232">https://github.com/mojombo/semver/issues/232</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">semver</span> <span class="o">=</span> <span class="s">"(0|[1-9]</span><span class="se">\\</span><span class="s">d*)</span><span class="se">\\</span><span class="s">.(0|[1-9]</span><span class="se">\\</span><span class="s">d*)</span><span class="se">\\</span><span class="s">.(0|[1-9]</span><span class="se">\\</span><span class="s">d*)(-(0|[1-9]</span><span class="se">\\</span><span class="s">d*|</span><span class="se">\\</span><span class="s">d*[a-zA-Z-][0-9a-zA-Z-]*)(</span><span class="se">\\</span><span class="s">.(0|[1-9]</span><span class="se">\\</span><span class="s">d*|</span><span class="se">\\</span><span class="s">d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(</span><span class="se">\\</span><span class="s">+[0-9a-zA-Z-]+(</span><span class="se">\\</span><span class="s">.[0-9a-zA-Z-]+)*)?"</span><span class="o">.</span><span class="n">r</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-08-21)</p>
+          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-08-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
