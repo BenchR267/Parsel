@@ -12,7 +12,7 @@ open class Parser<T, R> where T: Sequence {
     public typealias ParseFunction = (T) -> ParseResult<T, R>
     
     /// The wrapped function, call to start the parsing process.
-    public let parseFunction: ParseFunction
+    private let parseFunction: ParseFunction
     
     /// Initialize a parser with the given wrapping function.
     ///
@@ -83,12 +83,7 @@ open class Parser<T, R> where T: Sequence {
     /// - Returns: a parser that parses self and transforms the error if failed
     public func mapError(_ f: @escaping (ParseError) -> ParseError) -> Parser<T, R> {
         return Parser { str in
-            switch self.parse(str) {
-            case let .fail(err):
-                return .fail(f(err))
-            case let .success(result, rest):
-                return .success(result: result, rest: rest)
-            }
+            return self.parse(str).mapError(f)
         }
     }
     

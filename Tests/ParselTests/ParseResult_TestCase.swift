@@ -28,6 +28,12 @@ class ParseResult_TestCase: XCTestCase {
         XCTAssertTrue(res == mappedRes)
     }
     
+    func test_mapError() throws {
+        let res = ParseResult<String, Int>.fail(TestError(1))
+        let mappedRes = res.mapError({ _ in TestError(2) })
+        XCTAssertEqual(try mappedRes.error() as! TestError, TestError(2))
+    }
+    
     func validate<R>(_ value: Int, _ rest: R) -> ParseResult<R, Int> {
         guard value < 10 else {
             return .fail(TestError(1))
@@ -141,6 +147,7 @@ class ParseResult_TestCase: XCTestCase {
         static var allTests = [
             ("test_map_success", test_map_success),
             ("test_map_fail", test_map_fail),
+            ("test_mapError", test_mapError),
             ("test_flatMap_success", test_flatMap_success),
             ("test_flatMap_fail", test_flatMap_fail),
             ("test_equal", test_equal),

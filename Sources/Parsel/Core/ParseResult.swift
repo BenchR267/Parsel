@@ -31,6 +31,17 @@ public enum ParseResult<Token, Result> where Token: Sequence {
         }
     }
     
+    /// Transforms the error if the result is in failed state
+    ///
+    /// - Parameter f: a function that takes the wrapped error and returns a new one
+    /// - Returns: the result with transformed error or unchanged if successful
+    public func mapError(_ f: (ParseError) -> ParseError) -> ParseResult<Token, Result> {
+        guard case let .fail(err) = self else {
+            return self
+        }
+        return .fail(f(err))
+    }
+    
     /// Create a new ParseResult for the result.
     ///
     /// - Parameter f: a function that takes a result and returns a parse result
