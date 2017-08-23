@@ -8,9 +8,9 @@
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns the result of rhs
 public func >~<Token, A, B>(lhs: Parser<Token, A>, rhs: @escaping @autoclosure () -> Parser<Token, B>) -> Parser<Token, B> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { _, rest in
+        return lhs.parse(tokens).flatMap { _, rest in
             return rhs().parse(rest)
-        })
+        }
     }
 }
 
@@ -22,11 +22,11 @@ public func >~<Token, A, B>(lhs: Parser<Token, A>, rhs: @escaping @autoclosure (
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns the result of lhs
 public func <~<Token, A, B>(lhs: Parser<Token, B>, rhs: @escaping @autoclosure () -> Parser<Token, A>) -> Parser<Token, B> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { result, rest in
-            return rhs().parse(rest).map(f: { _, _ in
+        return lhs.parse(tokens).flatMap { result, rest in
+            return rhs().parse(rest).map { _, _ in
                 return result
-            })
-        })
+            }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -37,9 +37,9 @@ public func <~<Token, A, B>(lhs: Parser<Token, B>, rhs: @escaping @autoclosure (
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B>(lhs: Parser<Token, (A)>, rhs: @escaping @autoclosure () -> Parser<Token, B>) -> Parser<Token, (A, B)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result, r) }
+        }
     }
 }
     
@@ -51,9 +51,9 @@ public func ~<Token, A, B>(lhs: Parser<Token, (A)>, rhs: @escaping @autoclosure 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C>(lhs: Parser<Token, (A, B)>, rhs: @escaping @autoclosure () -> Parser<Token, C>) -> Parser<Token, (A, B, C)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, r) }
+        }
     }
 }
     
@@ -65,9 +65,9 @@ public func ~<Token, A, B, C>(lhs: Parser<Token, (A, B)>, rhs: @escaping @autocl
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C>(lhs: Parser<Token, C>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B)>) -> Parser<Token, (C, A, B)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -78,9 +78,9 @@ public func ~<Token, A, B, C>(lhs: Parser<Token, C>, rhs: @escaping @autoclosure
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D>(lhs: Parser<Token, (A, B, C)>, rhs: @escaping @autoclosure () -> Parser<Token, D>) -> Parser<Token, (A, B, C, D)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, r) }
+        }
     }
 }
     
@@ -92,9 +92,9 @@ public func ~<Token, A, B, C, D>(lhs: Parser<Token, (A, B, C)>, rhs: @escaping @
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D>(lhs: Parser<Token, D>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C)>) -> Parser<Token, (D, A, B, C)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -105,9 +105,9 @@ public func ~<Token, A, B, C, D>(lhs: Parser<Token, D>, rhs: @escaping @autoclos
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E>(lhs: Parser<Token, (A, B, C, D)>, rhs: @escaping @autoclosure () -> Parser<Token, E>) -> Parser<Token, (A, B, C, D, E)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, r) }
+        }
     }
 }
     
@@ -119,9 +119,9 @@ public func ~<Token, A, B, C, D, E>(lhs: Parser<Token, (A, B, C, D)>, rhs: @esca
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E>(lhs: Parser<Token, E>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D)>) -> Parser<Token, (E, A, B, C, D)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -132,9 +132,9 @@ public func ~<Token, A, B, C, D, E>(lhs: Parser<Token, E>, rhs: @escaping @autoc
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F>(lhs: Parser<Token, (A, B, C, D, E)>, rhs: @escaping @autoclosure () -> Parser<Token, F>) -> Parser<Token, (A, B, C, D, E, F)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, r) }
+        }
     }
 }
     
@@ -146,9 +146,9 @@ public func ~<Token, A, B, C, D, E, F>(lhs: Parser<Token, (A, B, C, D, E)>, rhs:
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F>(lhs: Parser<Token, F>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E)>) -> Parser<Token, (F, A, B, C, D, E)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -159,9 +159,9 @@ public func ~<Token, A, B, C, D, E, F>(lhs: Parser<Token, F>, rhs: @escaping @au
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G>(lhs: Parser<Token, (A, B, C, D, E, F)>, rhs: @escaping @autoclosure () -> Parser<Token, G>) -> Parser<Token, (A, B, C, D, E, F, G)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, r) }
+        }
     }
 }
     
@@ -173,9 +173,9 @@ public func ~<Token, A, B, C, D, E, F, G>(lhs: Parser<Token, (A, B, C, D, E, F)>
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G>(lhs: Parser<Token, G>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E, F)>) -> Parser<Token, (G, A, B, C, D, E, F)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -186,9 +186,9 @@ public func ~<Token, A, B, C, D, E, F, G>(lhs: Parser<Token, G>, rhs: @escaping 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H>(lhs: Parser<Token, (A, B, C, D, E, F, G)>, rhs: @escaping @autoclosure () -> Parser<Token, H>) -> Parser<Token, (A, B, C, D, E, F, G, H)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, r) }
+        }
     }
 }
     
@@ -200,9 +200,9 @@ public func ~<Token, A, B, C, D, E, F, G, H>(lhs: Parser<Token, (A, B, C, D, E, 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H>(lhs: Parser<Token, H>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E, F, G)>) -> Parser<Token, (H, A, B, C, D, E, F, G)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -213,9 +213,9 @@ public func ~<Token, A, B, C, D, E, F, G, H>(lhs: Parser<Token, H>, rhs: @escapi
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I>(lhs: Parser<Token, (A, B, C, D, E, F, G, H)>, rhs: @escaping @autoclosure () -> Parser<Token, I>) -> Parser<Token, (A, B, C, D, E, F, G, H, I)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, r) }
+        }
     }
 }
     
@@ -227,9 +227,9 @@ public func ~<Token, A, B, C, D, E, F, G, H, I>(lhs: Parser<Token, (A, B, C, D, 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I>(lhs: Parser<Token, I>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E, F, G, H)>) -> Parser<Token, (I, A, B, C, D, E, F, G, H)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -240,9 +240,9 @@ public func ~<Token, A, B, C, D, E, F, G, H, I>(lhs: Parser<Token, I>, rhs: @esc
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I, J>(lhs: Parser<Token, (A, B, C, D, E, F, G, H, I)>, rhs: @escaping @autoclosure () -> Parser<Token, J>) -> Parser<Token, (A, B, C, D, E, F, G, H, I, J)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, r) }
+        }
     }
 }
     
@@ -254,9 +254,9 @@ public func ~<Token, A, B, C, D, E, F, G, H, I, J>(lhs: Parser<Token, (A, B, C, 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I, J>(lhs: Parser<Token, J>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E, F, G, H, I)>) -> Parser<Token, (J, A, B, C, D, E, F, G, H, I)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8) }
+        }
     }
 }
 /// Sequential conjunction of lhs and rhs with combining of the results in a tuple
@@ -267,9 +267,9 @@ public func ~<Token, A, B, C, D, E, F, G, H, I, J>(lhs: Parser<Token, J>, rhs: @
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I, J, K>(lhs: Parser<Token, (A, B, C, D, E, F, G, H, I, J)>, rhs: @escaping @autoclosure () -> Parser<Token, K>) -> Parser<Token, (A, B, C, D, E, F, G, H, I, J, K)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (result, rest) in
-            return rhs().parse(rest).map(f: { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, result.9, r) })
-        })
+        return lhs.parse(tokens).flatMap { (result, rest) in
+            return rhs().parse(rest).map { r, t in (result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, result.9, r) }
+        }
     }
 }
     
@@ -281,8 +281,8 @@ public func ~<Token, A, B, C, D, E, F, G, H, I, J, K>(lhs: Parser<Token, (A, B, 
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, A, B, C, D, E, F, G, H, I, J, K>(lhs: Parser<Token, K>, rhs: @escaping @autoclosure () -> Parser<Token, (A, B, C, D, E, F, G, H, I, J)>) -> Parser<Token, (K, A, B, C, D, E, F, G, H, I, J)> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap(f: { (r, rest) in
-            return rhs().parse(rest).map(f: { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, result.9) })
-        })
+        return lhs.parse(tokens).flatMap { (r, rest) in
+            return rhs().parse(rest).map { result, t in (r, result.0, result.1, result.2, result.3, result.4, result.5, result.6, result.7, result.8, result.9) }
+        }
     }
 }

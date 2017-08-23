@@ -22,7 +22,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Parameter f: a function to use to transform result
     /// - Returns: ParseResult with transformed result or fail with unchanged error.
-    public func map<B>(f: (Result, Token) -> B) -> ParseResult<Token, B> {
+    public func map<B>(_ f: (Result, Token) -> B) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):
             return .success(result: f(result, rest), rest: rest)
@@ -46,7 +46,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Parameter f: a function that takes a result and returns a parse result
     /// - Returns: the value that was produced by f if self was success or still fail if not
-    public func flatMap<B>(f: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
+    public func flatMap<B>(_ f: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):
             return f(result, rest)
