@@ -44,14 +44,15 @@ extension Parser {
         return Parser { tokens in
             let result = self.parse(tokens)
             switch result {
-            case .fail(_):
+            case .fail:
                 return other().parse(tokens)
             default:
                 return result
             }
         }
     }
-    
+
+    // swiftlint:disable line_length
     /// Concatenates the results of self + all given parsers.
     /// The first of all that succeedes will be used.
     ///
@@ -98,7 +99,7 @@ extension Parser {
         return Parser { tokens in
             let result = self.parse(tokens)
             switch result {
-            case .fail(_):
+            case .fail:
                 return .success(result: defaultValue(), rest: tokens)
             default:
                 return result
@@ -177,7 +178,7 @@ extension Parser {
                 case let .success(result, rest):
                     results.append(result)
                     totalRest = rest
-                case .fail(_):
+                case .fail:
                     break loop
                 }
             }
@@ -203,13 +204,13 @@ extension Parser {
                 case let .success(result, rest):
                     results.append(result)
                     totalRest = rest
-                case .fail(_):
+                case .fail:
                     switch self.parse(totalRest) {
                     case let .success(singleResult, singleRest):
                         results.append(singleResult)
                         totalRest = singleRest
                         break loop
-                    case .fail(_):
+                    case .fail:
                         return .success(result: results, rest: totalRest)
                     }
                 }

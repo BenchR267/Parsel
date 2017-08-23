@@ -56,6 +56,7 @@ public func <~<Token, A, B>(lhs: Parser<Token, B>, rhs: @escaping @autoclosure (
         }
     }
 }
+
 """
 
 for i in (1...count) {
@@ -76,7 +77,7 @@ for i in (1...count) {
 public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: @escaping @autoclosure () -> Parser<Token, \(next)>) -> Parser<Token, (\(chars), \(next))> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap { (result, rest) in
-            return rhs().parse(rest).map { r, t in (\(results), r) }
+            return rhs().parse(rest).map { res, _ in (\(results), res) }
         }
     }
 }
@@ -94,15 +95,14 @@ public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, (\(chars))>, rhs: @es
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns a tuple of the combined results
 public func ~<Token, \(chars), \(next)>(lhs: Parser<Token, \(next)>, rhs: @escaping @autoclosure () -> Parser<Token, (\(chars))>) -> Parser<Token, (\(next), \(chars))> {
     return Parser { tokens in
-        return lhs.parse(tokens).flatMap { (r, rest) in
-            return rhs().parse(rest).map { result, t in (r, \(results)) }
+        return lhs.parse(tokens).flatMap { (res, rest) in
+            return rhs().parse(rest).map { result, _ in (res, \(results)) }
         }
     }
 }
+        
 """
     }
 }
-
-
 
 print(string)
