@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import Parsel
+@testable import Parsel
 
 class Lexical_TestCase: XCTestCase {
     
@@ -60,6 +60,21 @@ class Lexical_TestCase: XCTestCase {
         }
         XCTAssertEqual(expected, "abc")
         XCTAssertEqual(got, "edc")
+    }
+    
+    func test_string_length() throws {
+        let p = L.string(length: 3)
+        
+        let res1 = p.parse("aaaaa")
+        XCTAssertEqual(try res1.unwrap(), "aaa")
+        XCTAssertEqual(try res1.rest(), "aa")
+        
+        let res2 = p.parse("aa")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "char")
+        XCTAssertEqual(got, "")
     }
     
     func test_digit() throws {
@@ -211,7 +226,7 @@ class Lexical_TestCase: XCTestCase {
         guard case let .unexpectedToken(expected, got) = try res4.error() as! L.Error else {
             return XCTFail()
         }
-        XCTAssertEqual(expected, "0x")
+        XCTAssertEqual(expected, "0X")
         XCTAssertEqual(got, "0b")
         
         let res5 = p.parse("0xg")
@@ -253,6 +268,127 @@ class Lexical_TestCase: XCTestCase {
         test(input: "0o342424", result: 115988, rest: "")
     }
     
+    func test_floatingNumber() throws {
+        let p = L.floatingNumber
+        
+        let res1 = p.parse("0,123a")
+        XCTAssertEqual(try res1.unwrap(), 0.123, accuracy: 0.0001)
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("0.123a")
+        XCTAssertEqual(try res2.unwrap(), 0.123, accuracy: 0.0001)
+        XCTAssertEqual(try res2.rest(), "a")
+    }
+    
+    func test_oneWhitespace() throws {
+        let p = L.oneWhitespace
+        
+        let res1 = p.parse(" a")
+        XCTAssertEqual(try res1.unwrap(), " ")
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("a ")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "\t")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_whitespaces() throws {
+        let p = L.whitespaces ^^ { String($0) }
+        
+        let res1 = p.parse("   \t\n\r\na")
+        XCTAssertEqual(try res1.unwrap(), "   \t\n\r\n")
+        XCTAssertEqual(try res1.rest(), "a")
+        
+        let res2 = p.parse("a ")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "\t")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_asciiChar() throws {
+        let p = L.asciiChar
+        
+        let res1 = p.parse("a")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "")
+        
+        let res2 = p.parse("😜")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "ascii")
+        XCTAssertEqual(got, "😜")
+    }
+    
+    func test_asciiString() throws {
+        let p = L.asciiString
+        
+        let res1 = p.parse("abc😜")
+        XCTAssertEqual(try res1.unwrap(), "abc")
+        XCTAssertEqual(try res1.rest(), "😜")
+        
+        let res2 = p.parse("😜abc")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "ascii")
+        XCTAssertEqual(got, "😜")
+    }
+    
+    func test_lowercaseLetter() throws {
+        let p = L.lowercaseLetter
+        
+        let res1 = p.parse("abB")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "bB")
+        
+        let res2 = p.parse("Ab")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "lowercase")
+        XCTAssertEqual(got, "A")
+    }
+    
+    func test_uppercaseLetter() throws {
+        let p = L.uppercaseLetter
+        
+        let res1 = p.parse("ABb")
+        XCTAssertEqual(try res1.unwrap(), "A")
+        XCTAssertEqual(try res1.rest(), "Bb")
+        
+        let res2 = p.parse("aB")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "uppercase")
+        XCTAssertEqual(got, "a")
+    }
+    
+    func test_letter() throws {
+        let p = L.letter
+        
+        let res1 = p.parse("ab1")
+        XCTAssertEqual(try res1.unwrap(), "a")
+        XCTAssertEqual(try res1.rest(), "b1")
+        
+        let res2 = p.parse("1aB")
+        guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "letter")
+        XCTAssertEqual(got, "1")
+    }
+    
+    func test_asciiValue() {
+        XCTAssertEqual(L.asciiValue(from: Character("😜")), -1)
+        XCTAssertEqual(L.asciiValue(from: Character("a")), 97)
+    }
 }
 
 #if os(Linux)
@@ -261,6 +397,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_char", test_char),
             ("test_char_specific", test_char_specific),
             ("test_string", test_string),
+            ("test_string_length", test_string_length),
             ("test_digit", test_digit),
             ("test_binaryDigit", test_binaryDigit),
             ("test_binaryNumber", test_binaryNumber),
@@ -270,6 +407,15 @@ class Lexical_TestCase: XCTestCase {
             ("test_hexadecimalNumber", test_hexadecimalNumber),
             ("test_decimalNumber", test_decimalNumber),
             ("test_number", test_number),
+            ("test_floatingNumber", test_floatingNumber),
+            ("test_oneWhitespace", test_oneWhitespace),
+            ("test_whitespaces", test_whitespaces),
+            ("test_asciiChar", test_asciiChar),
+            ("test_asciiString", test_asciiString),
+            ("test_lowercaseLetter", test_lowercaseLetter),
+            ("test_uppercaseLetter", test_uppercaseLetter),
+            ("test_letter", test_letter),
+            ("test_asciiValue", test_asciiValue),
         ]
     }
 #endif

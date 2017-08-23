@@ -58,9 +58,9 @@ class Parser_Conjunction_TestCase: XCTestCase {
         
         XCTAssertTrue(res.isFailed())
         
-        let err = try res.error() as! Errors
-        
-        XCTAssertEqual(err, .conjunctionOfEmptyCollection)
+        guard case .conjunctionOfEmptyCollection = try res.error() as! Errors else {
+            return XCTFail()
+        }
     }
 
     func test_then() {
@@ -107,8 +107,28 @@ class Parser_Conjunction_TestCase: XCTestCase {
         let res1 = p1.parse("aaaa")
         XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
         
-        let res2 = p1.parse("aaa")
-        XCTAssertEqual(try res2.error() as! TestError, TestError(1))
+        let res2 = p1.parse("aaaaa")
+        XCTAssertEqual(try res2.unwrap(), ["a", "a", "a", "a", "a"])
+        
+        let res3 = p1.parse("aaa")
+        guard case let .expectedAtLeast(count, got: got) = try res3.error() as! Errors else {
+            return XCTFail()
+        }
+        XCTAssertEqual(count, 4)
+        XCTAssertEqual(got, 3)
+    }
+    
+    func test_exactly() throws {
+        let p = char("a").exactly(count: 4)
+        
+        let res1 = p.parse("aaaa")
+        XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
+        
+        let res2 = p.parse("aaaaa")
+        XCTAssertEqual(try res2.unwrap(), ["a", "a", "a", "a"])
+        
+        let res3 = p.parse("aaa")
+        XCTAssertEqual(try res3.error() as! TestError, TestError(1))
     }
     
     func test_atLeastOnce_sep() throws {
@@ -188,6 +208,8 @@ class Parser_Conjunction_TestCase: XCTestCase {
             ("test_fallback_parser", test_fallback_parser),
             ("test_atLeastOnce", test_atLeastOnce),
             ("test_atLeastOnce_sep", test_atLeastOnce_sep),
+            ("test_atLeast_count", test_atLeast_count),
+            ("test_exactly", test_exactly),
             ("test_rep", test_rep),
             ("test_rep2", test_rep2),
             ("test_rep_fail", test_rep_fail),
