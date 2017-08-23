@@ -8,10 +8,6 @@ else
     OPERATOR_COUNT=10
 endif
 
-initial:
-	swift package update
-	make generate
-
 clean:
 	rm -rf .build
 	rm -rf build
@@ -40,6 +36,10 @@ generate:
 	swift ./Scripts/SequentialOperators.swift $(OPERATOR_COUNT) > ./Sources/Parsel/Core/Operators+Sequential.swift
 	swift package generate-xcodeproj --enable-code-coverage
 
+initial:
+	swift package update
+	make generate
+
 test:
 	swift build
 	swift test
@@ -48,3 +48,8 @@ travis:
 	make initial
 	pod lib lint Parsel.podspec
 	make test
+
+travisosx:
+	make initial
+	swiftlint lint
+	make coverage

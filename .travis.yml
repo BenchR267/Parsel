@@ -21,5 +21,4 @@ matrix:
       sudo: required
       env: CODECOV_TOKEN=$CODECOV_TOKEN
       script:
-        - make initial
-        - make coverage
+        - make travisosx
