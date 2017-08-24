@@ -173,7 +173,7 @@ public enum Lexical {
     /// Parses a floating number from String to Double (0.123; 0,123; …)
     public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { input -> Double in
             let cleaned = input.replacingOccurrences(of: ",", with: ".")
-            return Double(cleaned)!
+            return Double(cleaned) ?? 0.0
         }
     
     // MARK: - Common characters

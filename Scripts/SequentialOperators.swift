@@ -11,6 +11,7 @@ if count < 1 {
     fatalError("Count should be 1 or more!")
 }
 
+// swiftlint:disable force_unwrapping
 func character(from number: Int) -> Character {
     assert(number >= 0)
     assert(number < 26)
