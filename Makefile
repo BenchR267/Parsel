@@ -2,7 +2,7 @@
 
 .PHONY: clean docs
 
-ifndef RELEASE
+ifndef VERSION
     OPERATOR_COUNT=10
 else
     OPERATOR_COUNT=25
