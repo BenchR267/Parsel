@@ -20,25 +20,36 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     
     /// Transforms the result with f, if successful.
     ///
-    /// - Parameter f: a function to use to transform result
+    /// - Parameter transform: a function to use to transform result
     /// - Returns: ParseResult with transformed result or fail with unchanged error.
-    public func map<B>(f: (Result, Token) -> B) -> ParseResult<Token, B> {
+    public func map<B>(_ transform: (Result, Token) -> B) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):
-            return .success(result: f(result, rest), rest: rest)
+            return .success(result: transform(result, rest), rest: rest)
         case let .fail(err):
             return .fail(err)
         }
     }
     
+    /// Transforms the error if the result is in failed state
+    ///
+    /// - Parameter transform: a function that takes the wrapped error and returns a new one
+    /// - Returns: the result with transformed error or unchanged if successful
+    public func mapError(_ transform: (ParseError) -> ParseError) -> ParseResult<Token, Result> {
+        guard case let .fail(err) = self else {
+            return self
+        }
+        return .fail(transform(err))
+    }
+    
     /// Create a new ParseResult for the result.
     ///
-    /// - Parameter f: a function that takes a result and returns a parse result
+    /// - Parameter transform: a function that takes a result and returns a parse result
     /// - Returns: the value that was produced by f if self was success or still fail if not
-    public func flatMap<B>(f: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
+    public func flatMap<B>(_ transform: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
         switch self {
         case let .success(result, rest):
-            return f(result, rest)
+            return transform(result, rest)
         case let .fail(err):
             return .fail(err)
         }
@@ -48,7 +59,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Returns: true if successful
     public func isSuccess() -> Bool {
-        guard case .success(_) = self else {
+        guard case .success = self else {
             return false
         }
         return true
@@ -58,7 +69,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Returns: true if failed
     public func isFailed() -> Bool {
-        guard case .fail(_) = self else {
+        guard case .fail = self else {
             return false
         }
         return true
@@ -77,7 +88,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
         }
     }
     
-    /// Unwraps the wrapped result and uses fallback if .fail(_)
+    /// Unwraps the wrapped result and uses fallback if .fail
     ///
     /// - Parameter fallback: the fallback value to use if parse failed
     /// - Returns: either the parse result or fallback
@@ -126,7 +137,7 @@ public func ==<T, R>(lhs: ParseResult<T, R>, rhs: ParseResult<T, R>) -> Bool whe
     switch (lhs, rhs) {
     case let (.success(res1, rest1), .success(res2, rest2)):
         return res1 == res2 && rest1 == rest2
-    case (.fail(_), .fail(_)):
+    case (.fail, .fail):
         return true
     default:
         return false

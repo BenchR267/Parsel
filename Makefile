@@ -2,28 +2,32 @@
 
 .PHONY: clean docs
 
-NUMBER_OF_SEQUENTIAL_OPERATORS = 10
-SEQUENTIAL_OPERATORS_PATH = ./Scripts/SequentialOperators.swift
-SEQUENTIAL_OPERATORS_SWIFT_PATH = ./Sources/Parsel/Core/Operators+Sequential.swift
+ifndef RELEASE
+    OPERATOR_COUNT=10
+else
+    OPERATOR_COUNT=25
+endif
 
-initial:
-	swift package update
-	make generate
-
+# clean the project folder from generated files
 clean:
+	$(info Cleaning all generated files.)
 	rm -rf .build
 	rm -rf build
 	rm -f Parsel.json
 	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 	rm -rf Parsel.xcodeproj
 
+# OSX only: build and run tests + measure code coverage and upload to codecov
 coverage:
+	$(info Build and run tests + measure coverage afterwards.)
 	make initial
 	xcodebuild -version
 	xcodebuild -scheme Parsel-Package -sdk macosx -skipUnavailableActions build test
 	curl -s https://codecov.io/bash | bash
 
+# OSX only: generate documentation
 docs:
+	$(info generate documentation)
 	swift build
 	sourcekitten doc --spm-module Parsel > Parsel.json
 	jazzy \
@@ -34,16 +38,52 @@ docs:
 	  --sourcekitten-sourcefile Parsel.json \
 	  --output docs/
 
+# generates xcode project and sequential operators
+# depends on OPERATOR_COUNT!
 generate:
-	chmod +x $(SEQUENTIAL_OPERATORS_PATH)
-	swift $(SEQUENTIAL_OPERATORS_PATH) $(NUMBER_OF_SEQUENTIAL_OPERATORS) > $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
+	$(info generate Swift source files…)
+	swift ./Scripts/SequentialOperators.swift $(OPERATOR_COUNT) > ./Sources/Parsel/Core/Operators+Sequential.swift
 	swift package generate-xcodeproj --enable-code-coverage
 
+# first command to execute on every machine
+initial:
+	swift package update
+	make generate
+
+# run tests
 test:
 	swift build
 	swift test
 
+# call this on travis linux machines
 travis:
 	make initial
 	pod lib lint Parsel.podspec
 	make test
+
+# OSX only: call this on travis osx machines
+travisosx:
+	make initial
+	swiftlint lint
+	make coverage
+
+# release a new version!
+ifndef VERSION
+release:
+	$(error VERSION is not set to version. Aborting…)
+else 
+ifneq ($(shell git rev-parse --abbrev-ref HEAD), master)
+release:
+	$(error You can only release while master is checked out, sorry.)
+else
+release:
+	make generate
+	sed -i "" "s/\(.*s\.version[[:space:]]*=[[:space:]]*\'\).*\\('.*\)/\1${VERSION}\2/g" Parsel.podspec
+	git add Parsel.podspec
+	git commit -m "Release version ${VERSION}"
+	git tag $(VERSION)
+	git push origin $(VERSION)
+	pod trunk push Parsel.podspec
+	git checkout HEAD -- ./Sources/Parsel/Core/Operators+Sequential.swift
+endif
+endif

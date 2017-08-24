@@ -5,6 +5,7 @@
 //  Created by Benjamin Herzog on 21.08.17.
 //
 
+// swiftlint:disable type_name
 /// L is the shortcut for Lexical namespace
 public typealias L = Lexical
 
@@ -24,23 +25,23 @@ public enum Lexical {
     // MARK: - strings
     
     /// Parses one Character from a given String
-    public static let char = Parser<String, Character> { str in
-        guard let first = str.characters.first else {
-            return .fail(Error.unexpectedToken(expected: "char", got: String(str.prefix(1))))
+    public static let char = Parser<String, Character> { input in
+        guard let first = input.characters.first else {
+            return .fail(Error.unexpectedToken(expected: "char", got: String(input.prefix(1))))
         }
-        return .success(result: first, rest: String(str.dropFirst()))
+        return .success(result: first, rest: String(input.dropFirst()))
     }
     
     /// Parses a specific Character from a given String
     ///
-    /// - Parameter c: the Character that should be parsed
+    /// - Parameter character: the Character that should be parsed
     /// - Returns: a parser that parses that one Character from a given String
-    public static func char(_ c: Character) -> Parser<String, Character> {
-        return Parser { str in
-            guard let first = str.characters.first, first == c else {
-                return .fail(Error.unexpectedToken(expected: String(c), got: String(str.prefix(1))))
+    public static func char(_ character: Character) -> Parser<String, Character> {
+        return Parser { input in
+            guard let first = input.characters.first, first == character else {
+                return .fail(Error.unexpectedToken(expected: String(character), got: String(input.prefix(1))))
             }
-            return .success(result: first, rest: String(str.dropFirst()))
+            return .success(result: first, rest: String(input.dropFirst()))
         }
     }
     
@@ -82,14 +83,14 @@ public enum Lexical {
     
     /// Parses a given String from a String.
     ///
-    /// - Parameter s: the String which should be parsed
+    /// - Parameter string: the String which should be parsed
     /// - Returns: a parser that parses that String
-    public static func string(_ s: String) -> Parser<String, String> {
-        return Parser { str in
-            guard str.hasPrefix(s) else {
-                return .fail(Error.unexpectedToken(expected: s, got: String(str.prefix(s.count))))
+    public static func string(_ string: String) -> Parser<String, String> {
+        return Parser { input in
+            guard input.hasPrefix(string) else {
+                return .fail(Error.unexpectedToken(expected: string, got: String(input.prefix(string.count))))
             }
-            return .success(result: s, rest: String(str.dropFirst(s.count)))
+            return .success(result: string, rest: String(input.dropFirst(string.count)))
         }
     }
     
@@ -104,11 +105,11 @@ public enum Lexical {
     // MARK: - numbers
     
     /// Parses a digit [0-9] from a given String
-    public static let digit = Parser<String, Int> { str in
-        guard let first = str.characters.first, let number = Int(String(first)) else {
-            return .fail(Error.unexpectedToken(expected: "digit", got: String(str.prefix(1))))
+    public static let digit = Parser<String, Int> { input in
+        guard let first = input.characters.first, let number = Int(String(first)) else {
+            return .fail(Error.unexpectedToken(expected: "digit", got: String(input.prefix(1))))
         }
-        return .success(result: number, rest: String(str.dropFirst()))
+        return .success(result: number, rest: String(input.dropFirst()))
     }
     
     /// Parses a binary digit (0 or 1)
@@ -170,9 +171,9 @@ public enum Lexical {
     public static let number = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
     
     /// Parses a floating number from String to Double (0.123; 0,123; …)
-    public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { str -> Double in
-            let cleaned = str.replacingOccurrences(of: ",", with: ".")
-            return Double(cleaned)!
+    public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { input -> Double in
+            let cleaned = input.replacingOccurrences(of: ",", with: ".")
+            return Double(cleaned) ?? 0.0
         }
     
     // MARK: - Common characters
@@ -235,8 +236,8 @@ public enum Lexical {
     ///   - base: the base of the numbers system
     /// - Returns: the value as an integer
     private static func buildNumber(digits: [Int], base: Int) -> Int {
-        return digits.reduce(0) { res, e in
-            return res * base + e
+        return digits.reduce(0) { res, element in
+            return res * base + element
         }
     }
     

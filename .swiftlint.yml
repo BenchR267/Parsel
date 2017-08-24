@@ -1,0 +1,19 @@
+disabled_rules:
+  - large_tuple
+  - trailing_whitespace
+opt_in_rules:
+  - force_unwrapping
+  - private_outlet
+  - explicit_init
+  - overridden_super_call
+  - redundant_nil_coalesing
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Tests
+
+line_length:
+  warning: 220
+  error: 250
+
+trailing_semicolon: error
+force_unwrapping: error
+control_statement: error

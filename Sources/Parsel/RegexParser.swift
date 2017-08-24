@@ -54,20 +54,30 @@ public final class RegexParser: Parser<String, String> {
     // (thanks to https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149)
     
     /// Parses an e-mail-address
-    public static let mail = "([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})".r
+    public static let mail = """
+([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})
+""".r
     
     /// Parses an http(s) address
-    public static let httpAddress = "(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?".r
+    public static let httpAddress = """
+(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?
+""".r
     
     /// Parses an IP address
-    public static let ipAddress = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)".r
-    
+    public static let ipAddress = """
+(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
+""".r
+
+    // swiftlint:disable line_length
     /// Parses a semantic version number (1.0.0, 1.0, …) thanks to https://github.com/mojombo/semver/issues/232
-    public static let semver = "(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?".r
+    public static let semver = """
+(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?
+""".r
 }
 
 extension String {
-    
+
+    // swiftlint:disable identifier_name
     /// Returns a RegexParser with self as the pattern
     public var r: RegexParser {
         return RegexParser(self)

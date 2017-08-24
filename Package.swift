@@ -8,7 +8,7 @@ let package = Package(
     products: [
         .library(
             name: "Parsel",
-            targets: ["Parsel"]),
+            targets: ["Parsel"])
     ],
     dependencies: [],
     targets: [
@@ -17,6 +17,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "ParselTests",
-            dependencies: ["Parsel"]),
+            dependencies: ["Parsel"])
     ]
 )

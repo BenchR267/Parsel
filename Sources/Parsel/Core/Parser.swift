@@ -12,13 +12,21 @@ open class Parser<T, R> where T: Sequence {
     public typealias ParseFunction = (T) -> ParseResult<T, R>
     
     /// The wrapped function, call to start the parsing process.
-    public let parse: ParseFunction
+    private let parseFunction: ParseFunction
     
     /// Initialize a parser with the given wrapping function.
     ///
     /// - Parameter parse: A function that describes how to parse from T to R
     public init(parse: @escaping ParseFunction) {
-        self.parse = parse
+        self.parseFunction = parse
+    }
+
+    /// Start the parsing with that parser
+    ///
+    /// - Parameter input: the token sequence that should be parsed
+    /// - Returns: the result of the parsing operation
+    public func parse(_ input: T) -> ParseResult<T, R> {
+        return self.parseFunction(input)
     }
     
     /// just creates a parser that parses the given value as success
@@ -26,8 +34,8 @@ open class Parser<T, R> where T: Sequence {
     /// - Parameter value: the result to produce
     /// - Returns: a parser that just produces this value as success
     public static func just<B>(_ value: B) -> Parser<T, B> {
-        return Parser<T, B> { t in
-            return .success(result: value, rest: t)
+        return Parser<T, B> { tokens in
+            return .success(result: value, rest: tokens)
         }
     }
     
@@ -49,48 +57,43 @@ open class Parser<T, R> where T: Sequence {
     
     /// Produce a new parser for every succeeded parsing process.
     ///
-    /// - Parameter f: function that maps a parse result to a new parser
+    /// - Parameter tranform: function that maps a parse result to a new parser
     /// - Returns: a new parser that combines both parse operations.
-    public func flatMap<B>(_ f: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
+    public func flatMap<B>(_ tranform: @escaping (R) -> Parser<T, B>) -> Parser<T, B> {
         return Parser<T, B> { tokens in
-            return self.parse(tokens).flatMap { r, t in
-                return f(r).parse(t)
+            return self.parse(tokens).flatMap { result, rest in
+                return tranform(result).parse(rest)
             }
         }
     }
     
     /// Produce a new parser which calls f on each successful parsing operation.
     ///
-    /// - Parameter f: transforming function that maps from R to B
+    /// - Parameter transform: transforming function that maps from R to B
     /// - Returns: a new parser that calls f on each successful parsing operation
-    public func map<B>(_ f: @escaping (R) -> B) -> Parser<T, B> {
-        return self.flatMap { res -> Parser<T, B> in
-            return Parser.just(f(res))
+    public func map<B>(_ transform: @escaping (R) -> B) -> Parser<T, B> {
+        return self.flatMap { result -> Parser<T, B> in
+            return Parser.just(transform(result))
         }
     }
     
     /// Return another error when parsing failed
     ///
-    /// - Parameter f: a function that maps from the occured error to another one
+    /// - Parameter transform: a function that maps from the occured error to another one
     /// - Returns: a parser that parses self and transforms the error if failed
-    public func mapError(_ f: @escaping (ParseError) -> ParseError) -> Parser<T, R> {
+    public func mapError(_ transform: @escaping (ParseError) -> ParseError) -> Parser<T, R> {
         return Parser { str in
-            switch self.parse(str) {
-            case let .fail(err):
-                return .fail(f(err))
-            case let .success(result, rest):
-                return .success(result: result, rest: rest)
-            }
+            return self.parse(str).mapError(transform)
         }
     }
     
     /// Filter the result of the parser. Could be used for validation.
     ///
-    /// - Parameter f: a function that produces an error if the given result should fail instead
+    /// - Parameter transform: a function that produces an error if the given result should fail instead
     /// - Returns: a parser that parses self and re-evaluates the result with f
-    public func filter(_ f: @escaping (R) -> ParseError?) -> Parser<T, R> {
+    public func filter(_ transform: @escaping (R) -> ParseError?) -> Parser<T, R> {
         return self.flatMap({ res in
-            if let err = f(res) {
+            if let err = transform(res) {
                 return Parser.fail(error: err)
             }
             return Parser.just(res)
