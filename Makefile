@@ -83,6 +83,7 @@ release:
 	git commit -m "Release version ${VERSION}"
 	git tag $(VERSION)
 	git push origin $(VERSION)
+	git push origin master
 	pod trunk push Parsel.podspec
 	git checkout HEAD -- ./Sources/Parsel/Core/Operators+Sequential.swift
 endif
