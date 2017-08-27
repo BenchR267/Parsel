@@ -8,7 +8,7 @@
 import Foundation
 
 /// A shortcut to RegexParser
-public typealias Regex = RegexParser
+public typealias R = RegexParser
 
 /// A parser that parses Strings with a given regular expression
 public final class RegexParser: Parser<String, String> {
@@ -58,9 +58,10 @@ public final class RegexParser: Parser<String, String> {
 ([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})
 """.r
     
+    // swiftlint:disable line_length
     /// Parses an http(s) address
     public static let httpAddress = """
-(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?
+^(?i)(?:(?:https?|ftp):\\/\\/)?(?:\\S+(?::\\S*)?@)?(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))(?::\\d{2,5})?(?:\\/[^\\s]*)?$
 """.r
     
     /// Parses an IP address
@@ -69,9 +70,9 @@ public final class RegexParser: Parser<String, String> {
 """.r
 
     // swiftlint:disable line_length
-    /// Parses a semantic version number (1.0.0, 1.0, …) thanks to https://github.com/mojombo/semver/issues/232
+    /// Parses a semantic version number (1.0.0, 1.0, …) thanks to https://git.daplie.com/coolaj86/semver-utils
     public static let semver = """
-(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\\+[0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*)?
+v?((\\d+)\\.(\\d+)\\.(\\d+))(?:-([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?
 """.r
 }
 
