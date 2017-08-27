@@ -2,7 +2,7 @@
 
 .PHONY: clean docs
 
-ifndef RELEASE
+ifndef VERSION
     OPERATOR_COUNT=10
 else
     OPERATOR_COUNT=25
@@ -78,8 +78,12 @@ release:
 else
 release:
 	make generate
+	$(info Set version in podspec)
 	sed -i "" "s/\(.*s\.version[[:space:]]*=[[:space:]]*\'\).*\\('.*\)/\1${VERSION}\2/g" Parsel.podspec
+	$(info Set version in README)
+	sed -i "" "s/\(.*\.package.*, from: \"\).*\(\".*\)/\1${VERSION}\2/g" README.md
 	git add Parsel.podspec
+	git add README.md
 	git commit -m "Release version ${VERSION}"
 	git tag $(VERSION)
 	git push origin $(VERSION)
