@@ -64,7 +64,7 @@ import PackageDescription
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .package(url: "https://github.com/BenchR267/Parsel", from: "2.1.0")
+    .package(url: "https://github.com/BenchR267/Parsel", from: "2.1.1")
   ]
 )
 ```

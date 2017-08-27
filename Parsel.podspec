@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'Parsel'
-  s.version           = '2.1.0'
+  s.version           = '2.1.1'
   s.summary           = 'Parsel is a parser combinator library written in Swift'
 
   s.description       = <<-DESC
