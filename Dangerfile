@@ -8,11 +8,11 @@ warn "#{github.html_link("Makefile")} was edited." if git.modified_files.include
 
 # Check if tests were written for swift files
 def isTest?(file)
-  file.end_with? "_TestCase.swift"
+  file.start_with? "Tests/"
 end
 
 def isSwiftFile?(file)
-	file.end_with? ".swift" || file.start_with? "Tests/"
+	file.end_with? ".swift"
 end
 
 (git.added_files + git.modified_files).each do |file|
