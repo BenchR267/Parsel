@@ -15,6 +15,6 @@ files = (git.added_files + git.modified_files).select{ |file| isTest?(file) }
 tests = (git.added_files + git.modified_files).select{ |file| !isTest?(file) }
 
 files.each do |file|
-	next if tests.any? { |e| e.contains? file }
+	next if tests.any? { |e| e.include? file }
 	fail("Please add a test case for #{file}.")
 end
