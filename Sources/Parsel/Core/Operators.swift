@@ -7,18 +7,25 @@
 
 // MARK: - Precendence groups and declaration
 
-precedencegroup ParserConjunctionGroup {
-    associativity: left
-    higherThan: BitwiseShiftPrecedence
-}
+// Check https://github.com/apple/swift-evolution/blob/master/proposals/0077-operator-precedence.md for reference
 
-precedencegroup ParserConjuctionRightGroup {
-    associativity: right
-    higherThan: ParserConjunctionGroup
-}
-
+/// ^^ and ^^^
 precedencegroup ParserMapPrecedenceGroup {
     associativity: left
+    lowerThan: AdditionPrecedence, BitwiseShiftPrecedence, NilCoalescingPrecedence
+}
+
+/// ~ and >~
+precedencegroup ParserConjunctionGroup {
+    associativity: left
+    lowerThan: NilCoalescingPrecedence
+    higherThan: ParserMapPrecedenceGroup
+}
+
+/// <~
+precedencegroup ParserConjuctionRightGroup {
+    associativity: right
+    lowerThan: NilCoalescingPrecedence
     higherThan: ParserConjunctionGroup
 }
 

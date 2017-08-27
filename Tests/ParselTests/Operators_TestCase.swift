@@ -90,7 +90,7 @@ class Operators_TestCase: XCTestCase {
         XCTAssertEqual(try res1.unwrap(), [])
     }
     
-    func test_fallback_operator() {
+    func test_fallback_operator() throws {
         let p1 = char("a") ?? "b"
         let p2 = char("a").fallback("b")
         
@@ -98,8 +98,42 @@ class Operators_TestCase: XCTestCase {
         let res1 = p1.parse(input)
         let res2 = p2.parse(input)
         XCTAssertTrue(res1 == res2)
+        
+        let p3 = char("a").map({ $0.description }) ?? digit.map({ $0.description })
+        let res3 = p3.parse("1")
+        XCTAssertEqual(try res3.unwrap(), "1")
+        let res4 = p3.parse("a")
+        XCTAssertEqual(try res4.unwrap(), "a")
+        let res5 = p3.parse("b")
+        XCTAssertTrue(res5.isFailed())
     }
     
+    func test_precedence() throws {
+        // ~ has higher presedence than ^^
+        let p = char("a") >~ char("b") <~ char("c") ^^ { String($0) }
+        let res1 = p.parse("abcd")
+        XCTAssertEqual(try res1.unwrap(), "b")
+        XCTAssertEqual(try res1.rest(), "d")
+        
+        // >> has higher precedence than ^^
+        let p2 = char("a") >> char("b") ^^ { L.asciiValue(from: $0) }
+        XCTAssertEqual(try p2.parse("ab").unwrap(), L.asciiValue(from: "b"))
+        
+        // + and * have highest precedence
+        let p3 = char("a")* ~ char("b")+ ^^ { ($0.0.count, String($0.1)) }
+        let res2 = try p3.parse("aaaaaaaaabbb").unwrap()
+        XCTAssertEqual(res2.0, 9)
+        XCTAssertEqual(res2.1, "bbb")
+        
+        // ?? has highest priority
+        let p4 = char("a") ?? "a" ~ digit
+        let res3 = try p4.parse("a4").unwrap()
+        XCTAssertEqual(res3.0, "a")
+        XCTAssertEqual(res3.1, 4)
+        let res4 = try p4.parse("4").unwrap()
+        XCTAssertEqual(res4.0, "a")
+        XCTAssertEqual(res4.1, 4)
+    }
 }
 
 #if os(Linux)
@@ -114,7 +148,8 @@ class Operators_TestCase: XCTestCase {
             ("test_atLeastOnce_operator", test_atLeastOnce_operator),
             ("test_rep_operator", test_rep_operator),
             ("test_rep_fail_operator", test_rep_fail_operator),
-            ("test_fallback_operator", test_fallback_operator)
+            ("test_fallback_operator", test_fallback_operator),
+            ("test_precedence", test_precedence)
         ]
     }
 #endif
