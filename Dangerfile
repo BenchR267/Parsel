@@ -12,7 +12,7 @@ def isTest?(file)
 end
 
 def isSwiftFile?(file)
-	file.end_with? ".swift"
+	file.end_with? ".swift" || file.start_with? "Tests/"
 end
 
 (git.added_files + git.modified_files).each do |file|
