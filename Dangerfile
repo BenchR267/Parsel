@@ -11,10 +11,18 @@ def isTest?(file)
   file.end_with? "_TestCase.swift"
 end
 
-files = (git.added_files + git.modified_files).select{ |file| isTest?(file) }
-tests = (git.added_files + git.modified_files).select{ |file| !isTest?(file) }
+(git.added_files + git.modified_files).each do |file|
+	next unless file.end_with? "Tests.swift"
+	warn "Test files should end with _TestCase.swift, not Tests.swift. Please rename #{github.html_link(file)}"
+end
+
+files = (git.added_files + git.modified_files).select{ |file| !isTest?(file) }
+tests = (git.added_files + git.modified_files).select{ |file| isTest?(file) }
 
 files.each do |file|
-	next if tests.any? { |e| e.include? file }
+	next if tests.any? { |e|
+		name = file.match(/\/([a-zA-Z_0-9]*)\.swift/).captures
+		e.include? name
+	}
 	fail("Please add a test case for #{file}.")
 end
