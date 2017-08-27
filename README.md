@@ -1,7 +1,7 @@
 # Parsel 
 ![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![Codecov branch](https://img.shields.io/codecov/c/github/BenchR267/Parsel/master.svg)](https://codecov.io/github/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
-Parsel is a library for writing parser combinators in Swift. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String: _(You can use the pre-defined lexical parser for digit: `L.digit`)_
+Parsel is a parser combinator library that makes it easy to write parsers. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String: _(You can use the pre-defined lexical parser for digit: `L.digit`)_
 
 ```Swift
 let digit = Parser<String, Int> { input in
@@ -15,7 +15,7 @@ let digit = Parser<String, Int> { input in
 We can now simply extend this to create a parser that parses an addition of two digits from a string:
 
 ```Swift
-let addition = (digit ~ "\\+".r ~ digit).map { a, _, b in a + b } // "\\+".r is a RegexParser that parses the `+` sign
+let addition = (digit ~ L.plus ~ digit).map { a, _, b in a + b } // `L.plus` is a predefined parser that parses the `+` sign
 
 let result = addition.parse("2+4")
 try! result.unwrap() // Int: 6
@@ -36,7 +36,7 @@ func intFromDigits(_ digits: [Int]) -> Int {
 }
 
 let number = digit.rep.map(intFromDigits)
-let addition = (number ~ "\\+".r ~ number).map { a, _, b in
+let addition = number ~ L.plus ~ number ^^ { a, _, b in // ^^ is convenience for map
     return a + b
 }
 

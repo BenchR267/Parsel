@@ -5,6 +5,7 @@
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
+/// ParseError is a generic protocol for Errors that could occur on parsing
 public protocol ParseError: Swift.Error { }
 
 /// The result of a parse process.
