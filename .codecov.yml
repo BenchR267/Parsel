@@ -1,3 +1,7 @@
 coverage:
   ignore:
    - "Tests/*"
+comment:
+  layout: "reach, diff"
+  behavior: once
+  require_changes: true

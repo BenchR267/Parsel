@@ -44,4 +44,4 @@ internal let digit = Parser<String, Int> { str in
     return .success(result: number, rest: String(str.dropFirst()))
 }
 
-internal let number = digit.rep.map { Int($0.map(String.init).joined()) ?? 0 }
+internal let number = digit.atLeastOnce.map { Int($0.map(String.init).joined()) ?? 0 }

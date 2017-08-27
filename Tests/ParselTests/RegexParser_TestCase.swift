@@ -59,6 +59,62 @@ class RegexParser_TestCase: XCTestCase {
         XCTAssertEqual(regex, "[")
     }
     
+    func test_parse_mail() throws {
+        let p = R.mail
+        let res1 = p.parse("mail@benchr.de")
+        XCTAssertEqual(try res1.unwrap(), "mail@benchr.de")
+        
+        let res2 = p.parse("mail@mail@benchr.de")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_parse_httpAddress() throws {
+        let p = R.httpAddress
+        let res1 = p.parse("https://www.google.de")
+        XCTAssertEqual(try res1.unwrap(), "https://www.google.de")
+        
+        let res2 = p.parse("http://https://facebook.com")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_parse_ipAddress() throws {
+        let p = R.ipAddress
+        let res1 = p.parse("192.168.2.1")
+        XCTAssertEqual(try res1.unwrap(), "192.168.2.1")
+        
+        let res2 = p.parse("5454.242.545.1")
+        XCTAssertTrue(res2.isFailed())
+    }
+    
+    func test_parse_semver() throws {
+        let p = R.semver
+        
+        let tests = [
+            "1.0.0",
+            "1.0.0-alpha1",
+            "1.0.0+build-123",
+            "v1.0.0",
+            "1.0.0b",
+            "1.0.0+build-abc."
+        ]
+        
+        for test in tests {
+            let res1 = p.parse(test)
+            XCTAssertTrue(test.hasPrefix(try res1.unwrap()))
+        }
+        
+        let failTests = [
+            "a.b.c",
+            "1",
+            "1.0"
+        ]
+        
+        for test in failTests {
+            let res2 = p.parse(test)
+            XCTAssertTrue(res2.isFailed())
+        }
+    }
+    
 }
 
 #if os(Linux)
@@ -70,6 +126,10 @@ class RegexParser_TestCase: XCTestCase {
             ("test_parse_lowercasedLetters", test_parse_lowercasedLetters),
             ("test_parse_fail", test_parse_fail),
             ("test_parse_fail_invalidRegex", test_parse_fail_invalidRegex),
+            ("test_parse_mail", test_parse_mail),
+            ("test_parse_httpAddress", test_parse_httpAddress),
+            ("test_parse_ipAddress", test_parse_ipAddress),
+            ("test_parse_semver", test_parse_semver)
         ]
     }
 #endif
