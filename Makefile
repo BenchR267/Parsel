@@ -36,6 +36,7 @@ docs:
 	  --author_url "https://blog.benchr.de" \
 	  --github_url "https://github.com/BenchR267/Parsel" \
 	  --sourcekitten-sourcefile Parsel.json \
+	  --use-safe-filenames \
 	  --output docs/
 
 # generates xcode project and sequential operators
