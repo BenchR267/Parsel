@@ -28,6 +28,8 @@ coverage:
 # OSX only: generate documentation
 docs:
 	$(info generate documentation)
+	rm -rf docs
+	mkdir docs
 	swift build
 	sourcekitten doc --spm-module Parsel > Parsel.json
 	jazzy \
@@ -38,6 +40,7 @@ docs:
 	  --sourcekitten-sourcefile Parsel.json \
 	  --use-safe-filenames \
 	  --output docs/
+	touch docs/.nojekyll
 
 # generates xcode project and sequential operators
 # depends on OPERATOR_COUNT!
