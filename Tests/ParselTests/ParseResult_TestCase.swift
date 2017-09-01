@@ -154,7 +154,6 @@ class ParseResult_TestCase: XCTestCase {
             ("test_unwrap", test_unwrap),
             ("test_unwrap_fallback", test_unwrap_fallback),
             ("test_rest", test_rest),
-            ("test_rest", test_rest),
             ("test_error", test_error),
             ("test_isSuccess", test_isSuccess),
             ("test_isFail", test_isFail),

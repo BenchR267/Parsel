@@ -203,6 +203,8 @@ class Parser_Conjunction_TestCase: XCTestCase {
         static var allTests = [
             ("test_or", test_or),
             ("test_or_sequence", test_or_sequence),
+            ("test_or_static_collection", test_or_static_collection),
+            ("test_or_static_collection_fail", test_or_static_collection_fail),
             ("test_then", test_then),
             ("test_fallback", test_fallback),
             ("test_fallback_parser", test_fallback_parser),
