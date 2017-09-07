@@ -62,7 +62,7 @@ test:
 # call this on travis linux machines
 travis:
 	make initial
-	pod lib lint Parsel.podspec
+	pod lib lint parsel.podspec
 	make test
 
 # OSX only: call this on travis osx machines
