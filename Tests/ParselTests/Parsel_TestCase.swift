@@ -31,7 +31,7 @@ class Parsel_TestCase: XCTestCase {
         
         func char(_ c: Character) -> Parser<String, Character> {
             return Parser { str in
-                guard let first = str.characters.first, first == c else {
+                guard let first = str.first, first == c else {
                     return .fail(TestError(1))
                 }
                 return .success(result: first, rest: String(str.dropFirst()))

@@ -26,7 +26,7 @@ public enum Lexical {
     
     /// Parses one Character from a given String
     public static let char = Parser<String, Character> { input in
-        guard let first = input.characters.first else {
+        guard let first = input.first else {
             return .fail(Error.unexpectedToken(expected: "char", got: String(input.prefix(1))))
         }
         return .success(result: first, rest: String(input.dropFirst()))
@@ -38,7 +38,7 @@ public enum Lexical {
     /// - Returns: a parser that parses that one Character from a given String
     public static func char(_ character: Character) -> Parser<String, Character> {
         return Parser { input in
-            guard let first = input.characters.first, first == character else {
+            guard let first = input.first, first == character else {
                 return .fail(Error.unexpectedToken(expected: String(character), got: String(input.prefix(1))))
             }
             return .success(result: first, rest: String(input.dropFirst()))
@@ -106,7 +106,7 @@ public enum Lexical {
     
     /// Parses a digit [0-9] from a given String
     public static let digit = Parser<String, Int> { input in
-        guard let first = input.characters.first, let number = Int(String(first)) else {
+        guard let first = input.first, let number = Int(String(first)) else {
             return .fail(Error.unexpectedToken(expected: "digit", got: String(input.prefix(1))))
         }
         return .success(result: number, rest: String(input.dropFirst()))

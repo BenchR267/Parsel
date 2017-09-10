@@ -41,7 +41,7 @@ class Parser_TestCase: XCTestCase {
     
     func test_init() {
         let lit = Parser<String, Character> { str in
-            guard let first = str.characters.first else {
+            guard let first = str.first else {
                 return .fail(TestError(1))
             }
             return .success(result: first, rest: String(str.dropFirst()))
