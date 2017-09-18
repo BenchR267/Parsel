@@ -5,7 +5,7 @@
     <key>CFBundleIdentifier</key>
       <string>com.jazzy.parsel</string>
     <key>CFBundleName</key>
-      <string>Parsel</string>
+      <string>parsel</string>
     <key>DocSetPlatformFamily</key>
       <string>parsel</string>
     <key>isDashDocset</key>
