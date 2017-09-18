@@ -28,6 +28,13 @@ open class Parser<T, R> where T: Sequence {
     public func parse(_ input: T) -> ParseResult<T, R> {
         return self.parseFunction(input)
     }
+
+    /// Starts the parsing with that parser
+    ///
+    /// - Parameter input: calls self.parse with the given input
+    public subscript(_ input: T) -> ParseResult<T, R> {
+        return self.parse(input)
+    }
     
     /// just creates a parser that parses the given value as success
     ///
