@@ -52,7 +52,6 @@ extension Parser {
         }
     }
 
-    // swiftlint:disable line_length
     /// Concatenates the results of self + all given parsers.
     /// The first of all that succeedes will be used.
     ///

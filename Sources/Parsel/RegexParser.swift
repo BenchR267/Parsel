@@ -7,6 +7,7 @@
 
 import Foundation
 
+// swiftlint:disable type_name
 /// A shortcut to RegexParser
 public typealias R = RegexParser
 
@@ -69,7 +70,6 @@ public final class RegexParser: Parser<String, String> {
 (?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
 """.r
 
-    // swiftlint:disable line_length
     /// Parses a semantic version number (1.0.0, 1.0, …) thanks to https://git.daplie.com/coolaj86/semver-utils
     public static let semver = """
 v?((\\d+)\\.(\\d+)\\.(\\d+))(?:-([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?

@@ -134,6 +134,25 @@ class Operators_TestCase: XCTestCase {
         XCTAssertEqual(res4.0, "a")
         XCTAssertEqual(res4.1, 4)
     }
+    
+    func test_patternMatching() {
+        switch "abc" {
+        case L.asciiString: ()
+        default: XCTFail("'abc' did not match L.asciiString")
+        }
+        
+        switch "a" {
+        case L.char: ()
+        default: XCTFail("'a' did not match L.char'")
+        }
+        
+        switch "abc" {
+        case L.char: XCTFail("'abc' should not match L.char because not the whole String matches")
+        case L.digit: XCTFail("'abc' is no digit")
+        case L.string(length: 3): ()
+        default: XCTFail("'abc' should have matched L.string(length: 3) before")
+        }
+    }
 }
 
 #if os(Linux)
@@ -149,7 +168,8 @@ class Operators_TestCase: XCTestCase {
             ("test_rep_operator", test_rep_operator),
             ("test_rep_fail_operator", test_rep_fail_operator),
             ("test_fallback_operator", test_fallback_operator),
-            ("test_precedence", test_precedence)
+            ("test_precedence", test_precedence),
+            ("test_patternMatching", test_patternMatching),
         ]
     }
 #endif
