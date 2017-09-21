@@ -5,7 +5,7 @@
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
-@testable import Parsel
+@testable import parsel
 
 internal struct TestError: ParseError, Equatable {
     let code: Int

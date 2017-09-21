@@ -62,7 +62,7 @@ test:
 # call this on travis linux machines
 travis:
 	make initial
-	pod lib lint parsel.podspec
+	pod lib lint parsel.podspec --skip-tests
 	make test
 
 # OSX only: call this on travis osx machines
@@ -83,7 +83,7 @@ else
 release:
 	make generate
 	$(info Set version in podspec)
-	sed -i "" "s/\(.*s\.version[[:space:]]*=[[:space:]]*\'\).*\\('.*\)/\1${VERSION}\2/g" Parsel.podspec
+	sed -i "" "s/\(.*s\.version[[:space:]]*=[[:space:]]*\'\).*\\('.*\)/\1${VERSION}\2/g" parsel.podspec
 	$(info Set version in README)
 	sed -i "" "s/\(.*\.package.*, from: \"\).*\(\".*\)/\1${VERSION}\2/g" README.md
 	git add Parsel.podspec

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class Parser_Conjunction_TestCase: XCTestCase {
 
