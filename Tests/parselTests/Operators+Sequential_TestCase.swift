@@ -30,8 +30,8 @@ class Operators_Sequential_TestCase: XCTestCase {
         let p2 = char("a") <~ (char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k"))
         XCTAssertEqual(try p2.parse(input).unwrap(), "a")
         
-//        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) ~> char("k")
-//        XCTAssertEqual(try p3.parse(input).unwrap(), "k")
+        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) ~> char("k")
+        XCTAssertEqual(try p3.parse(input).unwrap(), "k")
     }
     
     func test_sequential_fail() throws {
