@@ -145,7 +145,7 @@ class Parser_Conjunction_TestCase: XCTestCase {
     }
     
     func test_rep() throws {
-        let list = char("[") >~ digit.rep(sep: string(", ")) <~ char("]")
+        let list = char("[") ~> digit.rep(sep: string(", ")) <~ char("]")
         let result = list.parse("[1, 2, 3, 4]")
         XCTAssertEqual(try result.unwrap(), [1, 2, 3, 4])
     }

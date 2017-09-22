@@ -110,7 +110,7 @@ class Operators_TestCase: XCTestCase {
     
     func test_precedence() throws {
         // ~ has higher presedence than ^^
-        let p = char("a") >~ char("b") <~ char("c") ^^ { String($0) }
+        let p = char("a") ~> char("b") <~ char("c") ^^ { String($0) }
         let res1 = p.parse("abcd")
         XCTAssertEqual(try res1.unwrap(), "b")
         XCTAssertEqual(try res1.rest(), "d")

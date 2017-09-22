@@ -12,14 +12,14 @@
 /// ^^ and ^^^
 precedencegroup ParserMapPrecedenceGroup {
     associativity: left
-    lowerThan: AdditionPrecedence, BitwiseShiftPrecedence, NilCoalescingPrecedence
+    lowerThan: AdditionPrecedence, BitwiseShiftPrecedence, NilCoalescingPrecedence, DefaultPrecedence
 }
 
-/// ~ and >~
+/// ~ and ~>
 precedencegroup ParserConjunctionGroup {
     associativity: left
     lowerThan: NilCoalescingPrecedence
-    higherThan: ParserMapPrecedenceGroup
+    higherThan: ParserMapPrecedenceGroup, DefaultPrecedence
 }
 
 /// <~
@@ -33,7 +33,6 @@ postfix operator +
 postfix operator *
 
 infix operator ~: ParserConjunctionGroup
-infix operator >~: ParserConjunctionGroup
 infix operator <~: ParserConjuctionRightGroup
 
 infix operator ^^: ParserMapPrecedenceGroup

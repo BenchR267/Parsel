@@ -6,7 +6,7 @@
 ///   - lhs: the first parser that has to succeed
 ///   - rhs: the second parser that has to succeed
 /// - Returns: a parser that parses lhs, then rhs on the rest and returns the result of rhs
-public func >~<Token, A, B>(lhs: Parser<Token, A>, rhs: @escaping @autoclosure () -> Parser<Token, B>) -> Parser<Token, B> {
+public func ~><Token, A, B>(lhs: Parser<Token, A>, rhs: @escaping @autoclosure () -> Parser<Token, B>) -> Parser<Token, B> {
     return Parser { tokens in
         return lhs.parse(tokens).flatMap { _, rest in
             return rhs().parse(rest)

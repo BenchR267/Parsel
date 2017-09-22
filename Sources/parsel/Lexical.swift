@@ -121,7 +121,7 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0b10110110`
-    public static let binaryNumber = (string("0b") >~ binaryDigit.atLeastOnce) ^^ { digits in
+    public static let binaryNumber = (string("0b") ~> binaryDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 2)
     }
     
@@ -134,7 +134,7 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0o12372106`
-    public static let octalNumber = (string("0o") >~ octalDigit.atLeastOnce) ^^ { digits in
+    public static let octalNumber = (string("0o") ~> octalDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 8)
     }
     
@@ -158,7 +158,7 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0xdeadbeaf` or `0xDEADBEAF`
-    public static let hexadecimalNumber = ((string("0x") | string("0X")) >~ hexadecimalDigit.atLeastOnce) ^^ { digits in
+    public static let hexadecimalNumber = ((string("0x") | string("0X")) ~> hexadecimalDigit.atLeastOnce) ^^ { digits in
         return buildNumber(digits: digits, base: 16)
     }
     
