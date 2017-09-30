@@ -55,6 +55,10 @@ initial:
 	swift package update
 	make generate
 
+# lint source files with swiftlint
+lint:
+	swiftlint lint
+
 # run tests
 test:
 	swift build
@@ -69,7 +73,7 @@ travis:
 # OSX only: call this on travis osx machines
 travisosx:
 	make initial
-	swiftlint lint
+	make lint
 	make coverage
 
 # release a new version!
