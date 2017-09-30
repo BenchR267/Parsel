@@ -39,6 +39,7 @@ docs:
 	  --github_url "https://github.com/BenchR267/parsel" \
 	  --sourcekitten-sourcefile parsel.json \
 	  --use-safe-filenames \
+	  --no-download-badge \
 	  --output docs/
 	touch docs/.nojekyll
 

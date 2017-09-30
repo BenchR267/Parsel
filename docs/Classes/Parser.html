@@ -865,7 +865,7 @@ If self fails, the parser still succeeds and consumes nothing.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Concatenates the results of both parsers.</p>
+                        <p>Succeeds if one of the given parsers succeeds.</p>
 
                       </div>
                       <div class="declaration">
@@ -888,7 +888,7 @@ If self fails, the parser still succeeds and consumes nothing.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>another parser which results should be added</p>
+                                  <p>another parser which should be used as fallback</p>
                                 </div>
                               </td>
                             </tr>
@@ -897,7 +897,7 @@ If self fails, the parser still succeeds and consumes nothing.</p>
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>a parser that contains both parsing results.</p>
+                        <p>a parser that parses self and if it fails, if parses other</p>
                       </div>
                     </section>
                   </div>
@@ -915,7 +915,7 @@ If self fails, the parser still succeeds and consumes nothing.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Concatenates the results of self + all given parsers.
+                        <p>Tries to parse all given parsers in the order they are given
 The first of all that succeedes will be used.</p>
 
                       </div>
@@ -1030,7 +1030,8 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
                       <div class="abstract">
                         <p>Provides a fallback if the parser fails.</p>
 
-<p><em>NOTE</em> If parsing fails, there are no tokens consumed!</p>
+<p><em>NOTE</em> If parsing fails, there are no tokens consumed!
+<em>NOTE</em> This parser never fails!</p>
 
                       </div>
                       <div class="declaration">
@@ -1131,9 +1132,9 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6parsel6ParserC11atLeastOnceACyxSayq_GGv"></a>
-                    <a name="//apple_ref/swift/Property/atLeastOnce" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6parsel6ParserC11atLeastOnceACyxSayq_GGv">atLeastOnce</a>
+                    <a name="/s:6parsel6ParserC10atLeastOneACyxSayq_GGv"></a>
+                    <a name="//apple_ref/swift/Property/atLeastOne" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6parsel6ParserC10atLeastOneACyxSayq_GGv">atLeastOne</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1148,7 +1149,7 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">atLeastOnce</span><span class="p">:</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">atLeastOne</span><span class="p">:</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1175,7 +1176,7 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n"><a href="../Classes/Parser.html#/s:6parsel6ParserC11atLeastOnceACyxSayq_GGv">atLeastOnce</a></span><span class="o">&lt;</span><span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">sep</span><span class="p">:</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">atLeastOnce</span><span class="o">&lt;</span><span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">sep</span><span class="p">:</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Parser</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -1387,7 +1388,7 @@ Will parse Errors.conjunctionOfEmptyCollection if given collection is empty!</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-09-22)</p>
+          <p>&copy; 2017 <a class="link" href="https://blog.benchr.de" target="_blank" rel="external">Benjamin Herzog</a>. All rights reserved. (Last updated: 2017-09-30)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

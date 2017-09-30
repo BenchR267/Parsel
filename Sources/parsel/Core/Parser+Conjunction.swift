@@ -36,10 +36,10 @@ extension Parser {
     
     // MARK: - OR
     
-    /// Concatenates the results of both parsers.
+    /// Succeeds if one of the given parsers succeeds.
     ///
-    /// - Parameter other: another parser which results should be added
-    /// - Returns: a parser that contains both parsing results.
+    /// - Parameter other: another parser which should be used as fallback
+    /// - Returns: a parser that parses self and if it fails, if parses other
     public func or(_ other: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
         return Parser { tokens in
             let result = self.parse(tokens)
@@ -52,7 +52,7 @@ extension Parser {
         }
     }
 
-    /// Concatenates the results of self + all given parsers.
+    /// Tries to parse all given parsers in the order they are given
     /// The first of all that succeedes will be used.
     ///
     /// - Parameter others: a sequence of parsers to use as fallback
@@ -94,6 +94,7 @@ extension Parser {
     /// - Returns: a parser that tries to parse and uses defaultValue if parsing failed.
     ///
     /// *NOTE* If parsing fails, there are no tokens consumed!
+    /// *NOTE* This parser never fails!
     public func fallback(_ defaultValue: @escaping @autoclosure () -> R) -> Parser<T, R> {
         return Parser { tokens in
             let result = self.parse(tokens)
@@ -125,7 +126,7 @@ extension Parser {
     
     /// Parses self repetitive with at least one success
     public var atLeastOne: Parser<T, [R]> {
-        return (self ~ self.rep) ^^ { [$0] + $1 }
+        return self ~ self.rep ^^ { [$0] + $1 }
     }
     
     /// Parses self repetitive with separator with at least one success
@@ -146,12 +147,12 @@ extension Parser {
     /// - Parameter count: the number of required succeeds
     /// - Returns: a parser that parses self repetitive with at least `count` succeeds
     public func atLeast(count: Int) -> Parser<T, [R]> {
-        return self.rep.filter({ parsed in
+        return self.rep.filter { parsed in
             guard parsed.count >= count else {
                 return Errors.expectedAtLeast(count, got: parsed.count)
             }
             return nil
-        })
+        }
     }
     
     /// Parses self exactly count times and return the results in an array
