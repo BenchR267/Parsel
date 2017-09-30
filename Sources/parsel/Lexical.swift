@@ -141,9 +141,9 @@ public enum Lexical {
     /// Parses a hexadecimal digit (0 to 15)
     public static let hexadecimalDigit = char.map { parsed -> Int in
         let ascii = asciiValue(from: parsed)
-        if (asciiValue(from: "a")...asciiValue(from: "z")).contains(ascii) {
+        if (asciiValue(from: "a")...asciiValue(from: "f")).contains(ascii) {
             return ascii - asciiValue(from: "a") + 10
-        } else if (asciiValue(from: "A")...asciiValue(from: "Z")).contains(ascii) {
+        } else if (asciiValue(from: "A")...asciiValue(from: "F")).contains(ascii) {
             return ascii - asciiValue(from: "A") + 10
         } else if (asciiValue(from: "0")...asciiValue(from: "9")).contains(ascii) {
             return ascii - asciiValue(from: "0")

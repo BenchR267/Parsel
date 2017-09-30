@@ -190,7 +190,7 @@ class Lexical_TestCase: XCTestCase {
             return XCTFail()
         }
         XCTAssertEqual(expected, "0 to 15")
-        XCTAssertEqual(got, "16")
+        XCTAssertEqual(got, "-1")
         
         let res6 = p.parse(",")
         guard case let .unexpectedToken(expected2, got2) = try res6.error() as! L.Error else {
@@ -234,7 +234,7 @@ class Lexical_TestCase: XCTestCase {
             return XCTFail()
         }
         XCTAssertEqual(expected2, "0 to 15")
-        XCTAssertEqual(got2, "16")
+        XCTAssertEqual(got2, "-1")
     }
     
     func test_decimalNumber() throws {
