@@ -86,7 +86,7 @@ public func ^^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> B)
 /// - Parameter lhs: the parser that should succeed at least once.
 /// - Returns: a parser that parses lhs repetitive with at least one successful result.
 public postfix func +<T, R>(lhs: Parser<T, R>) -> Parser<T, [R]> {
-    return lhs.atLeastOnce
+    return lhs.atLeastOne
 }
 
 /// Convenience oeprator for rep operation. (repetitive parsing.

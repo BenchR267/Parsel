@@ -92,7 +92,7 @@ class Parser_Conjunction_TestCase: XCTestCase {
     }
     
     func test_atLeastOnce() throws {
-        let p1 = char("a").atLeastOnce
+        let p1 = char("a").atLeastOne
         
         let res1 = p1.parse("aaaa")
         XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])

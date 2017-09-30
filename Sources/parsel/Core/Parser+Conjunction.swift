@@ -124,7 +124,7 @@ extension Parser {
     // MARK: - repetition
     
     /// Parses self repetitive with at least one success
-    public var atLeastOnce: Parser<T, [R]> {
+    public var atLeastOne: Parser<T, [R]> {
         return (self ~ self.rep) ^^ { [$0] + $1 }
     }
     

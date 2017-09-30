@@ -54,7 +54,7 @@ public enum Lexical {
     }
     
     /// Parses a string that consists only of characters from the ascii range
-    public static let asciiString = asciiChar.atLeastOnce ^^ { String($0) }
+    public static let asciiString = asciiChar.atLeastOne ^^ { String($0) }
     
     /// Parses a lowercase letter ('a'-'z')
     public static let lowercaseLetter = char.filter { parsed in
@@ -121,7 +121,7 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0b10110110`
-    public static let binaryNumber = (string("0b") ~> binaryDigit.atLeastOnce) ^^ { digits in
+    public static let binaryNumber = (string("0b") ~> binaryDigit.atLeastOne) ^^ { digits in
         return buildNumber(digits: digits, base: 2)
     }
     
@@ -134,7 +134,7 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0o12372106`
-    public static let octalNumber = (string("0o") ~> octalDigit.atLeastOnce) ^^ { digits in
+    public static let octalNumber = (string("0o") ~> octalDigit.atLeastOne) ^^ { digits in
         return buildNumber(digits: digits, base: 8)
     }
     
@@ -158,12 +158,12 @@ public enum Lexical {
     }
     
     /// A parser for numbers of the format `0xdeadbeaf` or `0xDEADBEAF`
-    public static let hexadecimalNumber = ((string("0x") | string("0X")) ~> hexadecimalDigit.atLeastOnce) ^^ { digits in
+    public static let hexadecimalNumber = ((string("0x") | string("0X")) ~> hexadecimalDigit.atLeastOne) ^^ { digits in
         return buildNumber(digits: digits, base: 16)
     }
     
     /// Parses a decimal number
-    public static let decimalNumber = digit.atLeastOnce ^^ { digits in
+    public static let decimalNumber = digit.atLeastOne ^^ { digits in
         return buildNumber(digits: digits, base: 10)
     }
     
@@ -214,7 +214,7 @@ public enum Lexical {
     public static let oneWhitespace = space | newLine | carriageReturn | tab
     
     /// Parses at least one whitespace
-    public static let whitespaces = oneWhitespace.atLeastOnce
+    public static let whitespaces = oneWhitespace.atLeastOne
     
     // MARK: - Helpers
     
