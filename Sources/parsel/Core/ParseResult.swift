@@ -47,7 +47,7 @@ public enum ParseResult<Token, Result> where Token: Sequence {
     ///
     /// - Parameter transform: a function that takes a result and returns a parse result
     /// - Returns: the value that was produced by f if self was success or still fail if not
-    public func flatMap<B>(_ transform: (Result, Token) -> ParseResult<Token, B>) -> ParseResult<Token, B> {
+    public func flatMap<B, S>(_ transform: (Result, Token) -> ParseResult<S, B>) -> ParseResult<S, B> {
         switch self {
         case let .success(result, rest):
             return transform(result, rest)

@@ -2,9 +2,8 @@ import parsel
 
 let input = """
 val a = 5
-val b = 4
-val c = a + b
+var b = 4
 """
 
-let res = lexer.parse(input)
-print(try res.unwrap())
+let res = lexer.parse(input).flatMap({ tokens, _ in parser.parse(tokens) })
+dump(try res.unwrap())

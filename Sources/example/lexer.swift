@@ -19,7 +19,7 @@ public enum Token {
     }
     
     case literal(Literal)
-    case op(Operator)
+    case operate(Operator)
     case keyword(Keyword)
     case identifier(name: String)
 }
@@ -27,10 +27,10 @@ public enum Token {
 private let intLiteral = L.number ^^ { Token.literal(.int($0)) }
 private let literal = intLiteral
 
-private let plusOperator = L.plus.typeErased ^^ { Token.op(.plus) }
-private let minusOperator = L.minus.typeErased ^^ { Token.op(.minus) }
-private let equalOperator = L.equal.typeErased ^^ { Token.op(.equal) }
-private let assignOperator = L.assign.typeErased ^^ { Token.op(.assign) }
+private let plusOperator = L.plus.typeErased ^^ { Token.operate(.plus) }
+private let minusOperator = L.minus.typeErased ^^ { Token.operate(.minus) }
+private let equalOperator = L.equal.typeErased ^^ { Token.operate(.equal) }
+private let assignOperator = L.assign.typeErased ^^ { Token.operate(.assign) }
 private let `operator` = Parser.or([plusOperator, minusOperator, equalOperator, assignOperator])
 
 private let val = L.string("val").typeErased ^^ { Token.keyword(.val) }
@@ -43,10 +43,10 @@ private let identifier = letterAsString ~ (letterAsString | digitAsString).rep ^
     return Token.identifier(name: $0.0 + $0.1.joined())
 }
 
-public let lexer = Parser.or([literal, `operator`, identifier]).rep(sep: L.oneWhitespace)
+public let lexer = Parser.or([keyword, literal, `operator`, identifier]).rep(sep: L.oneWhitespace)
 
 extension Token.Literal: Equatable {
-    public static func ==(lhs: Token.Literal, rhs: Token.Literal) -> Bool {
+    public static func == (lhs: Token.Literal, rhs: Token.Literal) -> Bool {
         switch (lhs, rhs) {
         case let (.int(l), .int(r)): return l == r
         }
@@ -54,10 +54,10 @@ extension Token.Literal: Equatable {
 }
 
 extension Token: Equatable {
-    public static func ==(lhs: Token, rhs: Token) -> Bool {
+    public static func == (lhs: Token, rhs: Token) -> Bool {
         switch (lhs, rhs) {
         case let (.literal(l), .literal(r)): return l == r
-        case let (.op(l), .op(r)): return l == r
+        case let (.operate(l), .operate(r)): return l == r
         case let (.keyword(l), .keyword(r)): return l == r
         case let (.identifier(l), .identifier(r)): return l == r
         default: return false
