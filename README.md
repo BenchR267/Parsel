@@ -15,7 +15,7 @@ let digit = Parser<String, Int> { input in
 We can now simply extend this to create a parser that parses an addition of two digits from a string:
 
 ```Swift
-let addition = (digit ~ L.plus ~ digit).map { a, _, b in a + b } // `L.plus` is a predefined parser that parses the `+` sign
+let addition = (digit <~ L.plus ~ digit).map(+) // `L.plus` is a predefined parser that parses the `+` sign
 
 let result = addition.parse("2+4")
 try! result.unwrap() // Int: 6

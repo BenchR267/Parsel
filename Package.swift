@@ -13,6 +13,9 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(
+            name: "example",
+            dependencies: []),
+        .target(
             name: "parsel",
             dependencies: []),
         .testTarget(
