@@ -14,12 +14,12 @@ public enum ParseError: parsel.ParseError {
 
 public enum AST {
     public enum Declaration {
-        case val, `var`
+        case constant, variable
         
         init(token: Token.Keyword) {
             switch token {
-            case .val: self = .val
-            case .var: self = .var
+            case .val: self = .constant
+            case .var: self = .variable
             }
         }
     }
@@ -77,4 +77,6 @@ private let declaration = (valDeclaration | varDeclaration).map { info in
     return AST.declaration(AST.Declaration(token: info.0), name: info.1, value: info.2)
 }
 
-let parser = declaration.rep
+private let statement = declaration
+
+let parser = statement.rep
