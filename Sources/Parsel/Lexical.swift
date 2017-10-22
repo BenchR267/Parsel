@@ -13,13 +13,20 @@ public typealias L = Lexical
 public enum Lexical {
     
     /// Errors that could occur while lexical parsing
-    public enum Error: ParseError {
+    public enum Error: ParseError, CustomStringConvertible {
         
         /// an unexpected token occured
         ///
         /// - expected: a description of what was expected
         /// - got: the actual value at that position
         case unexpectedToken(expected: String, got: String)
+        
+        public var description: String {
+            switch self {
+            case let .unexpectedToken(expected, got):
+                return "Parsing Error: Expected \(expected) but got \(got)."
+            }
+        }
     }
     
     // MARK: - strings
