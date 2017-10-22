@@ -24,7 +24,7 @@ precedencegroup ParserConjunctionGroup {
 
 /// <~
 precedencegroup ParserConjuctionRightGroup {
-    associativity: right
+    associativity: left
     lowerThan: NilCoalescingPrecedence
     higherThan: ParserConjunctionGroup
 }
