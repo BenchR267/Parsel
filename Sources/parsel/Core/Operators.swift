@@ -12,14 +12,14 @@
 /// ^^ and ^^^
 precedencegroup ParserMapPrecedenceGroup {
     associativity: left
-    lowerThan: AdditionPrecedence, BitwiseShiftPrecedence, NilCoalescingPrecedence
+    lowerThan: AdditionPrecedence, BitwiseShiftPrecedence, NilCoalescingPrecedence, DefaultPrecedence
 }
 
-/// ~ and >~
+/// ~ and ~>
 precedencegroup ParserConjunctionGroup {
     associativity: left
     lowerThan: NilCoalescingPrecedence
-    higherThan: ParserMapPrecedenceGroup
+    higherThan: ParserMapPrecedenceGroup, DefaultPrecedence
 }
 
 /// <~
@@ -33,7 +33,6 @@ postfix operator +
 postfix operator *
 
 infix operator ~: ParserConjunctionGroup
-infix operator >~: ParserConjunctionGroup
 infix operator <~: ParserConjuctionRightGroup
 
 infix operator ^^: ParserMapPrecedenceGroup
@@ -87,7 +86,7 @@ public func ^^^<T, R, B>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> B)
 /// - Parameter lhs: the parser that should succeed at least once.
 /// - Returns: a parser that parses lhs repetitive with at least one successful result.
 public postfix func +<T, R>(lhs: Parser<T, R>) -> Parser<T, [R]> {
-    return lhs.atLeastOnce
+    return lhs.atLeastOne
 }
 
 /// Convenience oeprator for rep operation. (repetitive parsing.
@@ -116,4 +115,29 @@ public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> R) -> 
 /// - Returns: a parser that tries to parse self and parses rhs if self failed.
 public func ??<T, R>(lhs: Parser<T, R>, rhs: @escaping @autoclosure () -> Parser<T, R>) -> Parser<T, R> {
     return lhs.fallback(rhs())
+}
+
+/// ~= allows the usage of `Parser`s in switch-case pattern matching statements.
+///
+/// example:
+/// ```Swift
+/// switch "a" {
+///     case L.char: print("it's a char \o/")
+///     case L.digit: print("it's a digit!")
+///     default: print("it's something unexpected :/")
+/// ```
+///
+/// **NOTE**: Be aware that this also checks if the rest is empty to ensure the
+///           whole input matches!
+///
+/// - Parameters:
+///   - lhs: the pattern, in this case the parser that should succeed
+///   - rhs: the value that the pattern should be matched with
+/// - Returns: true if the parsing succeeds, false otherwise
+public func ~=<T, U>(lhs: Parser<T, U>, rhs: T) -> Bool {
+    let res = lhs.parse(rhs)
+    guard let rest = try? res.rest() else {
+        return false
+    }
+    return res.isSuccess() && !rest.contains(where: {_ in true})
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>^^(_:_:) Function Reference</title>
+    <title>~&gt;(_:_:) Function Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Function/^^(_:_:)" class="dashAnchor"></a>
-    <a title="^^(_:_:) Function Reference"></a>
+    <a name="//apple_ref/swift/Function/~&gt;(_:_:)" class="dashAnchor"></a>
+    <a title="~&gt;(_:_:) Function Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">parsel Docs</a> (100% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">parsel Reference</a>
         <img id="carat" src="../img/carat.png" />
-        ^^(_:_:) Function Reference
+        ~&gt;(_:_:) Function Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -200,14 +200,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>^^(_:_:)</h1>
+            <h1>~&gt;(_:_:)</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">^^&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">B</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">~&gt;&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">A</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
-            <p>Convenience operator for map operations.</p>
+            <p>Sequential conjunction of two parsers while ignoring the result of lhs</p>
 
           </section>
           <section class="section task-group-section">
@@ -216,9 +216,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6parsel2xxoiAA6ParserCyxq0_GADyxq_G_q0_q_cts8SequenceRzr1_lF1TL_xmfp"></a>
-                    <a name="//apple_ref/swift/Parameter/T" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6parsel2xxoiAA6ParserCyxq0_GADyxq_G_q0_q_cts8SequenceRzr1_lF1TL_xmfp">T</a>
+                    <a name="/s:6parsel2tgoiAA6ParserCyxq0_GADyxq_G_AEyXKts8SequenceRzr1_lF5TokenL_xmfp"></a>
+                    <a name="//apple_ref/swift/Parameter/Token" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6parsel2tgoiAA6ParserCyxq0_GADyxq_G_AEyXKts8SequenceRzr1_lF5TokenL_xmfp">Token</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -232,7 +232,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">^^&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Typealiases.html#/s:6parsel1Ra">R</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">B</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">~&gt;&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">A</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">A</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kd">@autoclosure</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Parser.html">Parser</a></span><span class="o">&lt;</span><span class="kt">Token</span><span class="p">,</span> <span class="kt">B</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>

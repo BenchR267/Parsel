@@ -5,7 +5,7 @@
 //  Created by Benjamin Herzog on 13.08.17.
 //
 
-@testable import Parsel
+@testable import parsel
 
 internal struct TestError: ParseError, Equatable {
     let code: Int
@@ -21,7 +21,7 @@ internal struct TestError: ParseError, Equatable {
 
 internal func char(_ c: Character) -> Parser<String, Character> {
     return Parser { str in
-        guard let first = str.characters.first, first == c else {
+        guard let first = str.first, first == c else {
             return .fail(TestError(1))
         }
         return .success(result: first, rest: String(str.dropFirst()))
@@ -38,10 +38,10 @@ internal func string(_ s: String) -> Parser<String, String> {
 }
 
 internal let digit = Parser<String, Int> { str in
-    guard let first = str.characters.first, let number = Int(String(first)) else {
+    guard let first = str.first, let number = Int(String(first)) else {
         return .fail(TestError(1))
     }
     return .success(result: number, rest: String(str.dropFirst()))
 }
 
-internal let number = digit.atLeastOnce.map { Int($0.map(String.init).joined()) ?? 0 }
+internal let number = digit.atLeastOne.map { Int($0.map(String.init).joined()) ?? 0 }

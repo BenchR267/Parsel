@@ -4,19 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "Parsel",
+    name: "parsel",
     products: [
         .library(
-            name: "Parsel",
-            targets: ["Parsel"])
+            name: "parsel",
+            targets: ["parsel"])
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Parsel",
+            name: "parsel",
             dependencies: []),
         .testTarget(
-            name: "ParselTests",
-            dependencies: ["Parsel"])
+            name: "parselTests",
+            dependencies: ["parsel"])
     ]
 )

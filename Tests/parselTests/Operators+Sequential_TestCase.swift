@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class Operators_Sequential_TestCase: XCTestCase {
     
@@ -30,7 +30,7 @@ class Operators_Sequential_TestCase: XCTestCase {
         let p2 = char("a") <~ (char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k"))
         XCTAssertEqual(try p2.parse(input).unwrap(), "a")
         
-        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) >~ char("k")
+        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) ~> char("k")
         XCTAssertEqual(try p3.parse(input).unwrap(), "k")
     }
     
@@ -41,7 +41,7 @@ class Operators_Sequential_TestCase: XCTestCase {
     }
     
     func test_sequential() {
-        let p1 = char("a") >~ char("b")
+        let p1 = char("a") ~> char("b")
         let p2 = char("a") <~ char("b")
         
         let input = "ab"
@@ -75,7 +75,7 @@ class Operators_Sequential_TestCase: XCTestCase {
         let p2 = char("a") <~ (char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j") ~ char("k"))
         XCTAssertEqual(try p2.parse(input).unwrap(), "a")
         
-        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) >~ char("k")
+        let p3 = (char("a") ~ char("b") ~ char("c") ~ char("d") ~ char("e") ~ char("f") ~ char("g") ~ char("h") ~ char("i") ~ char("j")) ~> char("k")
         XCTAssertEqual(try p3.parse(input).unwrap(), "k")
     }
     

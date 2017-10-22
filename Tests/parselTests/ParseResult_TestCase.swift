@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class ParseResult_TestCase: XCTestCase {
     
@@ -153,7 +153,7 @@ class ParseResult_TestCase: XCTestCase {
             ("test_equal", test_equal),
             ("test_unwrap", test_unwrap),
             ("test_unwrap_fallback", test_unwrap_fallback),
-            ("test_rest", test_rest),
+            ("test_unwrap_fallback_operator", test_unwrap_fallback_operator),
             ("test_rest", test_rest),
             ("test_error", test_error),
             ("test_isSuccess", test_isSuccess),

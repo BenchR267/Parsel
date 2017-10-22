@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class Lexical_TestCase: XCTestCase {
     
@@ -205,7 +205,7 @@ class Lexical_TestCase: XCTestCase {
             return XCTFail()
         }
         XCTAssertEqual(expected, "0 to 15")
-        XCTAssertEqual(got, "16")
+        XCTAssertEqual(got, "-1")
         
         let res6 = p.parse(",")
         guard case let .unexpectedToken(expected2, got2) = try res6.error() as! L.Error else {
@@ -225,12 +225,12 @@ class Lexical_TestCase: XCTestCase {
     func test_hexadecimalNumber() throws {
         let p = L.hexadecimalNumber
         
-        let res1 = p.parse("0xdeadbeafg")
-        XCTAssertEqual(try res1.unwrap(), 3735928495)
+        let res1 = p.parse("0xdeadg")
+        XCTAssertEqual(try res1.unwrap(), 57005)
         XCTAssertEqual(try res1.rest(), "g")
         
-        let res2 = p.parse("0xDEADBEAFG")
-        XCTAssertEqual(try res2.unwrap(), 3735928495)
+        let res2 = p.parse("0xDEADG")
+        XCTAssertEqual(try res2.unwrap(), 57005)
         XCTAssertEqual(try res2.rest(), "G")
         
         let res3 = p.parse("0x12345G")
@@ -249,7 +249,7 @@ class Lexical_TestCase: XCTestCase {
             return XCTFail()
         }
         XCTAssertEqual(expected2, "0 to 15")
-        XCTAssertEqual(got2, "16")
+        XCTAssertEqual(got2, "-1")
     }
     
     func test_decimalNumber() throws {

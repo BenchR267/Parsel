@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class Parser_Conjunction_TestCase: XCTestCase {
 
@@ -92,7 +92,7 @@ class Parser_Conjunction_TestCase: XCTestCase {
     }
     
     func test_atLeastOnce() throws {
-        let p1 = char("a").atLeastOnce
+        let p1 = char("a").atLeastOne
         
         let res1 = p1.parse("aaaa")
         XCTAssertEqual(try res1.unwrap(), ["a", "a", "a", "a"])
@@ -145,7 +145,7 @@ class Parser_Conjunction_TestCase: XCTestCase {
     }
     
     func test_rep() throws {
-        let list = char("[") >~ digit.rep(sep: string(", ")) <~ char("]")
+        let list = char("[") ~> digit.rep(sep: string(", ")) <~ char("]")
         let result = list.parse("[1, 2, 3, 4]")
         XCTAssertEqual(try result.unwrap(), [1, 2, 3, 4])
     }
@@ -203,13 +203,15 @@ class Parser_Conjunction_TestCase: XCTestCase {
         static var allTests = [
             ("test_or", test_or),
             ("test_or_sequence", test_or_sequence),
+            ("test_or_static_collection", test_or_static_collection),
+            ("test_or_static_collection_fail", test_or_static_collection_fail),
             ("test_then", test_then),
             ("test_fallback", test_fallback),
             ("test_fallback_parser", test_fallback_parser),
             ("test_atLeastOnce", test_atLeastOnce),
-            ("test_atLeastOnce_sep", test_atLeastOnce_sep),
             ("test_atLeast_count", test_atLeast_count),
             ("test_exactly", test_exactly),
+            ("test_atLeastOnce_sep", test_atLeastOnce_sep),
             ("test_rep", test_rep),
             ("test_rep2", test_rep2),
             ("test_rep_fail", test_rep_fail),

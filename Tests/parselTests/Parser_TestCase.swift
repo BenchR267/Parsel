@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Parsel
+@testable import parsel
 
 class Parser_TestCase: XCTestCase {
     
@@ -41,7 +41,7 @@ class Parser_TestCase: XCTestCase {
     
     func test_init() {
         let lit = Parser<String, Character> { str in
-            guard let first = str.characters.first else {
+            guard let first = str.first else {
                 return .fail(TestError(1))
             }
             return .success(result: first, rest: String(str.dropFirst()))
@@ -115,7 +115,12 @@ class Parser_TestCase: XCTestCase {
         let res = p.parse("123")
         XCTAssertEqual(try res.error() as! GenericParseError, GenericParseError(message: "a message"))
     }
-    
+
+    func test_subscript() throws {
+        let p = L.char
+        let res = p["abc"]
+        XCTAssertEqual(try res.unwrap(), "a")
+    }
 }
 
 #if os(Linux)
@@ -131,6 +136,7 @@ class Parser_TestCase: XCTestCase {
             ("test_filter", test_filter),
             ("test_fail_error", test_fail_error),
             ("test_fail_message", test_fail_message),
+            ("test_subscript", test_subscript),
         ]
     }
 #endif

@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import ParselTests
+@testable import parselTests
 
 #if os(Linux)
 XCTMain([
