@@ -26,6 +26,6 @@ tests = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file)
 # Check for test case of added/modified files
 files.each do |file|
 	name = File.basename(file, ".swift")
-	test = Dir.glob(/#{name}_TestCase\.swift/).first.to_s
+	test = Dir.glob("Tests/**/#{name}_TestCase.swift").first.to_s
   	fail "Please add a test case for #{file}." if test == ''
 end
