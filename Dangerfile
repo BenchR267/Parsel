@@ -23,10 +23,9 @@ end
 files = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && !isTest?(file) }
 tests = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && isTest?(file) }
 
+# Check for test case of added/modified files
 files.each do |file|
-	next if tests.any? { |e|
-		name = file.match(/\/([a-zA-Z_0-9]*)\.swift/).captures.first
-		e.include? name
-	}
-	fail("Please add a test case for #{file}.")
+	name = File.basename(file, ".swift")
+	test = Dir.glob(/#{name}_TestCase\.swift/).first.to_s
+  	fail "Please add a test case for #{file}." if test == ''
 end
