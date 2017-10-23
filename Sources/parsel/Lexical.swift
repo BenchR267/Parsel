@@ -57,11 +57,11 @@ public enum Lexical {
     /// - Parameter character: the Character that should be parsed
     /// - Returns: a parser that parses that one Character from a given String
     public static func char(_ character: Character) -> Parser<String, Character> {
-        return self.char(condition: { $0 == character }).mapError { err in
-            guard case let .unexpectedToken(_, got)? = err as? Error else {
-                return err
+        return Parser<String, Character> { input in
+            guard let first = input.characters.first, first == character else {
+                return .fail(Error.unexpectedToken(expected: character.description, got: String(input.prefix(1))))
             }
-            return Error.unexpectedToken(expected: String(character), got: got)
+            return .success(result: first, rest: String(input.dropFirst()))
         }
     }
     
