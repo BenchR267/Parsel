@@ -1,6 +1,8 @@
 //: In the [previous](@previous) page we defined a parser to parse a `Character` from a given `String`. This parser is actually pre-defined in parsel in the `Lexical` namespace *(or short `L`)*.
 try L.char.parse("foo").unwrap()
 /*:
+ ## Calculator 1️⃣➕1️⃣
+ 
  There are many more very useful parsers defined in `L`, so let's use some of them to build a very limited and easy **calculator**!
 
  Before we can start, here is a very useful function we need.
@@ -48,6 +50,7 @@ try line.parse("3*5+10").unwrap()
 /*:
  As you can see, the parsers already get very nice to read and to understand. That is the whole part behind parser combinators: you define them explicitly on low level and combine those easy ones to get complex ones.
  
- Our calculator is very limited, it can only calculate `Int`s , only the operations `+`, `-` and `*` and it can only process two operands per operation. Check out [**Calculator**A](https://github.com/BenchR267/Calculator) for a working example project with more functionality built with parsel.
+ Our calculator is very limited, it can only calculate `Int`s , only the operations `+`, `-` and `*` and it can only process two operands per operation. Check out [**Calculator**](https://github.com/BenchR267/Calculator) for a working example project with more functionality built with parsel.
+ 
+ In the [next](@next) page we take a look on sequences which we can use to produce multiple values.
  */
-//: Use the [next](@next) page for experiments with the framework. Use the documentation if you need any help! If you find any bug or you can think about any functionality that should be added, do not hesitate to open an issue [here](https://github.com/BenchR267/parsel/issues). Thanks for using parsel!
