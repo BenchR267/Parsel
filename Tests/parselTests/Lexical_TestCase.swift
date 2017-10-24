@@ -25,20 +25,35 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "")
     }
     
+    func test_char_condition() throws {
+        let p = L.char { L.asciiValue(from: $0) >= L.asciiValue(from: "a") }
+        
+        let res1 = p.parse("ABC")
+        guard case let .unexpectedToken(expected, got)? = try res1.error() as? L.Error else {
+            return XCTFail()
+        }
+        XCTAssertEqual(expected, "certain char")
+        XCTAssertEqual(got, "A")
+        
+        let res2 = p.parse("abc")
+        XCTAssertEqual(try res2.unwrap(), "a")
+        XCTAssertEqual(try res2.rest(), "bc")
+    }
+    
     func test_char_specific() throws {
         let p = L.char("a")
         
         let res1 = p.parse("ab")
         XCTAssertEqual(try res1.unwrap(), "a")
         XCTAssertEqual(try res1.rest(), "b")
-        
+
         let res2 = p.parse("ba")
         guard case let .unexpectedToken(expected, got) = try res2.error() as! L.Error else {
             return XCTFail()
         }
         XCTAssertEqual(expected, "a")
         XCTAssertEqual(got, "b")
-        
+
         let res3 = p.parse("")
         guard case let .unexpectedToken(expected2, got2) = try res3.error() as! L.Error else {
             return XCTFail()
@@ -389,12 +404,17 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(L.asciiValue(from: Character("😜")), -1)
         XCTAssertEqual(L.asciiValue(from: Character("a")), 97)
     }
+
+    func test_error_description() {
+        XCTAssertEqual(L.Error.unexpectedToken(expected: "EXP", got: "GOT").description, "Parsing Error: Expected EXP but got GOT.")
+    }
 }
 
 #if os(Linux)
     extension Lexical_TestCase {
         static var allTests = [
             ("test_char", test_char),
+            ("test_char_condition", test_char_condition),
             ("test_char_specific", test_char_specific),
             ("test_string", test_string),
             ("test_string_length", test_string_length),
@@ -416,6 +436,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_uppercaseLetter", test_uppercaseLetter),
             ("test_letter", test_letter),
             ("test_asciiValue", test_asciiValue),
+            ("test_error_description", test_error_description)
         ]
     }
 #endif

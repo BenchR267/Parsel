@@ -13,13 +13,20 @@ public typealias L = Lexical
 public enum Lexical {
     
     /// Errors that could occur while lexical parsing
-    public enum Error: ParseError {
+    public enum Error: ParseError, CustomStringConvertible {
         
         /// an unexpected token occured
         ///
         /// - expected: a description of what was expected
         /// - got: the actual value at that position
         case unexpectedToken(expected: String, got: String)
+        
+        public var description: String {
+            switch self {
+            case let .unexpectedToken(expected, got):
+                return "Parsing Error: Expected \(expected) but got \(got)."
+            }
+        }
     }
     
     // MARK: - strings
@@ -32,14 +39,27 @@ public enum Lexical {
         return .success(result: first, rest: String(input.dropFirst()))
     }
     
+    /// Parses a character that matches condition
+    ///
+    /// - Parameter condition: a function that returns true if the character should be parsed
+    /// - Returns: a parser that tries to parse a character that matches condition
+    public static func char(condition: @escaping (Character) -> Bool) -> Parser<String, Character> {
+        return Parser { input in
+            guard let first = input.characters.first, condition(first) else {
+                return .fail(Error.unexpectedToken(expected: "certain char", got: String(input.prefix(1))))
+            }
+            return .success(result: first, rest: String(input.dropFirst()))
+        }
+    }
+    
     /// Parses a specific Character from a given String
     ///
     /// - Parameter character: the Character that should be parsed
     /// - Returns: a parser that parses that one Character from a given String
     public static func char(_ character: Character) -> Parser<String, Character> {
-        return Parser { input in
-            guard let first = input.first, first == character else {
-                return .fail(Error.unexpectedToken(expected: String(character), got: String(input.prefix(1))))
+        return Parser<String, Character> { input in
+            guard let first = input.characters.first, first == character else {
+                return .fail(Error.unexpectedToken(expected: character.description, got: String(input.prefix(1))))
             }
             return .success(result: first, rest: String(input.dropFirst()))
         }
@@ -58,7 +78,7 @@ public enum Lexical {
     
     /// Parses a lowercase letter ('a'-'z')
     public static let lowercaseLetter = char.filter { parsed in
-        guard (asciiValue(from: "a")...asciiValue(from: "z")).contains(asciiValue(from: parsed)) else {
+        guard ("a"..."z").contains(parsed) else {
             return Error.unexpectedToken(expected: "lowercase", got: String(parsed))
         }
         return nil
@@ -66,7 +86,7 @@ public enum Lexical {
     
     /// Parses an uppercase letter ('A'-'Z')
     public static let uppercaseLetter = char.filter { parsed in
-        guard (asciiValue(from: "A")...asciiValue(from: "Z")).contains(asciiValue(from: parsed)) else {
+        guard ("A"..."Z").contains(parsed) else {
             return Error.unexpectedToken(expected: "uppercase", got: String(parsed))
         }
         return nil
@@ -141,11 +161,11 @@ public enum Lexical {
     /// Parses a hexadecimal digit (0 to 15)
     public static let hexadecimalDigit = char.map { parsed -> Int in
         let ascii = asciiValue(from: parsed)
-        if (asciiValue(from: "a")...asciiValue(from: "f")).contains(ascii) {
+        if ("a"..."f").contains(parsed) {
             return ascii - asciiValue(from: "a") + 10
-        } else if (asciiValue(from: "A")...asciiValue(from: "F")).contains(ascii) {
+        } else if ("A"..."F").contains(parsed) {
             return ascii - asciiValue(from: "A") + 10
-        } else if (asciiValue(from: "0")...asciiValue(from: "9")).contains(ascii) {
+        } else if ("0"..."9").contains(parsed) {
             return ascii - asciiValue(from: "0")
         } else {
             return -1
