@@ -1,7 +1,3 @@
-// # Parser combinators
-
-import Foundation
-
 /*:
  
  # parsel
@@ -34,6 +30,9 @@ let character = Parser<String, Character> { input in
 //: At next we need to use our created parser with an input. We try multiple ones, some will succeed, others will fail.
 character.parse("abc")
 character.parse("")
-//: The result of the parse operation is a `ParseResult`. You can use the `unwrap()` and `error()` methods to get the corresponding values, but be careful since they can throw!
+//: The result of the parse operation is a `ParseResult`. You can use the `unwrap()`, `rest()` and `error()` methods to get the corresponding values, but be careful since they can throw!
 try character.parse("abc").unwrap()
+try character.parse("abc").rest()
 try character.parse("").error()
+
+//: In the [**next**](@next) page we are going to use pre-defined lexical parsers to create a more **complex** one!
