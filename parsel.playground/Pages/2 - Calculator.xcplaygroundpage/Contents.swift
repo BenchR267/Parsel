@@ -9,7 +9,7 @@ try L.char.parse("foo").unwrap()
  
  * Parser<S, A>.map(f: (A) -> B) -> Parser<S, B>
  */
-let digitPlusOne = L.digit.map({ $0 + 1 })
+let digitPlusOne = L.digit.map { $0 + 1 }
 try digitPlusOne.parse("1").unwrap()
 /*:
  There exists also a custom operator `^^` that does the same as `map`, but you do not need to specify annoying brackets.
@@ -25,9 +25,9 @@ try twoDigits.parse("12").unwrap()
 let multiply = L.decimalNumber ~ L.multiply ~ L.decimalNumber ^^ { n1, _, n2 in n1 * n2 }
 try multiply.parse("42*5").unwrap()
 /*:
- Since we could potentially also declare division as an own parser we would like to define point arithmetics as an own parser that we can use in lower prioritized ones.
+ Since we could potentially also declare division as an parser we would like to define point arithmetics as an own parser that we can use in lower prioritized ones.
  
- We decide that just a number is also a valid point arithmetic. `|` helps us with or combination of two parsers, the first that succeeds defines the result.
+ We decide that just a number is also a valid point arithmetic. `|` helps us with an or-combination of two parsers, the first that succeeds defines the result.
  */
 let point = multiply | L.decimalNumber
 /*:
@@ -35,10 +35,10 @@ let point = multiply | L.decimalNumber
  At next, we define plus and minus operations. Since we always ignore the sign character, we can also use `<~` *(needs both parsers to succeed, but ignores the right result)* and `~>` *(also needs both parsers to succeed, but ignores the left result)*.
  */
 let plus = point <~ L.plus ~ point ^^ (+)
-try plus.parse("4*3+5")
+try plus.parse("4*3+5").unwrap()
 
 let minus = point <~ L.minus ~ point ^^ (-)
-try minus.parse("4*3-5")
+try minus.parse("4*3-5").unwrap()
 /*:
  Line calculations are lower prioritized, that is the reason we used point as the operands. We also define `line` as the summary of all line calculations, a single number included as well.
  */
@@ -48,6 +48,6 @@ try line.parse("3*5+10").unwrap()
 /*:
  As you can see, the parsers already get very nice to read and to understand. That is the whole part behind parser combinators: you define them explicitly on low level and combine those easy ones to get complex ones.
  
- Our calculator is very limited, it can only calculate `Int`s and also only the operations `+`, `-` and `*`. Check out [**Calculator**A](https://github.com/BenchR267/Calculator) for a working example project with more functionality built with parsel.
+ Our calculator is very limited, it can only calculate `Int`s , only the operations `+`, `-` and `*` and it can only process two operands per operation. Check out [**Calculator**A](https://github.com/BenchR267/Calculator) for a working example project with more functionality built with parsel.
  */
 //: Use the [next](@next) page for experiments with the framework. Use the documentation if you need any help! If you find any bug or you can think about any functionality that should be added, do not hesitate to open an issue [here](https://github.com/BenchR267/parsel/issues). Thanks for using parsel!
