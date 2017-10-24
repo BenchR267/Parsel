@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name              = 'parsel'
+  s.name              = 'Parsel'
   s.version           = '3.0.0'
   s.summary           = 'parsel is a parser combinator library written in Swift'
 
@@ -21,9 +21,5 @@ Parsing is a very common task, it does not always mean to parse source code or J
   s.prepare_command = <<-CMD
     make initial
   CMD
-
-  s.test_spec 'parselTests' do |test_spec|
-    test_spec.source_files = 'Tests/ParselTests/*.swift'
-  end  
 
 end
