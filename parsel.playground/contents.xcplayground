@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='1 - Starting'/>
+        <page name='2 - Calculator'/>
+        <page name='3 - Sequences'/>
+        <page name='4 - Playground'/>
+    </pages>
+</playground>

@@ -16,6 +16,7 @@ clean:
 	rm -f parsel.json
 	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 	rm -rf parsel.xcodeproj
+	rm -rf parsel.playground/Sources/*
 
 # OSX only: build and run tests + measure code coverage and upload to codecov
 coverage:
@@ -49,11 +50,17 @@ generate:
 	$(info generate Swift source files…)
 	swift ./Scripts/SequentialOperators.swift $(OPERATOR_COUNT) > ./Sources/parsel/Core/Operators+Sequential.swift
 	swift package generate-xcodeproj --enable-code-coverage
+	make playground
 
 # first command to execute on every machine
 initial:
 	swift package update
 	make generate
+
+# copy content sources into playground
+playground:
+	mkdir -p ./parsel.playground/Sources
+	cp -r ./Sources/parsel/* ./parsel.playground/Sources
 
 # run tests
 test:
@@ -95,5 +102,6 @@ release:
 	git push origin master
 	pod trunk push parsel.podspec
 	git checkout HEAD -- ./Sources/parsel/Core/Operators+Sequential.swift
+	$(info Do not forget to add playground to release!)
 endif
 endif
