@@ -11,5 +11,5 @@
 *.coverage.txt
 
 # playground contents (generated via make playground)
-/aParsel.playground/playground.xcworkspace
-/aParsel.playground/Sources/*
+/Parsel.playground/playground.xcworkspace
+/Parsel.playground/Sources/*
