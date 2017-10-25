@@ -17,6 +17,7 @@ clean:
 	rm -f $(SEQUENTIAL_OPERATORS_SWIFT_PATH)
 	rm -rf Parsel.xcodeproj
 	rm -rf Parsel.playground/Sources/*
+	rm -rf *.coverage.txt
 
 # OSX only: build and run tests + measure code coverage and upload to codecov
 coverage:
