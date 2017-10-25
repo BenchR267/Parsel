@@ -9,7 +9,7 @@ opt_in_rules:
   - redundant_nil_coalesing
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Tests
-  - parsel.playground
+  - Parsel.playground
 
 line_length:
   warning: 220

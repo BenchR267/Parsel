@@ -1,6 +1,6 @@
 //
 //  Lexical.swift
-//  ParselPackageDescription
+//  Parsel
 //
 //  Created by Benjamin Herzog on 21.08.17.
 //

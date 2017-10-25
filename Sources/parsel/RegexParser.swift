@@ -1,6 +1,6 @@
 //
 //  RegexParser.swift
-//  ParselPackageDescription
+//  Parsel
 //
 //  Created by Benjamin Herzog on 14.08.17.
 //
