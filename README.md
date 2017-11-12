@@ -113,6 +113,7 @@ $ make initial
 Please make sure that all tests are green before you submit a pull request by running `make test`.
 
 If you experience a bug or have an idea for a feature request but you don't know where to get started: feel free to open an [issue](https://github.com/BenchR267/Parsel/issues/new) with a self-explaining description text.
+
 If you have an idea for a better (more readable and/or faster) implementation for an existing function: feel free to change the code and submit a pull request.
 I will be more than happy to review the changes to make Parsel the best project if can become!
 
