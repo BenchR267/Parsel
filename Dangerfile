@@ -16,7 +16,7 @@ def isSwiftFile?(file)
 end
 
 def shouldEvaluate?(file)
-	!file.start_with? "parsel.playground"
+	!file.start_with? "Parsel.playground"
 end
 
 (git.added_files + git.modified_files).each do |file|

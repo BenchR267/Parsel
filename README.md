@@ -1,5 +1,5 @@
 # Parsel 
-![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/parsel.svg?branch=master)](https://travis-ci.org/BenchR267/parsel) [![Codecov branch](https://img.shields.io/codecov/c/github/BenchR267/parsel/master.svg)](https://codecov.io/github/BenchR267/parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/parsel/)
+![Swift](https://img.shields.io/badge/Swift-4.0-orange.svg) [![Build Status](https://travis-ci.org/BenchR267/Parsel.svg?branch=master)](https://travis-ci.org/BenchR267/Parsel) [![Codecov branch](https://img.shields.io/codecov/c/github/BenchR267/Parsel/master.svg)](https://codecov.io/github/BenchR267/Parsel) [![CocoaPods](https://img.shields.io/cocoapods/v/Parsel.svg)]() [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](http://mit-license.org) [![](https://img.shields.io/badge/documentation-available-brightgreen.svg)](https://benchr267.github.io/Parsel/)
 
 Parsel is a parser combinator library that makes it easy to write parsers. Parser combinators lets you create simple parses that can be combined together to very complex ones. Take for example a parser that parses a digit from a given String: _(You can use the pre-defined lexical parser for digit: `L.digit`)_
 
@@ -64,7 +64,7 @@ import PackageDescription
 let package = Package(
   name: "MyAwesomeApp",
   dependencies: [
-    .package(url: "https://github.com/BenchR267/Parsel", from: "2.2.0")
+    .package(url: "https://github.com/BenchR267/Parsel", from: "3.0.0")
   ]
 )
 ```
@@ -99,6 +99,23 @@ Check out the documentation on the [Github page](https://benchr267.github.io/Par
 # Author
 
 * [@benchr](https://twitter.com/benchr), mail@benchr.de
+
+# Contributing
+
+To start contributing to Parsel please clone the project and configure it initially:
+
+```Bash
+$ git clone git@github.com:BenchR267/Parsel.git
+$ cd Parsel
+$ make initial
+```
+
+Please make sure that all tests are green before you submit a pull request by running `make test`.
+
+If you experience a bug or have an idea for a feature request but you don't know where to get started: feel free to open an [issue](https://github.com/BenchR267/Parsel/issues/new) with a self-explaining description text.
+
+If you have an idea for a better (more readable and/or faster) implementation for an existing function: feel free to change the code and submit a pull request.
+I will be more than happy to review the changes to make Parsel the best project it can be!
 
 # License
 
