@@ -216,6 +216,9 @@ public enum Lexical {
     /// Parses the `==` sign
     public static let equal = (assign ~ assign) ^^ { String([$0, $1]) }
     
+    /// parses the `√` sign (alt + V)
+    public static let sqrt = char("√")
+    
     // MARK: - Whitespaces
     
     /// Parses one space character
