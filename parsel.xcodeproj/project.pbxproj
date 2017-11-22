@@ -16,13 +16,13 @@
             "en",
          );
          mainGroup = "OBJ_5";
-         productRefGroup = "OBJ_33";
+         productRefGroup = "OBJ_32";
          projectDirPath = ".";
          targets = (
-            "parsel::SwiftPMPackageDescription",
-            "parsel::parselTests",
-            "parsel::parsel",
-            "parsel::parselPackageTests::ProductTarget",
+            "Parsel::SwiftPMPackageDescription",
+            "Parsel::ParselTests",
+            "Parsel::Parsel",
+            "Parsel::ParselPackageTests::ProductTarget",
          );
       };
       "OBJ_10" = {
@@ -88,8 +88,8 @@
             "OBJ_28",
             "OBJ_29",
          );
-         name = "parselTests";
-         path = "Tests/parselTests";
+         name = "ParselTests";
+         path = "Tests/ParselTests";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_2" = {
@@ -185,39 +185,34 @@
       };
       "OBJ_30" = {
          isa = "PBXFileReference";
-         path = "Doc";
+         path = "docs";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_31" = {
          isa = "PBXFileReference";
-         path = "docs";
-         sourceTree = "SOURCE_ROOT";
-      };
-      "OBJ_32" = {
-         isa = "PBXFileReference";
          path = "Scripts";
          sourceTree = "SOURCE_ROOT";
       };
-      "OBJ_33" = {
+      "OBJ_32" = {
          isa = "PBXGroup";
          children = (
-            "parsel::parselTests::Product",
-            "parsel::parsel::Product",
+            "Parsel::ParselTests::Product",
+            "Parsel::Parsel::Product",
          );
          name = "Products";
          path = "";
          sourceTree = "BUILT_PRODUCTS_DIR";
       };
-      "OBJ_37" = {
+      "OBJ_36" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
+            "OBJ_37",
             "OBJ_38",
-            "OBJ_39",
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
       };
-      "OBJ_38" = {
+      "OBJ_37" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             LD = "/usr/bin/true";
@@ -235,7 +230,7 @@
          };
          name = "Debug";
       };
-      "OBJ_39" = {
+      "OBJ_38" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             LD = "/usr/bin/true";
@@ -252,6 +247,12 @@
             SWIFT_VERSION = "4.0";
          };
          name = "Release";
+      };
+      "OBJ_39" = {
+         isa = "PBXSourcesBuildPhase";
+         files = (
+            "OBJ_40",
+         );
       };
       "OBJ_4" = {
          isa = "XCBuildConfiguration";
@@ -284,23 +285,44 @@
          name = "Release";
       };
       "OBJ_40" = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            "OBJ_41",
-         );
-      };
-      "OBJ_41" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_6";
       };
-      "OBJ_43" = {
+      "OBJ_42" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
+            "OBJ_43",
             "OBJ_44",
-            "OBJ_45",
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
+      };
+      "OBJ_43" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks",
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)",
+            );
+            INFOPLIST_FILE = "Parsel.xcodeproj/ParselTests_Info.plist";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "@loader_path/../Frameworks",
+               "@loader_path/Frameworks",
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)",
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)",
+            );
+            SWIFT_VERSION = "4.0";
+            TARGET_NAME = "ParselTests";
+         };
+         name = "Debug";
       };
       "OBJ_44" = {
          isa = "XCBuildConfiguration";
@@ -313,7 +335,7 @@
             HEADER_SEARCH_PATHS = (
                "$(inherited)",
             );
-            INFOPLIST_FILE = "parsel.xcodeproj/parselTests_Info.plist";
+            INFOPLIST_FILE = "Parsel.xcodeproj/ParselTests_Info.plist";
             LD_RUNPATH_SEARCH_PATHS = (
                "@loader_path/../Frameworks",
                "@loader_path/Frameworks",
@@ -325,40 +347,14 @@
                "$(inherited)",
             );
             SWIFT_VERSION = "4.0";
-            TARGET_NAME = "parselTests";
-         };
-         name = "Debug";
-      };
-      "OBJ_45" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks",
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)",
-            );
-            INFOPLIST_FILE = "parsel.xcodeproj/parselTests_Info.plist";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "@loader_path/../Frameworks",
-               "@loader_path/Frameworks",
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)",
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
-            );
-            SWIFT_VERSION = "4.0";
-            TARGET_NAME = "parselTests";
+            TARGET_NAME = "ParselTests";
          };
          name = "Release";
       };
-      "OBJ_46" = {
+      "OBJ_45" = {
          isa = "PBXSourcesBuildPhase";
          files = (
+            "OBJ_46",
             "OBJ_47",
             "OBJ_48",
             "OBJ_49",
@@ -368,20 +364,23 @@
             "OBJ_53",
             "OBJ_54",
             "OBJ_55",
-            "OBJ_56",
          );
       };
-      "OBJ_47" = {
+      "OBJ_46" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_20";
       };
-      "OBJ_48" = {
+      "OBJ_47" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_21";
       };
-      "OBJ_49" = {
+      "OBJ_48" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_22";
+      };
+      "OBJ_49" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_23";
       };
       "OBJ_5" = {
          isa = "PBXGroup";
@@ -392,52 +391,47 @@
             "OBJ_30",
             "OBJ_31",
             "OBJ_32",
-            "OBJ_33",
          );
          path = "";
          sourceTree = "<group>";
       };
       "OBJ_50" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_23";
+         fileRef = "OBJ_24";
       };
       "OBJ_51" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_24";
+         fileRef = "OBJ_25";
       };
       "OBJ_52" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_25";
+         fileRef = "OBJ_26";
       };
       "OBJ_53" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_26";
+         fileRef = "OBJ_27";
       };
       "OBJ_54" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_27";
+         fileRef = "OBJ_28";
       };
       "OBJ_55" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_28";
-      };
-      "OBJ_56" = {
-         isa = "PBXBuildFile";
          fileRef = "OBJ_29";
       };
-      "OBJ_57" = {
+      "OBJ_56" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
-            "OBJ_58",
+            "OBJ_57",
          );
       };
-      "OBJ_58" = {
+      "OBJ_57" = {
          isa = "PBXBuildFile";
-         fileRef = "parsel::parsel::Product";
+         fileRef = "Parsel::Parsel::Product";
       };
-      "OBJ_59" = {
+      "OBJ_58" = {
          isa = "PBXTargetDependency";
-         target = "parsel::parsel";
+         target = "Parsel::Parsel";
       };
       "OBJ_6" = {
          isa = "PBXFileReference";
@@ -445,14 +439,44 @@
          path = "Package.swift";
          sourceTree = "<group>";
       };
-      "OBJ_61" = {
+      "OBJ_60" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
+            "OBJ_61",
             "OBJ_62",
-            "OBJ_63",
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
+      };
+      "OBJ_61" = {
+         isa = "XCBuildConfiguration";
+         buildSettings = {
+            ENABLE_TESTABILITY = "YES";
+            FRAMEWORK_SEARCH_PATHS = (
+               "$(inherited)",
+               "$(PLATFORM_DIR)/Developer/Library/Frameworks",
+            );
+            HEADER_SEARCH_PATHS = (
+               "$(inherited)",
+            );
+            INFOPLIST_FILE = "Parsel.xcodeproj/Parsel_Info.plist";
+            LD_RUNPATH_SEARCH_PATHS = (
+               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+            );
+            OTHER_LDFLAGS = (
+               "$(inherited)",
+            );
+            OTHER_SWIFT_FLAGS = (
+               "$(inherited)",
+            );
+            PRODUCT_BUNDLE_IDENTIFIER = "Parsel";
+            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+            SKIP_INSTALL = "YES";
+            SWIFT_VERSION = "4.0";
+            TARGET_NAME = "Parsel";
+         };
+         name = "Debug";
       };
       "OBJ_62" = {
          isa = "XCBuildConfiguration";
@@ -465,7 +489,7 @@
             HEADER_SEARCH_PATHS = (
                "$(inherited)",
             );
-            INFOPLIST_FILE = "parsel.xcodeproj/parsel_Info.plist";
+            INFOPLIST_FILE = "Parsel.xcodeproj/Parsel_Info.plist";
             LD_RUNPATH_SEARCH_PATHS = (
                "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
             );
@@ -475,48 +499,19 @@
             OTHER_SWIFT_FLAGS = (
                "$(inherited)",
             );
-            PRODUCT_BUNDLE_IDENTIFIER = "parsel";
+            PRODUCT_BUNDLE_IDENTIFIER = "Parsel";
             PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
             PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
             SKIP_INSTALL = "YES";
             SWIFT_VERSION = "4.0";
-            TARGET_NAME = "parsel";
-         };
-         name = "Debug";
-      };
-      "OBJ_63" = {
-         isa = "XCBuildConfiguration";
-         buildSettings = {
-            ENABLE_TESTABILITY = "YES";
-            FRAMEWORK_SEARCH_PATHS = (
-               "$(inherited)",
-               "$(PLATFORM_DIR)/Developer/Library/Frameworks",
-            );
-            HEADER_SEARCH_PATHS = (
-               "$(inherited)",
-            );
-            INFOPLIST_FILE = "parsel.xcodeproj/parsel_Info.plist";
-            LD_RUNPATH_SEARCH_PATHS = (
-               "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
-            );
-            OTHER_LDFLAGS = (
-               "$(inherited)",
-            );
-            OTHER_SWIFT_FLAGS = (
-               "$(inherited)",
-            );
-            PRODUCT_BUNDLE_IDENTIFIER = "parsel";
-            PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
-            PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-            SKIP_INSTALL = "YES";
-            SWIFT_VERSION = "4.0";
-            TARGET_NAME = "parsel";
+            TARGET_NAME = "Parsel";
          };
          name = "Release";
       };
-      "OBJ_64" = {
+      "OBJ_63" = {
          isa = "PBXSourcesBuildPhase";
          files = (
+            "OBJ_64",
             "OBJ_65",
             "OBJ_66",
             "OBJ_67",
@@ -524,28 +519,31 @@
             "OBJ_69",
             "OBJ_70",
             "OBJ_71",
-            "OBJ_72",
          );
       };
-      "OBJ_65" = {
+      "OBJ_64" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_10";
       };
-      "OBJ_66" = {
+      "OBJ_65" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_11";
       };
-      "OBJ_67" = {
+      "OBJ_66" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_12";
       };
-      "OBJ_68" = {
+      "OBJ_67" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_13";
       };
-      "OBJ_69" = {
+      "OBJ_68" = {
          isa = "PBXBuildFile";
          fileRef = "OBJ_14";
+      };
+      "OBJ_69" = {
+         isa = "PBXBuildFile";
+         fileRef = "OBJ_15";
       };
       "OBJ_7" = {
          isa = "PBXGroup";
@@ -558,45 +556,41 @@
       };
       "OBJ_70" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_15";
+         fileRef = "OBJ_16";
       };
       "OBJ_71" = {
          isa = "PBXBuildFile";
-         fileRef = "OBJ_16";
-      };
-      "OBJ_72" = {
-         isa = "PBXBuildFile";
          fileRef = "OBJ_17";
       };
-      "OBJ_73" = {
+      "OBJ_72" = {
          isa = "PBXFrameworksBuildPhase";
          files = (
          );
       };
-      "OBJ_75" = {
+      "OBJ_74" = {
          isa = "XCConfigurationList";
          buildConfigurations = (
+            "OBJ_75",
             "OBJ_76",
-            "OBJ_77",
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
       };
-      "OBJ_76" = {
+      "OBJ_75" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
          };
          name = "Debug";
       };
-      "OBJ_77" = {
+      "OBJ_76" = {
          isa = "XCBuildConfiguration";
          buildSettings = {
          };
          name = "Release";
       };
-      "OBJ_78" = {
+      "OBJ_77" = {
          isa = "PBXTargetDependency";
-         target = "parsel::parselTests";
+         target = "Parsel::ParselTests";
       };
       "OBJ_8" = {
          isa = "PBXGroup";
@@ -605,8 +599,8 @@
             "OBJ_16",
             "OBJ_17",
          );
-         name = "parsel";
-         path = "Sources/parsel";
+         name = "Parsel";
+         path = "Sources/Parsel";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_9" = {
@@ -623,67 +617,67 @@
          path = "Core";
          sourceTree = "<group>";
       };
-      "parsel::SwiftPMPackageDescription" = {
+      "Parsel::Parsel" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_37";
+         buildConfigurationList = "OBJ_60";
          buildPhases = (
-            "OBJ_40",
+            "OBJ_63",
+            "OBJ_72",
          );
          dependencies = (
          );
-         name = "parselPackageDescription";
-         productName = "parselPackageDescription";
+         name = "Parsel";
+         productName = "Parsel";
+         productReference = "Parsel::Parsel::Product";
          productType = "com.apple.product-type.framework";
       };
-      "parsel::parsel" = {
-         isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_61";
-         buildPhases = (
-            "OBJ_64",
-            "OBJ_73",
-         );
-         dependencies = (
-         );
-         name = "parsel";
-         productName = "parsel";
-         productReference = "parsel::parsel::Product";
-         productType = "com.apple.product-type.framework";
-      };
-      "parsel::parsel::Product" = {
+      "Parsel::Parsel::Product" = {
          isa = "PBXFileReference";
-         path = "parsel.framework";
+         path = "Parsel.framework";
          sourceTree = "BUILT_PRODUCTS_DIR";
       };
-      "parsel::parselPackageTests::ProductTarget" = {
+      "Parsel::ParselPackageTests::ProductTarget" = {
          isa = "PBXAggregateTarget";
-         buildConfigurationList = "OBJ_75";
+         buildConfigurationList = "OBJ_74";
          buildPhases = (
          );
          dependencies = (
-            "OBJ_78",
+            "OBJ_77",
          );
-         name = "parselPackageTests";
-         productName = "parselPackageTests";
+         name = "ParselPackageTests";
+         productName = "ParselPackageTests";
       };
-      "parsel::parselTests" = {
+      "Parsel::ParselTests" = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = "OBJ_43";
+         buildConfigurationList = "OBJ_42";
          buildPhases = (
-            "OBJ_46",
-            "OBJ_57",
+            "OBJ_45",
+            "OBJ_56",
          );
          dependencies = (
-            "OBJ_59",
+            "OBJ_58",
          );
-         name = "parselTests";
-         productName = "parselTests";
-         productReference = "parsel::parselTests::Product";
+         name = "ParselTests";
+         productName = "ParselTests";
+         productReference = "Parsel::ParselTests::Product";
          productType = "com.apple.product-type.bundle.unit-test";
       };
-      "parsel::parselTests::Product" = {
+      "Parsel::ParselTests::Product" = {
          isa = "PBXFileReference";
-         path = "parselTests.xctest";
+         path = "ParselTests.xctest";
          sourceTree = "BUILT_PRODUCTS_DIR";
+      };
+      "Parsel::SwiftPMPackageDescription" = {
+         isa = "PBXNativeTarget";
+         buildConfigurationList = "OBJ_36";
+         buildPhases = (
+            "OBJ_39",
+         );
+         dependencies = (
+         );
+         name = "ParselPackageDescription";
+         productName = "ParselPackageDescription";
+         productType = "com.apple.product-type.framework";
       };
    };
    rootObject = "OBJ_1";
