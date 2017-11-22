@@ -15,13 +15,17 @@ def isSwiftFile?(file)
 	file.end_with? ".swift"
 end
 
+def shouldEvaluate?(file)
+	!file.start_with? "Parsel.playground"
+end
+
 (git.added_files + git.modified_files).each do |file|
 	next unless file.end_with? "Tests.swift"
 	warn "Test files should end with _TestCase.swift, not Tests.swift. Please rename #{github.html_link(file)}"
 end
 
-files = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && !isTest?(file) }
-tests = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && isTest?(file) }
+files = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && !isTest?(file) && shouldEvaluate?(file) }
+tests = (git.added_files + git.modified_files).select{ |file| isSwiftFile?(file) && isTest?(file) && shouldEvaluate?(file) }
 
 # Check for test case of added/modified files
 files.each do |file|

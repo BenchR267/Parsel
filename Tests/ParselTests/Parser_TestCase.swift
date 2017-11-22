@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import parsel
+@testable import Parsel
 
 class Parser_TestCase: XCTestCase {
     

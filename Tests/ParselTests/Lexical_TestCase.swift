@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import parsel
+@testable import Parsel
 
 class Lexical_TestCase: XCTestCase {
     
@@ -408,6 +408,26 @@ class Lexical_TestCase: XCTestCase {
     func test_error_description() {
         XCTAssertEqual(L.Error.unexpectedToken(expected: "EXP", got: "GOT").description, "Parsing Error: Expected EXP but got GOT.")
     }
+    
+    func test_commonCharacters() {
+        let tests: [(Parser<String, String>, String)] = [
+            (L.plus.map(String.init), "+"),
+            (L.minus.map(String.init), "-"),
+            (L.multiply.map(String.init), "*"),
+            (L.divide.map(String.init), "/"),
+            (L.assign.map(String.init), "="),
+            (L.equal, "=="),
+            (L.sqrt.map(String.init), "√"),
+            (L.space.map(String.init), " "),
+            (L.newLine.map(String.init), "\n"),
+            (L.carriageReturn.map(String.init), "\r\n"),
+            (L.tab.map(String.init), "\t"),
+        ]
+        
+        for (parser, input) in tests {
+            XCTAssertEqual(try parser.parse(input).unwrap(), input)
+        }
+    }
 }
 
 #if os(Linux)
@@ -436,7 +456,8 @@ class Lexical_TestCase: XCTestCase {
             ("test_uppercaseLetter", test_uppercaseLetter),
             ("test_letter", test_letter),
             ("test_asciiValue", test_asciiValue),
-            ("test_error_description", test_error_description)
+            ("test_error_description", test_error_description),
+            ("test_commonCharacters", test_commonCharacters)
         ]
     }
 #endif

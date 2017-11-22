@@ -1,6 +1,6 @@
 //
 //  Lexical.swift
-//  ParselPackageDescription
+//  Parsel
 //
 //  Created by Benjamin Herzog on 21.08.17.
 //
@@ -45,7 +45,7 @@ public enum Lexical {
     /// - Returns: a parser that tries to parse a character that matches condition
     public static func char(condition: @escaping (Character) -> Bool) -> Parser<String, Character> {
         return Parser { input in
-            guard let first = input.characters.first, condition(first) else {
+            guard let first = input.first, condition(first) else {
                 return .fail(Error.unexpectedToken(expected: "certain char", got: String(input.prefix(1))))
             }
             return .success(result: first, rest: String(input.dropFirst()))
@@ -58,7 +58,7 @@ public enum Lexical {
     /// - Returns: a parser that parses that one Character from a given String
     public static func char(_ character: Character) -> Parser<String, Character> {
         return Parser<String, Character> { input in
-            guard let first = input.characters.first, first == character else {
+            guard let first = input.first, first == character else {
                 return .fail(Error.unexpectedToken(expected: character.description, got: String(input.prefix(1))))
             }
             return .success(result: first, rest: String(input.dropFirst()))
@@ -215,6 +215,9 @@ public enum Lexical {
     
     /// Parses the `==` sign
     public static let equal = (assign ~ assign) ^^ { String([$0, $1]) }
+    
+    /// parses the `√` sign (alt + V)
+    public static let sqrt = char("√")
     
     // MARK: - Whitespaces
     

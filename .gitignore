@@ -9,6 +9,7 @@
 # codecov
 *.coverage.txt
 
+<<<<<<< HEAD
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -18,3 +19,7 @@
 *.perspectivev3
 !default.perspectivev3
 xcuserdata/
+
+# playground contents (generated via make playground)
+/Parsel.playground/playground.xcworkspace
+/Parsel.playground/Sources/*
