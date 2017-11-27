@@ -66,7 +66,7 @@ playground:
 # run tests
 test:
 	swift build
-	swift test
+	swift test --parallel
 
 # call this on travis linux machines
 travis:
