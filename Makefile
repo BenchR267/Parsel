@@ -60,7 +60,7 @@ initial:
 
 # lint source files with swiftlint
 lint:
-    swiftlint lint
+	swiftlint lint
 
 # copy content sources into playground
 playground:
