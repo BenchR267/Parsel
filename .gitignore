@@ -9,3 +9,7 @@
 
 # codecov
 *.coverage.txt
+
+# playground contents (generated via make playground)
+/Parsel.playground/playground.xcworkspace
+/Parsel.playground/Sources/*
