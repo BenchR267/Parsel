@@ -5,9 +5,9 @@
 //  Created by Benjamin Herzog on 30.09.17.
 //
 
-import parsel
+import Parsel
 
-public enum ParseError: parsel.ParseError {
+public enum ParseError: Parsel.ParseError {
     case tokenMismatch(expected: Token, got: Token)
     case emptySequence
 }

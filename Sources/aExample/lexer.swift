@@ -5,7 +5,7 @@
 //  Created by Benjamin Herzog on 30.09.17.
 //
 
-import parsel
+import Parsel
 
 public enum Token {
     public enum Literal {
