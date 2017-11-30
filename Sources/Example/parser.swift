@@ -67,8 +67,10 @@ private let literal = Parser<[Token], Token.Literal> { input in
     }
 }
 
+private let expression = literal
+
 private func specificDeclaration(_ keyword: Token.Keyword) -> Parser<[Token], (Token.Keyword, String, Token.Literal)> {
-    return parseKeyword(keyword) ~ identifier <~ token(.operate(.assign)) ~ literal
+    return parseKeyword(keyword) ~ identifier <~ token(.operate(.assign)) ~ expression
 }
 
 private let valDeclaration = specificDeclaration(.val)

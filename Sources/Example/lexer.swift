@@ -10,6 +10,7 @@ import Parsel
 public enum Token {
     public enum Literal {
         case int(Int)
+        case string(String)
     }
     public enum Operator {
         case plus, minus, equal, assign
@@ -25,7 +26,10 @@ public enum Token {
 }
 
 private let intLiteral = L.number ^^ { Token.literal(.int($0)) }
-private let literal = intLiteral
+private let stringLiteral = L.char("\"") ~> L.char(condition: { $0 != "\"" }).rep <~ L.char("\"") ^^ { chars in
+    return Token.literal(.string(String.init(chars)))
+}
+private let literal = intLiteral | stringLiteral
 
 private let plusOperator = L.plus.typeErased ^^ { Token.operate(.plus) }
 private let minusOperator = L.minus.typeErased ^^ { Token.operate(.minus) }
@@ -49,6 +53,8 @@ extension Token.Literal: Equatable {
     public static func == (lhs: Token.Literal, rhs: Token.Literal) -> Bool {
         switch (lhs, rhs) {
         case let (.int(l), .int(r)): return l == r
+        case let (.string(l), .string(r)): return l == r
+        default: return false
         }
     }
 }
