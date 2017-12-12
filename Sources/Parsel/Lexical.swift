@@ -187,8 +187,11 @@ public enum Lexical {
         return buildNumber(digits: digits, base: 10)
     }
     
+    /// Parses an unsigned (positive) number in hexadecimal, octal, binary or decimal format
+    public static let unsignedNumber = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
+    
     /// Parses a number in hexadecimal, octal, binary or decimal format
-    public static let number = hexadecimalNumber | octalNumber | binaryNumber | decimalNumber
+    public static let number = L.minus.optional ~ unsignedNumber ^^ { minus, number in minus == nil ? number : number * -1 }
     
     /// Parses a floating number from String to Double (0.123; 0,123; …)
     public static let floatingNumber = "[0-9]+([\\.,][0-9]+)?".r ^^ { input -> Double in

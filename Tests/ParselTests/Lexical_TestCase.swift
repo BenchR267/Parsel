@@ -267,8 +267,8 @@ class Lexical_TestCase: XCTestCase {
         XCTAssertEqual(got, "a")
     }
     
-    func test_number() {
-        let p = L.number
+    func test_unsignedNumber() {
+        let p = L.unsignedNumber
         
         func test(input: String, result: Int, rest: String) {
             let res = p.parse(input)
@@ -281,6 +281,27 @@ class Lexical_TestCase: XCTestCase {
         test(input: "0x12345", result: 74565, rest: "")
         test(input: "0b101011b", result: 43, rest: "b")
         test(input: "0o342424", result: 115988, rest: "")
+        
+        XCTAssertThrowsError(try p.parse("-1234").unwrap())
+        XCTAssertThrowsError(try p.parse("-0x12345").unwrap())
+        XCTAssertThrowsError(try p.parse("-0b101011").unwrap())
+        XCTAssertThrowsError(try p.parse("-0o342424").unwrap())
+    }
+    
+    func test_number() {
+        let p = L.number
+        
+        func test(input: String, result: Int, rest: String) {
+            let res = p.parse(input)
+            XCTAssertEqual(try res.unwrap(), result)
+            XCTAssertEqual(try res.rest(), rest)
+        }
+        
+        test(input: "-1234a", result: -1234, rest: "a")
+        test(input: "-9a", result: -9, rest: "a")
+        test(input: "-0x12345", result: -74565, rest: "")
+        test(input: "-0b101011b", result: -43, rest: "b")
+        test(input: "-0o342424", result: -115988, rest: "")
     }
     
     func test_floatingNumber() throws {
@@ -426,6 +447,7 @@ class Lexical_TestCase: XCTestCase {
             ("test_hexadecimalDigit", test_hexadecimalDigit),
             ("test_hexadecimalNumber", test_hexadecimalNumber),
             ("test_decimalNumber", test_decimalNumber),
+            ("test_unsignedNumber", test_unsignedNumber),
             ("test_number", test_number),
             ("test_floatingNumber", test_floatingNumber),
             ("test_oneWhitespace", test_oneWhitespace),
