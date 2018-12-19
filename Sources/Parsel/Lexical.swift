@@ -5,6 +5,8 @@
 //  Created by Benjamin Herzog on 21.08.17.
 //
 
+import Foundation
+
 // swiftlint:disable type_name
 /// L is the shortcut for Lexical namespace
 public typealias L = Lexical
@@ -78,7 +80,7 @@ public enum Lexical {
     
     /// Parses a lowercase letter ('a'-'z')
     public static let lowercaseLetter = char.filter { parsed in
-        guard ("a"..."z").contains(parsed) else {
+        guard let scalar = parsed.unicodeScalars.first, CharacterSet.lowercaseLetters.contains(scalar), parsed.unicodeScalars.count == 1 else {
             return Error.unexpectedToken(expected: "lowercase", got: String(parsed))
         }
         return nil
@@ -86,7 +88,7 @@ public enum Lexical {
     
     /// Parses an uppercase letter ('A'-'Z')
     public static let uppercaseLetter = char.filter { parsed in
-        guard ("A"..."Z").contains(parsed) else {
+        guard let scalar = parsed.unicodeScalars.first, CharacterSet.uppercaseLetters.contains(scalar), parsed.unicodeScalars.count == 1 else {
             return Error.unexpectedToken(expected: "uppercase", got: String(parsed))
         }
         return nil

@@ -368,6 +368,10 @@ class Lexical_TestCase: XCTestCase {
         }
         XCTAssertEqual(expected, "lowercase")
         XCTAssertEqual(got, "A")
+        
+        let res3 = p.parse("üuU")
+        XCTAssertEqual(try res3.unwrap(), "ü")
+        XCTAssertEqual(try res3.rest(), "uU")
     }
     
     func test_uppercaseLetter() throws {
@@ -383,6 +387,10 @@ class Lexical_TestCase: XCTestCase {
         }
         XCTAssertEqual(expected, "uppercase")
         XCTAssertEqual(got, "a")
+        
+        let res3 = p.parse("Éüu")
+        XCTAssertEqual(try res3.unwrap(), "É")
+        XCTAssertEqual(try res3.rest(), "üu")
     }
     
     func test_letter() throws {
@@ -398,6 +406,11 @@ class Lexical_TestCase: XCTestCase {
         }
         XCTAssertEqual(expected, "letter")
         XCTAssertEqual(got, "1")
+        
+        let res3 = (p ~ p).parse("éÜI")
+        XCTAssertEqual(try res3.unwrap().0, "é")
+        XCTAssertEqual(try res3.unwrap().1, "Ü")
+        XCTAssertEqual(try res3.rest(), "I")
     }
     
     func test_asciiValue() {
